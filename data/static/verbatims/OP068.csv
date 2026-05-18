@@ -12,7 +12,7 @@ OP068,"Je réalise des analyses exploratoires et des prototypes via Jupyter Note
 OP068,"Je modélise et interroge des graphes de données avec Neo4j et Bloom"
 OP068,"Je mets en place et maintiens des pipelines CI/CD avec GitHub Actions"
 OP068,"Je publie et maintiens des images conteneurs sur DockerHub et Github Registry"
-OP068,"Je gère le déploiement de conteneurs avec Podman et Docker"
+OP068,"Je gère le déploiement de conteneurs avec Podman"
 OP068,"J'assure la traçabilité des développements au sein de la chaîne DevOps (Git, GitHub)"
 OP068,"Je déploie et administre des applications sur Kubernetes (Helm, Minikube, K9s, kubectl)"
 OP068,"Je package des applications en charts Helm et gère les montées de version"
