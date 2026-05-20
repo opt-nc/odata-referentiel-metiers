@@ -1,4 +1,6 @@
 DROP MACRO IF EXISTS formatter;
+
+-- Cette
 CREATE MACRO formatter(str) AS (
     TRIM(
         BOTH '_' FROM
@@ -43,9 +45,71 @@ DROP INDEX IF EXISTS idx_niveau_description_comp_utilisateur;
 DROP INDEX IF EXISTS idx_metier_competence_competence;
 DROP INDEX IF EXISTS idx_metier_competence_metier;
 
-CREATE TEMP TABLE gem_metier AS SELECT * FROM read_csv_auto('data/input/gem_metiers.csv');
-CREATE TEMP TABLE gem_competence AS SELECT * FROM read_csv_auto('data/input/gem_competences.csv') WHERE "Code de compétence" IS NOT NULL;
-CREATE TEMP TABLE gem_metier_competence AS SELECT * FROM read_csv_auto('data/input/gem_metiers_competences.csv') WHERE "Code de compétence" IS NOT NULL;
+CREATE TEMP TABLE gem_metier AS
+SELECT
+    "Nom Client" AS nom_client,
+    "Id Neobrain Métier" AS id_neobrain_metier,
+    "Code Métier" AS code_metier,
+    "Métier collaborateur" as nom_metier,
+    "Famille métier" AS famille_metier,
+    "Sous-famille métier" AS sous_famille_metier,
+    "Nombre de compétences du métier" AS nb_competence_metier,
+    "Niveau de compétence moyen requis" AS niveau_competence_moyen_requis,
+    "Métier actif? 0/1" AS metier_active_count,
+    "Métier actif?" = 'True' AS metier_actif,
+    "Statut du métier" AS statut_metier
+FROM read_csv_auto('data/input/gem_metiers.csv');
+
+select * from gem_metier;
+
+CREATE TEMP TABLE gem_competence AS
+SELECT
+    "Nom Client" AS nom_client,
+    "Id interne Neobrain Client" AS id_neobrain_client,
+    "Id interne Neobrain Compétence" AS id_neobrain_competence,
+    "Code de compétence" AS code_competence,
+    "Nom de la compétence" AS nom_competence,
+    "Référentiel de compétences" AS referentiel_competence,
+    "Type de référentiel de compétences" AS type_referentiel_competence,
+    "Type de référentiel de compétences détaillé" AS type_referentiel_competence_detaille,
+    "Groupe de compétences" AS groupe_competence,
+    "Type de groupe de compétences" AS type_groupe_competence,
+    "Compétence mise à jour le" date_mise_a_jour,
+    "Maîtrise moyenne de la compétence" AS maitrise_moyenne,
+    "Motivation moyenne sur la compétence" AS motivation_moyenne,
+    "Maîtrise moyenne de la compétence (note du manager)" AS maitrise_moyenne_note_manager,
+    "Collaborateurs actifs possédant cette compétence" AS nb_collaborateurs_actifs,
+    "Nombre de collaborateurs actifs à reskiller" AS nb_collaborateur_a_reskiller,
+    "Nombre de métiers actifs ayant cette compétence" AS nb_metier_possedant_ce_metier,
+    "Catégorie de détention de compétences" categorie_detention,
+    "Gamme de détention dans les métiers de la compétence" AS gamme_detention,
+    "Description Niveau 1 Compétence" AS description_niveau_1,
+    "Description Niveau 2 Compétence" AS description_niveau_2,
+    "Description Niveau 3 Compétence" AS description_niveau_3,
+    "Description Niveau 4 Compétence" AS description_niveau_4,
+FROM read_csv_auto('data/input/gem_competences.csv')
+WHERE code_competence IS NOT NULL;
+
+CREATE TEMP TABLE gem_metier_competence AS
+SELECT
+    "Id Neobrain Métier" AS id_neobrain_metier,
+    "Code Métier" AS code_metier,
+    "Métier collaborateur" as nom_metier,
+    "Famille métier" AS famille_metier,
+    "Sous-famille métier" AS sous_famille_metier,
+    "Nom de la compétence" AS nom_competence,
+    "Référentiel de compétences" AS referentiel_competence,
+    "Code de compétence" AS code_competence,
+    "Id interne Neobrain Compétence" AS id_neobrain_competence,
+    "Groupe de compétences" AS groupe_competence,
+    "Poids de la compétence" AS poids,
+    "Niveau requis pour le métier" niveau_requis,
+    "Relation Métier-Compétence créée le" date_creation,
+    "Relation Métier-Compétence mise à jour le" AS date_mise_a_jour,
+    "Relation Métier-Compétence active?" = 'True' AS relation_metier_competence_active
+
+FROM read_csv_auto('data/input/gem_metiers_competences.csv')
+WHERE code_competence IS NOT NULL;
 
 
 CREATE TABLE sous_famille_metier (
@@ -55,10 +119,10 @@ CREATE TABLE sous_famille_metier (
 
 INSERT INTO sous_famille_metier
 SELECT DISTINCT
-    NULLIF(formatter("Sous-famille métier"), '') AS id_sous_famille_metier,
-    "Sous-famille métier" AS libelle
+    formatter(sous_famille_metier) AS id_sous_famille_metier,
+    sous_famille_metier AS libelle
 FROM gem_metier
-WHERE "Sous-famille métier" IS NOT NULL;
+WHERE sous_famille_metier IS NOT NULL;
 
 COMMENT ON TABLE sous_famille_metier IS 'Sous-familles de classification des métiers';
 COMMENT ON COLUMN sous_famille_metier.id_sous_famille_metier IS 'Identifiant unique de la sous-famille (généré par formatter)';
@@ -69,20 +133,18 @@ CREATE TABLE famille_metier (
     libelle VARCHAR NOT NULL,
     description VARCHAR,
     id_sous_famille_metier VARCHAR,
-    CONSTRAINT fk_famille_sous_famille
-        FOREIGN KEY (id_sous_famille_metier) REFERENCES sous_famille_metier(id_sous_famille_metier)
+    -- CONSTRAINT fk_famille_sous_famille FOREIGN KEY (id_sous_famille_metier) REFERENCES sous_famille_metier(id_sous_famille_metier)
 );
-
 CREATE INDEX idx_famille_metier_sous_famille ON famille_metier(id_sous_famille_metier);
 
 INSERT INTO famille_metier
 SELECT DISTINCT
-    NULLIF(formatter("Famille métier"), '') AS id_famille_metier,
-    "Famille métier" AS libelle,
+    formatter(famille_metier) AS id_famille_metier,
+    famille_metier AS libelle,
     NULL AS description,
-    NULLIF(formatter("Sous-famille métier"), '') AS id_sous_famille_metier
+    formatter(sous_famille_metier) AS id_sous_famille_metier
 FROM gem_metier
-WHERE NULLIF(formatter("Famille métier"), '') IS NOT NULL;
+WHERE formatter(famille_metier) IS NOT NULL;
 
 COMMENT ON TABLE famille_metier IS 'Familles de métiers possiblement rattachées à une sous-famille';
 COMMENT ON COLUMN famille_metier.id_famille_metier IS 'Identifiant unique de la famille (généré par formatter)';
@@ -100,7 +162,7 @@ SELECT DISTINCT
     UPPER(formatter(statut)) AS id_statut_metier,
     statut AS libelle
 FROM (
-    SELECT DISTINCT "Statut du métier" AS statut
+    SELECT DISTINCT statut_metier AS statut
     FROM gem_metier
 ) WHERE statut IS NOT NULL;
 
@@ -126,14 +188,14 @@ CREATE INDEX idx_metier_statut ON metier(id_statut_metier);
 
 INSERT INTO metier
 SELECT DISTINCT
-    gmc."Code Métier" AS code_metier,
-    gmc."Id Neobrain Métier" AS id_neobrain_metier,
-    gmc."Métier collaborateur" AS metier_collaborateur,
-    NULLIF(formatter(gmc."Famille métier"), '') AS id_famille_metier,
-    NULLIF(UPPER(formatter(gm."Statut du métier")), '') AS id_statut_metier,
-    CAST(gm."Métier actif?" AS BOOLEAN) AS metier_actif
+    gmc.code_metier AS code_metier,
+    gmc.id_neobrain_metier AS id_neobrain_metier,
+    gmc.nom_metier AS metier_collaborateur,
+    formatter(gmc.famille_metier) AS id_famille_metier,
+    UPPER(formatter(gm.statut_metier)) AS id_statut_metier,
+    gm.metier_actif AS metier_actif
 FROM gem_metier gm, gem_metier_competence gmc
-WHERE gmc."Code Métier" IS NOT NULL;
+WHERE gmc.code_metier IS NOT NULL;
 
 COMMENT ON TABLE metier IS 'Table centrale des métiers de l''entreprise';
 COMMENT ON COLUMN metier.code_metier IS 'Code unique du métier';
@@ -151,24 +213,17 @@ CREATE TABLE referentiel_competence (
 );
 
 INSERT INTO referentiel_competence
-SELECT DISTINCT
-    formatter(list.nom) AS id_referentiel_competence,
-    list.nom AS libelle,
-    ref.type_ref AS type_referentiel,
-    ref.type_ref_detail AS type_referentiel_detaille
+SELECT
+    formatter(nom) AS id_referentiel_competence,
+    nom AS libelle,
+    ARG_MAX(type_ref, type_ref) AS type_referentiel,
+    ARG_MAX(type_ref_detail, type_ref_detail) AS type_referentiel_detaille
 FROM (
-         SELECT "Référentiel de compétences" AS nom FROM gem_competence
-         UNION
-         SELECT "Référentiel de compétences" AS nom FROM gem_metier_competence
-    ) list
-    LEFT JOIN (
-    SELECT DISTINCT
-        "Référentiel de compétences" AS nom,
-        "Type de référentiel de compétences" AS type_ref,
-        "Type de référentiel de compétences détaillé" AS type_ref_detail
-    FROM gem_competence
-) ref ON list.nom = ref.nom
-WHERE list.nom IS NOT NULL;
+    SELECT referentiel_competence AS nom, type_referentiel_competence AS type_ref, type_referentiel_competence_detaille AS type_ref_detail FROM gem_competence
+    UNION
+    SELECT referentiel_competence AS nom, NULL, NULL FROM gem_metier_competence
+)
+GROUP BY nom;
 
 COMMENT ON TABLE referentiel_competence IS 'Référentiels sources (ex: Neobrain, OPT-NC 2025)';
 COMMENT ON COLUMN referentiel_competence.id_referentiel_competence IS 'Identifiant unique du référentiel (généré par formatter)';
@@ -183,22 +238,16 @@ CREATE TABLE groupe_competence (
 );
 
 INSERT INTO groupe_competence
-SELECT DISTINCT
-    formatter(list.nom) AS id_groupe_competence,
-    list.nom AS libelle,
-    grp.type_grp AS type_groupe
+SELECT
+    formatter(nom) AS id_groupe_competence,
+    nom AS libelle,
+    ARG_MAX(type_grp, type_grp) AS type_groupe
 FROM (
-         SELECT "Groupe de compétences" AS nom FROM gem_competence
-         UNION
-         SELECT "Groupe de compétences" AS nom FROM gem_metier_competence
-     ) list
-         LEFT JOIN (
-    SELECT DISTINCT
-        "Groupe de compétences" AS nom,
-        "Type de groupe de compétences" AS type_grp
-    FROM gem_competence
-) grp ON list.nom = grp.nom
-WHERE COALESCE(TRIM(list.nom), '') <> '';
+    SELECT groupe_competence AS nom, type_groupe_competence AS type_grp FROM gem_competence
+    UNION ALL
+    SELECT groupe_competence AS nom, NULL FROM gem_metier_competence
+)
+GROUP BY nom;
 
 COMMENT ON TABLE groupe_competence IS 'Groupes de classification (ex: Savoir-faire, Savoir-être)';
 COMMENT ON COLUMN groupe_competence.id_groupe_competence IS 'Identifiant unique du groupe (généré par formatter)';
@@ -213,12 +262,12 @@ CREATE TABLE categorie_detention (
 
 INSERT INTO categorie_detention
 SELECT DISTINCT
-    formatter("Catégorie de détention de compétences") AS id_categorie_detention,
-    "Catégorie de détention de compétences" AS libelle_categorie,
-    "Gamme de détention dans les métiers de la compétence" AS gamme_detention
+    formatter(categorie_detention) AS id_categorie_detention,
+    categorie_detention AS libelle_categorie,
+    gamme_detention AS gamme_detention
 FROM gem_competence
-WHERE "Catégorie de détention de compétences" IS NOT NULL
-  AND "Gamme de détention dans les métiers de la compétence" IS NOT NULL;
+WHERE categorie_detention IS NOT NULL
+AND gamme_detention IS NOT NULL;
 
 COMMENT ON TABLE categorie_detention IS 'Niveaux de classification de la possession d''une compétence';
 COMMENT ON COLUMN categorie_detention.id_categorie_detention IS 'Identifiant unique de la catégorie (généré par formatter)';
@@ -247,19 +296,19 @@ SELECT
     ARG_MAX(id_ref, date_maj) AS id_referentiel_competence
 FROM (
     SELECT
-        "Id interne Neobrain Compétence" AS id,
-        "Code de compétence" AS code,
-        NULLIF(formatter("Groupe de compétences"), '') AS id_grp,
-        NULLIF(formatter("Référentiel de compétences"), '') AS id_ref,
-        "Compétence mise à jour le" AS date_maj
+        id_neobrain_competence AS id,
+        code_competence AS code,
+        formatter(groupe_competence) AS id_grp,
+        formatter(referentiel_competence) AS id_ref,
+        date_mise_a_jour AS date_maj
     FROM gem_competence
-    UNION ALL
+    UNION
     SELECT
-        "Id interne Neobrain Compétence" AS id,
-        "Code de compétence" AS code,
-        NULLIF(formatter("Groupe de compétences"), '') AS id_grp,
-        NULLIF(formatter("Référentiel de compétences"), '') AS id_ref,
-        "Relation Métier-Compétence mise à jour le" AS date_maj
+        id_neobrain_competence AS id,
+        code_competence AS code,
+        formatter(groupe_competence) AS id_grp,
+        formatter(referentiel_competence) AS id_ref,
+        date_mise_a_jour AS date_maj
     FROM gem_metier_competence
     )
 GROUP BY code;
@@ -285,14 +334,14 @@ CREATE INDEX idx_competence_utilisateur_competence ON competence_utilisateur(cod
 CREATE INDEX idx_competence_utilisateur_categorie ON competence_utilisateur(id_categorie_detention);
 
 INSERT INTO competence_utilisateur
-SELECT
-    "Code de compétence",
-    ARG_MAX("Nom de la compétence", "Compétence mise à jour le") AS nom_competence,
-    ANY_VALUE(NULLIF(formatter("Catégorie de détention de compétences"), '')) AS id_cat,
-    MAX("Compétence mise à jour le") AS date_mise_a_jour
+SELECT DISTINCT
+    code_competence,
+    ARG_MAX(nom_competence, date_mise_a_jour) AS nom_competence,
+    ARG_MAX(formatter(categorie_detention), date_mise_a_jour) AS id_cat,
+    MAX(date_mise_a_jour) AS date_mise_a_jour
 FROM gem_competence
-WHERE "Code de compétence" IN (SELECT code_competence FROM competence)
-GROUP BY "Code de compétence";
+WHERE code_competence IN (SELECT code_competence FROM competence)
+GROUP BY code_competence;
 
 COMMENT ON TABLE competence_utilisateur IS 'Profil de la compétence tel que perçu ou détenu par les collaborateurs';
 COMMENT ON COLUMN competence_utilisateur.code_competence IS 'Référence à la compétence centrale';
@@ -312,29 +361,25 @@ CREATE TABLE niveau_description_competence (
 CREATE INDEX idx_niveau_description_comp_utilisateur ON niveau_description_competence(code_competence);
 
 INSERT INTO niveau_description_competence
-    SELECT "Code de compétence", 1, ANY_VALUE("Description Niveau 1 Compétence")
+    SELECT code_competence, 1, ANY_VALUE(description_niveau_1) AS description
     FROM gem_competence
-    WHERE "Description Niveau 1 Compétence" IS NOT NULL
-    AND "Code de compétence" IN (SELECT code_competence FROM competence_utilisateur)
-    GROUP BY "Code de compétence"
-UNION ALL
-    SELECT "Code de compétence", 2, ANY_VALUE("Description Niveau 2 Compétence")
+    WHERE description_niveau_1 IS NOT NULL
+    GROUP BY code_competence
+UNION
+    SELECT code_competence, 2, ANY_VALUE(description_niveau_2) AS description
     FROM gem_competence
-    WHERE "Description Niveau 2 Compétence" IS NOT NULL
-    AND "Code de compétence" IN (SELECT code_competence FROM competence_utilisateur)
-    GROUP BY "Code de compétence"
-UNION ALL
-    SELECT "Code de compétence", 3, ANY_VALUE("Description Niveau 3 Compétence")
+    WHERE description_niveau_2 IS NOT NULL
+    GROUP BY code_competence
+UNION
+    SELECT code_competence, 3, ANY_VALUE(description_niveau_3) AS description
     FROM gem_competence
-    WHERE "Description Niveau 3 Compétence" IS NOT NULL
-    AND "Code de compétence" IN (SELECT code_competence FROM competence_utilisateur)
-    GROUP BY "Code de compétence"
-UNION ALL
-    SELECT "Code de compétence", 4, ANY_VALUE("Description Niveau 4 Compétence")
+    WHERE description_niveau_3 IS NOT NULL
+    GROUP BY code_competence
+UNION
+    SELECT code_competence, 4, ANY_VALUE(description_niveau_4) AS description
     FROM gem_competence
-    WHERE "Description Niveau 4 Compétence" IS NOT NULL
-    AND "Code de compétence" IN (SELECT code_competence FROM competence_utilisateur)
-    GROUP BY "Code de compétence";
+    WHERE description_niveau_4 IS NOT NULL
+    GROUP BY code_competence;
 
 COMMENT ON TABLE niveau_description_competence IS 'Descriptions textuelles des différents niveaux de maîtrise d''une compétence pour l''utilisateur';
 COMMENT ON COLUMN niveau_description_competence.code_competence IS 'Référence à la compétence côté utilisateur';
@@ -362,28 +407,16 @@ CREATE INDEX idx_metier_competence_metier ON metier_competence(code_metier);
 
 INSERT INTO metier_competence
 SELECT
-    "Code Métier" AS code_metier,
-    "Code de compétence" AS code_competence,
-    "Nom de la compétence" AS nom_competence,
-    CASE
-        WHEN ARG_MAX("Poids de la compétence", "Relation Métier-Compétence mise à jour le") > 0 THEN ARG_MAX("Poids de la compétence", "Relation Métier-Compétence mise à jour le")
-        ELSE 0
-        END AS poids,
-    CASE
-        WHEN ARG_MAX("Niveau requis pour le métier", "Relation Métier-Compétence mise à jour le") THEN ARG_MAX("Niveau requis pour le métier", "Relation Métier-Compétence mise à jour le")
-        ELSE 0
-        END AS niveau_requis,
-    ARG_MAX(LOWER(CAST("Relation Métier-Compétence active?" AS VARCHAR)) = 'true', "Relation Métier-Compétence mise à jour le") AS est_actif,
-    MIN("Relation Métier-Compétence créée le") AS date_creation,
-    MAX("Relation Métier-Compétence mise à jour le") AS date_mise_a_jour
+    code_metier AS code_metier,
+    code_competence AS code_competence,
+    nom_competence AS nom_competence,
+    poids,
+    niveau_requis,
+    relation_metier_competence_active AS est_actif,
+    date_creation,
+    date_mise_a_jour
 FROM gem_metier_competence
-WHERE "Code Métier" IN (SELECT code_metier FROM metier)
-    AND "Code de compétence" IN (SELECT code_competence FROM competence)
-    AND "Nom de la compétence" IS NOT NULL
-GROUP BY
-    "Code Métier",
-    "Code de compétence",
-    "Nom de la compétence";
+WHERE code_metier IN (SELECT code_metier FROM metier);
 
 COMMENT ON TABLE metier_competence IS 'Table d''association définissant les besoins en compétences d''un métier spécifique';
 COMMENT ON COLUMN metier_competence.code_metier IS 'Référence au métier demandeur';
@@ -415,11 +448,11 @@ SELECT
     m.metier_collaborateur,
     c.code_competence,
     mc.nom_competence,
+    (SELECT g.libelle FROM groupe_competence g WHERE c.id_groupe_competence = g.id_groupe_competence) AS groupe_competence,
+    (SELECT r.libelle FROM referentiel_competence r WHERE c.id_referentiel_competence = r.id_referentiel_competence) AS referentiel_competence
 FROM metier m
-    JOIN metier_competence mc ON m.code_metier = mc.code_metier
-    JOIN competence c ON mc.code_competence = c.code_competence
-    LEFT JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
-    LEFT JOIN referentiel_competence r ON c.id_referentiel_competence = r.id_referentiel_competence
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+JOIN competence c ON mc.code_competence = c.code_competence
 ORDER BY code_metier;
 
 COMMENT ON VIEW vw_lister_competences_metier IS 'Vue détaillée des compétences requises par métier';
@@ -432,13 +465,11 @@ CREATE OR REPLACE VIEW vw_compter_competences_par_metier AS
 SELECT
     m.code_metier,
     m.metier_collaborateur,
-    COUNT(mc.code_competence) AS nb_competences,
-    COUNT(CASE WHEN mc.est_actif THEN 1 END) AS nb_competences_actives,
-    AVG(mc.niveau_requis) AS niveau_moyen_requis,
-    SUM(mc.poids) AS poids_total
+    (SELECT COUNT(*) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS nb_competences,
+    (SELECT COUNT(*) FROM metier_competence mc WHERE mc.code_metier = m.code_metier AND mc.est_actif = true) AS nb_competences_actives,
+    (SELECT AVG(mc.niveau_requis) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS niveau_moyen_requis,
+    (SELECT SUM(mc.poids) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS poids_total
 FROM metier m
-    LEFT JOIN metier_competence mc ON m.code_metier = mc.code_metier
-GROUP BY m.code_metier, m.metier_collaborateur
 ORDER BY nb_competences;
 
 COMMENT ON VIEW vw_compter_competences_par_metier IS 'Vue agrégée résumant le profil de compétences de chaque métier';
@@ -455,10 +486,9 @@ SELECT
     cu.nom_competence,
     g.libelle AS groupe_competence
 FROM competence c
-    LEFT JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
-    LEFT JOIN metier_competence mc ON c.code_competence = mc.code_competence
-    LEFT JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
-WHERE mc.code_competence IS NULL;
+    JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
+    JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
+WHERE c.code_competence NOT IN (SELECT DISTINCT code_competence FROM metier_competence);
 
 COMMENT ON VIEW vw_competences_orphelines IS 'Liste des compétences du catalogue qui ne sont requises par aucun métier actif';
 COMMENT ON COLUMN vw_competences_orphelines.code_competence IS 'Code de la compétence isolée';
@@ -467,18 +497,16 @@ COMMENT ON COLUMN vw_competences_orphelines.groupe_competence IS 'Groupe d''appa
 
 CREATE OR REPLACE VIEW vw_competences_architecte_logiciel AS
 SELECT
-    gc.libelle AS groupe_competence,
+    (SELECT gc.libelle FROM groupe_competence gc WHERE c.id_groupe_competence = gc.id_groupe_competence) AS groupe_competence,
     m.metier_collaborateur,
     cu.code_competence,
     mc.nom_competence AS nom_competence_metier,
     mc.niveau_requis,
-    ndc.description AS description_niveau_requis
+    (SELECT ndc.description FROM niveau_description_competence ndc WHERE cu.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)) AS description_niveau_requis
 FROM metier m
-    JOIN metier_competence mc ON m.code_metier = mc.code_metier
-    JOIN competence_utilisateur cu ON mc.code_competence = cu.code_competence
-    JOIN competence c ON mc.code_competence = c.code_competence
-    LEFT JOIN groupe_competence gc ON c.id_groupe_competence = gc.id_groupe_competence
-    LEFT JOIN niveau_description_competence ndc ON cu.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+JOIN competence_utilisateur cu ON mc.code_competence = cu.code_competence
+JOIN competence c ON mc.code_competence = c.code_competence
 WHERE m.metier_collaborateur ILIKE '%Architecte%logiciel%';
 
 COMMENT ON VIEW vw_competences_architecte_logiciel IS 'Vue listant les compétences, le métier et la description du niveau requis spécifiquement pour le métier Architecte Logiciel';
@@ -498,11 +526,10 @@ SELECT
     stm.libelle AS statut_metier,
     m.metier_actif
 FROM metier m
-    LEFT JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
-    LEFT JOIN sous_famille_metier sm ON fm.id_sous_famille_metier = sm.id_sous_famille_metier
-    LEFT JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
-    LEFT JOIN metier_competence mc ON m.code_metier = mc.code_metier
-WHERE mc.code_metier IS NULL;
+    JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
+    JOIN sous_famille_metier sm ON fm.id_sous_famille_metier = sm.id_sous_famille_metier
+    JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
+WHERE m.code_metier NOT IN (SELECT DISTINCT code_metier FROM metier_competence);
 
 COMMENT ON VIEW vw_metiers_orphelins IS 'Liste des métiers sans aucune compétence associée';
 COMMENT ON COLUMN vw_metiers_orphelins.code_metier IS 'Code unique du métier';
