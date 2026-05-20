@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: DuckDB Integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: opt-nc/setup-duckdb-action@v1.2.6
+      
+      - name: Load DuckDB database
+        run: |
+          mkdir dist
+          duckdb dist/gem.duckdb < duck.sql
