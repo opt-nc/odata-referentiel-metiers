@@ -60,8 +60,6 @@ SELECT
     "Statut du métier" AS statut_metier
 FROM read_csv_auto('data/input/gem_metiers.csv');
 
-select * from gem_metier;
-
 CREATE TEMP TABLE gem_competence AS
 SELECT
     "Nom Client" AS nom_client,
