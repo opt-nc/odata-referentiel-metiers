@@ -19,4 +19,4 @@ jobs:
       - name: Load DuckDB database
         run: |
           mkdir dist
-          duckdb dist/gem.duckdb < duck.sql
+          duckdb dist/gem.duckdb < src/duck.sql
