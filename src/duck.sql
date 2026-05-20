@@ -536,3 +536,7 @@ COMMENT ON COLUMN vw_metiers_orphelins.famille_metier IS 'Famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.sous_famille_metier IS 'Sous-famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.statut_metier IS 'Statut de publication du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier est actif';
+
+-- REPORTING
+FROM vw_metiers_orphelins;
+FROM vw_competences_orphelines;
