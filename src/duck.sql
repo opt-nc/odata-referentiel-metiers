@@ -60,8 +60,6 @@ SELECT
     "Statut du métier" AS statut_metier
 FROM read_csv_auto('data/input/gem_metiers.csv');
 
-select * from gem_metier;
-
 CREATE TEMP TABLE gem_competence AS
 SELECT
     "Nom Client" AS nom_client,
@@ -538,3 +536,7 @@ COMMENT ON COLUMN vw_metiers_orphelins.famille_metier IS 'Famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.sous_famille_metier IS 'Sous-famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.statut_metier IS 'Statut de publication du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier est actif';
+
+-- REPORTING
+FROM vw_metiers_orphelins;
+FROM vw_competences_orphelines;
