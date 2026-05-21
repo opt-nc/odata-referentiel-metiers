@@ -537,3 +537,5 @@ COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier es
 -- REPORTING
 FROM vw_metiers_orphelins;
 FROM vw_competences_orphelines;
+
+EXPORT DATABASE 'data/output';
