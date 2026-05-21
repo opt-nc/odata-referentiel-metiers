@@ -37,3 +37,5 @@ jobs:
           git push origin $UNIQUE_BRANCH
 
           gh pr create --head $UNIQUE_BRANCH --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+
+          gh pr merge $UNIQUE_BRANCH --merge --auto --delete-branch
