@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - uses: opt-nc/setup-duckdb-action@v1.2.6
       
@@ -27,4 +29,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add data/output/*.csv
           git commit -m "Updated output's files"
-          git push origin HEAD
+          git push
