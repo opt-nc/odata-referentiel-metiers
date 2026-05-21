@@ -27,4 +27,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add data/output/*.csv
           git commit -m "Updated output's files"
-          git push
+          git push origin HEAD
