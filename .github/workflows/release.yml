@@ -13,8 +13,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
 
       - uses: opt-nc/setup-duckdb-action@v1.2.6
       
@@ -24,9 +22,13 @@ jobs:
           duckdb dist/gem.duckdb < src/duck.sql
 
       - name: update output repository and push to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
+          git checkout -b data-update
+          
           git add data/output/*.csv
           git commit -m "Updated output's files"
-          git push
+          git push origin data-update
