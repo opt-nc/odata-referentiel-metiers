@@ -38,7 +38,7 @@ jobs:
 
           gh pr create --head $UNIQUE_BRANCH --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
 
-          gh pr merge $UNIQUE_BRANCH --merge --auto --delete-branch
+          gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
           gh release edit v0.0 --target main --verify-tag
           gh release create v0.0 --title "Release v0.0" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main --verify-tag
