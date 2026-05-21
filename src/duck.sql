@@ -360,25 +360,21 @@ CREATE TABLE niveau_description_competence (
 CREATE INDEX idx_niveau_description_comp_utilisateur ON niveau_description_competence(code_competence);
 
 INSERT INTO niveau_description_competence
-    SELECT code_competence, 1, ANY_VALUE(description_niveau_1) AS description
+    SELECT code_competence, 1, description_niveau_1 AS description
     FROM gem_competence
     WHERE description_niveau_1 IS NOT NULL
-    GROUP BY code_competence
 UNION
-    SELECT code_competence, 2, ANY_VALUE(description_niveau_2) AS description
+    SELECT code_competence, 2, description_niveau_2 AS description
     FROM gem_competence
     WHERE description_niveau_2 IS NOT NULL
-    GROUP BY code_competence
 UNION
-    SELECT code_competence, 3, ANY_VALUE(description_niveau_3) AS description
+    SELECT code_competence, 3, description_niveau_3 AS description
     FROM gem_competence
     WHERE description_niveau_3 IS NOT NULL
-    GROUP BY code_competence
 UNION
-    SELECT code_competence, 4, ANY_VALUE(description_niveau_4) AS description
+    SELECT code_competence, 4, description_niveau_4 AS description
     FROM gem_competence
-    WHERE description_niveau_4 IS NOT NULL
-    GROUP BY code_competence;
+    WHERE description_niveau_4 IS NOT NULL;
 
 COMMENT ON TABLE niveau_description_competence IS 'Descriptions textuelles des différents niveaux de maîtrise d''une compétence pour l''utilisateur';
 COMMENT ON COLUMN niveau_description_competence.code_competence IS 'Référence à la compétence côté utilisateur';
