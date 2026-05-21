@@ -32,3 +32,5 @@ jobs:
           git add data/output/*.csv
           git commit -m "Updated output's files"
           git push origin data-update
+
+          gh pr create --head data-update --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
