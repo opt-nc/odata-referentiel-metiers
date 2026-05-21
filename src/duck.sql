@@ -28,7 +28,6 @@ DROP TABLE IF EXISTS metier;
 DROP TABLE IF EXISTS famille_metier;
 DROP TABLE IF EXISTS competence;
 
-DROP TABLE IF EXISTS sous_famille_metier;
 DROP TABLE IF EXISTS statut_metier;
 DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS groupe_competence;
@@ -36,7 +35,6 @@ DROP TABLE IF EXISTS categorie_detention;
 
 DROP TABLE IF EXISTS about;
 
-DROP INDEX IF EXISTS idx_famille_metier_sous_famille;
 DROP INDEX IF EXISTS idx_metier_famille;
 DROP INDEX IF EXISTS idx_metier_statut;
 DROP INDEX IF EXISTS idx_competence_groupe;
@@ -53,7 +51,6 @@ SELECT
     "Code Métier" AS code_metier,
     "Métier collaborateur" as nom_metier,
     "Famille métier" AS famille_metier,
-    "Sous-famille métier" AS sous_famille_metier,
     "Nombre de compétences du métier" AS nb_competence_metier,
     "Niveau de compétence moyen requis" AS niveau_competence_moyen_requis,
     "Métier actif? 0/1" AS metier_active_count,
@@ -95,7 +92,6 @@ SELECT
     "Code Métier" AS code_metier,
     "Métier collaborateur" as nom_metier,
     "Famille métier" AS famille_metier,
-    "Sous-famille métier" AS sous_famille_metier,
     "Nom de la compétence" AS nom_competence,
     "Référentiel de compétences" AS referentiel_competence,
     "Code de compétence" AS code_competence,
@@ -110,46 +106,24 @@ SELECT
 FROM read_csv_auto('data/input/gem_metiers_competences.csv')
 WHERE code_competence IS NOT NULL;
 
-
-CREATE TABLE sous_famille_metier (
-     id_sous_famille_metier VARCHAR PRIMARY KEY NOT NULL,
-     libelle VARCHAR NOT NULL
-);
-
-INSERT INTO sous_famille_metier
-SELECT DISTINCT
-    formatter(sous_famille_metier) AS id_sous_famille_metier,
-    sous_famille_metier AS libelle
-FROM gem_metier
-WHERE sous_famille_metier IS NOT NULL;
-
-COMMENT ON TABLE sous_famille_metier IS 'Sous-familles de classification des métiers';
-COMMENT ON COLUMN sous_famille_metier.id_sous_famille_metier IS 'Identifiant unique de la sous-famille (généré par formatter)';
-COMMENT ON COLUMN sous_famille_metier.libelle IS 'Nom complet de la sous-famille de métiers';
-
 CREATE TABLE famille_metier (
     id_famille_metier VARCHAR PRIMARY KEY NOT NULL,
     libelle VARCHAR NOT NULL,
     description VARCHAR,
-    id_sous_famille_metier VARCHAR,
-    -- CONSTRAINT fk_famille_sous_famille FOREIGN KEY (id_sous_famille_metier) REFERENCES sous_famille_metier(id_sous_famille_metier)
 );
-CREATE INDEX idx_famille_metier_sous_famille ON famille_metier(id_sous_famille_metier);
 
 INSERT INTO famille_metier
 SELECT DISTINCT
     formatter(famille_metier) AS id_famille_metier,
     famille_metier AS libelle,
     NULL AS description,
-    formatter(sous_famille_metier) AS id_sous_famille_metier
 FROM gem_metier
 WHERE formatter(famille_metier) IS NOT NULL;
 
-COMMENT ON TABLE famille_metier IS 'Familles de métiers possiblement rattachées à une sous-famille';
+COMMENT ON TABLE famille_metier IS 'Référentiel des familles de métiers de l''entreprise';
 COMMENT ON COLUMN famille_metier.id_famille_metier IS 'Identifiant unique de la famille (généré par formatter)';
 COMMENT ON COLUMN famille_metier.libelle IS 'Libellé complet de la famille de métiers';
 COMMENT ON COLUMN famille_metier.description IS 'Description optionnelle de la famille';
-COMMENT ON COLUMN famille_metier.id_sous_famille_metier IS 'Référence à la sous-famille parente';
 
 CREATE TABLE statut_metier (
     id_statut_metier VARCHAR PRIMARY KEY,
@@ -517,12 +491,10 @@ SELECT
     m.code_metier,
     m.metier_collaborateur,
     fm.libelle AS famille_metier,
-    sm.libelle AS sous_famille_metier,
     stm.libelle AS statut_metier,
     m.metier_actif
 FROM metier m
     JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
-    JOIN sous_famille_metier sm ON fm.id_sous_famille_metier = sm.id_sous_famille_metier
     JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
 WHERE m.code_metier NOT IN (SELECT DISTINCT code_metier FROM metier_competence);
 
@@ -530,7 +502,6 @@ COMMENT ON VIEW vw_metiers_orphelins IS 'Liste des métiers sans aucune compéte
 COMMENT ON COLUMN vw_metiers_orphelins.code_metier IS 'Code unique du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_collaborateur IS 'Nom du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.famille_metier IS 'Famille du métier';
-COMMENT ON COLUMN vw_metiers_orphelins.sous_famille_metier IS 'Sous-famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.statut_metier IS 'Statut de publication du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier est actif';
 

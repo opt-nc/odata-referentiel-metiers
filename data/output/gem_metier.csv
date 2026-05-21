@@ -1,85 +1,85 @@
-nom_client,id_neobrain_metier,code_metier,nom_metier,famille_metier,sous_famille_metier,nb_competence_metier,niveau_competence_moyen_requis,metier_active_count,metier_actif,statut_metier
-OPT - NC,11041851,OP001,Chargé de soutien des réseaux de vente,Vente & relation client,,25,3.6,1,true,Publié
-OPT - NC,11041852,OP002,Chargé d'affaires,Vente & relation client,,17,3.0,1,true,Publié
-OPT - NC,11041853,OP003,Conseiller clientèle,Vente & relation client,,21,2.81,1,true,Publié
-OPT - NC,11041854,OP004,Coordonateur de l'exploitation commerciale,Vente & relation client,,22,3.09,1,true,Publié
-OPT - NC,11041855,OP005,Chargé de contact clientèle,Vente & relation client,,24,3.38,1,true,Publié
-OPT - NC,11041856,OP006,Responsable marketing stratégique,MARKETING ET COMMUNICATION,,28,3.39,1,true,Publié
-OPT - NC,11041857,OP007,Chargé d'études marketing,MARKETING ET COMMUNICATION,,23,2.87,1,true,Publié
-OPT - NC,11041858,OP008,Chef de produits,MARKETING ET COMMUNICATION,,25,2.68,1,true,Publié
-OPT - NC,11041859,OP009,Chargé de communication,MARKETING ET COMMUNICATION,,30,3.17,1,true,Publié
-OPT - NC,11041860,OP010,Analyste LCBFT,SERVICES BANCAIRES,,24,3.25,1,true,Publié
-OPT - NC,11041861,OP011,Responsable LCBTF,SERVICES BANCAIRES,,25,3.28,1,true,Publié
-OPT - NC,11041862,OP012,Gestionnaire du back office bancaire,SERVICES BANCAIRES,,18,2.72,1,true,Publié
-OPT - NC,11041863,OP013,Chargé d'études opérationnelles postales,ACTIVITES POSTALES,,17,3.18,1,true,Publié
-OPT - NC,11041864,OP014,Coordinateur courrier colis,ACTIVITES POSTALES,,27,2.41,1,true,Publié
-OPT - NC,11041865,OP015,Chargé d'exploitation postal,ACTIVITES POSTALES,,28,2.39,1,true,Publié
-OPT - NC,11041866,OP016,Chargé de la distribution postale,ACTIVITES POSTALES,,18,2.83,1,true,Publié
-OPT - NC,11041867,OP017,Product owner,Pilotage,,22,3.59,1,true,Publié
-OPT - NC,11041868,OP018,Architecte des réseaux et services des télécommunications,TELECOMMUNICATIONS,,29,3.38,1,true,Publié
-OPT - NC,11041869,OP019,Concepteur des réseaux et services des télécommunications,TELECOMMUNICATIONS,,28,2.71,1,true,Publié
-OPT - NC,11041870,OP020,Qualifieur réseaux,TELECOMMUNICATIONS,,26,2.81,1,true,Publié
-OPT - NC,11041871,OP021,Planificateur réseaux,TELECOMMUNICATIONS,,22,2.82,1,true,Publié
-OPT - NC,11041872,OP022,Ingénieur de déploiement des réseaux et services des télécommunications,TELECOMMUNICATIONS,,21,3.0,1,true,Publié
-OPT - NC,11041873,OP023,Chargé d'ordonnancement,TELECOMMUNICATIONS,,25,2.73,1,true,Publié
-OPT - NC,11041874,OP024,Coordinateur de travaux,TELECOMMUNICATIONS,,27,2.56,1,true,Publié
-OPT - NC,11041875,OP025,Analyste qualité et performance des réseaux et services,TELECOMMUNICATIONS,,24,3.54,1,true,Publié
-OPT - NC,11041876,OP026,Ingénieur des réseaux et services des télécommunications,TELECOMMUNICATIONS,,25,2.75,1,true,Publié
-OPT - NC,11041877,OP027,Technicien d'exploitation des réseaux et services des télécommunications,TELECOMMUNICATIONS,,28,2.79,1,true,Publié
-OPT - NC,11041878,OP028,Technicien support client,TELECOMMUNICATIONS,,22,2.55,1,true,Publié
-OPT - NC,11041879,OP029,Planificateur d'intervention des réseaux et services,TELECOMMUNICATIONS,,25,2.52,1,true,Publié
-OPT - NC,11041880,OP030,Pilote d'intervention client,TELECOMMUNICATIONS,,23,2.91,1,true,Publié
-OPT - NC,11041881,OP031,Technicien d'intervention client,TELECOMMUNICATIONS,,22,2.68,1,true,Publié
-OPT - NC,11041882,OP032,Responsable administratif,ADMINISTRATION,,24,3.33,1,true,Publié
-OPT - NC,11041883,OP033,Assistant administratif,ADMINISTRATION,,24,2.75,1,true,Publié
-OPT - NC,11041884,OP034,Référent RH,ADMINISTRATION,,17,2.82,1,true,Publié
-OPT - NC,11041885,OP035,Chargé du développement des compétences,Ressources humaines,,25,2.96,1,true,Publié
-OPT - NC,11041886,OP036,Chargé de recrutement,Ressources humaines,,21,3.43,1,true,Publié
-OPT - NC,11041887,OP037,Infirmière santé,Ressources humaines,,27,2.96,1,true,Publié
-OPT - NC,11041888,OP038,Gestionnaire santé,Ressources humaines,,26,2.96,1,true,Publié
-OPT - NC,11041889,OP039,Psychologue du travail,Ressources humaines,,29,3.14,1,true,Publié
-OPT - NC,11041890,OP040,Formateur,Ressources humaines,,21,3.43,1,true,Publié
-OPT - NC,11041891,OP041,Chargé des relations sociales,Ressources humaines,,27,2.96,1,true,Publié
-OPT - NC,11041892,OP042,Gestionnaire paie,Ressources humaines,,26,3.12,1,true,Publié
-OPT - NC,11041893,OP043,Gestionnaire carrière,Ressources humaines,,26,3.17,1,true,Publié
-OPT - NC,11041894,OP044,Conseiller en prévention,Ressources humaines,,22,3.36,1,true,Publié
-OPT - NC,11041895,OP045,Agent comptable,Finances & budget,,32,3.28,1,true,Publié
-OPT - NC,11041896,OP046,Gestionnaire budgétaire,Finances & budget,,20,3.15,1,true,Publié
-OPT - NC,11041897,OP047,Gestionnaire comptable,Finances & budget,,21,2.9,1,true,Publié
-OPT - NC,11041898,OP048,Responsable financier,Finances & budget,,23,3.04,1,true,Publié
-OPT - NC,11041899,OP049,Responsable des constructions,Patrimoine bâti,,27,2.67,1,true,Publié
-OPT - NC,11041900,OP050,Conducteur d'opération en batiment,Patrimoine bâti,,28,2.12,1,true,Publié
-OPT - NC,11041901,OP051,Gestionnaire intervention immobilière,Patrimoine bâti,,23,3.0,1,true,Publié
-OPT - NC,11041902,OP052,Agent d'entretien des locaux,LOGISTIQUE,,9,3.0,1,true,Publié
-OPT - NC,11041903,OP053,Approvisionneur,LOGISTIQUE,,24,2.42,1,true,Publié
-OPT - NC,11041904,OP054,Magasinier,LOGISTIQUE,,21,3.0,1,true,Publié
-OPT - NC,11041905,OP055,Gestionnaire logistique,LOGISTIQUE,,24,2.88,1,true,Publié
-OPT - NC,11041906,OP056,Gestionnaire de parc,LOGISTIQUE,,36,2.56,1,true,Publié
-OPT - NC,11041907,OP057,Acheteur,LOGISTIQUE,,23,2.87,1,true,Publié
-OPT - NC,11041908,OP058,Chargé de la transition énergétique,LOGISTIQUE,,25,2.64,1,true,Publié
-OPT - NC,11041909,OP059,Agent d'entretien des espaces naturels,LOGISTIQUE,,14,3.0,1,true,Publié
-OPT - NC,11041910,OP060,Chargé du dédouanement,LOGISTIQUE,,23,2.91,1,true,Publié
-OPT - NC,11041911,OP061,Urbaniste du SI,Systèmes d'information,,21,3.1,1,true,Publié
-OPT - NC,11041912,OP062,Responsable d'études,Systèmes d'information,,21,3.1,1,true,Publié
-OPT - NC,11041913,OP063,Architecte logiciel,Systèmes d'information,,28,3.11,1,true,Publié
-OPT - NC,11041914,OP064,Administrateur réseau,Systèmes d'information,,25,3.04,1,true,Publié
-OPT - NC,11041915,OP065,Administrateur système,Systèmes d'information,,20,3.05,1,true,Publié
-OPT - NC,11041916,OP066,Administrateur d'application,Systèmes d'information,,29,3.31,1,true,Publié
-OPT - NC,11041917,OP067,Responsable de système applicatif,Systèmes d'information,,24,3.08,1,true,Publié
-OPT - NC,11041918,OP068,Concepteur développeur du SI,Systèmes d'information,,25,3.0,1,true,Publié
-OPT - NC,11041919,OP069,Intégrateur d'application,Systèmes d'information,,23,3.13,1,true,Publié
-OPT - NC,11041920,OP070,Technicien de maintenance poste de travail,Systèmes d'information,,23,2.91,1,true,Publié
-OPT - NC,11041921,OP071,Technicien support utilisateur,Systèmes d'information,,24,3.3,1,true,Publié
-OPT - NC,11041922,OP072,Responsable d'exploitation du SI,Systèmes d'information,,25,3.16,1,true,Publié
-OPT - NC,11041923,OP073,Responsable de la Sécurité des Systèmes d'Information - SSI,Systèmes d'information,,24,3.17,1,true,Publié
-OPT - NC,11041924,OP074,Géomaticien,Systèmes d'information,,21,3.0,1,true,Publié
-OPT - NC,11041925,OP075,Directeur,Pilotage,,35,3.46,1,true,Publié
-OPT - NC,11041926,OP076,Contrôleur de gestion,Pilotage,,24,2.46,1,true,Publié
-OPT - NC,11041927,OP077,Responsable qualité et méthodes,Pilotage,,24,3.0,1,true,Publié
-OPT - NC,11041928,OP078,Responsable de projet,Pilotage,,23,2.91,1,true,Publié
-OPT - NC,11041929,OP079,Auditeur interne,Pilotage,,18,3.06,1,true,Publié
-OPT - NC,11041930,OP080,Controleur interne,Pilotage,,27,3.0,1,true,Publié
-OPT - NC,11041931,OP081,Chef d'établissement,Pilotage,,35,3.29,1,true,Publié
-OPT - NC,11041932,OP082,Chef de service,Pilotage,,33,3.33,1,true,Publié
-OPT - NC,11041933,OP083,Juriste conformité,Pilotage,,16,2.5,1,true,Publié
-OPT - NC,11041934,OP084,Data analyst,Pilotage,,20,3.15,1,true,Publié
+nom_client,id_neobrain_metier,code_metier,nom_metier,famille_metier,nb_competence_metier,niveau_competence_moyen_requis,metier_active_count,metier_actif,statut_metier
+OPT - NC,11041851,OP001,Chargé de soutien des réseaux de vente,Vente & relation client,25,3.6,1,true,Publié
+OPT - NC,11041852,OP002,Chargé d'affaires,Vente & relation client,17,3.0,1,true,Publié
+OPT - NC,11041853,OP003,Conseiller clientèle,Vente & relation client,21,2.81,1,true,Publié
+OPT - NC,11041854,OP004,Coordonateur de l'exploitation commerciale,Vente & relation client,22,3.09,1,true,Publié
+OPT - NC,11041855,OP005,Chargé de contact clientèle,Vente & relation client,24,3.38,1,true,Publié
+OPT - NC,11041856,OP006,Responsable marketing stratégique,MARKETING ET COMMUNICATION,28,3.39,1,true,Publié
+OPT - NC,11041857,OP007,Chargé d'études marketing,MARKETING ET COMMUNICATION,23,2.87,1,true,Publié
+OPT - NC,11041858,OP008,Chef de produits,MARKETING ET COMMUNICATION,25,2.68,1,true,Publié
+OPT - NC,11041859,OP009,Chargé de communication,MARKETING ET COMMUNICATION,30,3.17,1,true,Publié
+OPT - NC,11041860,OP010,Analyste LCBFT,SERVICES BANCAIRES,24,3.25,1,true,Publié
+OPT - NC,11041861,OP011,Responsable LCBTF,SERVICES BANCAIRES,25,3.28,1,true,Publié
+OPT - NC,11041862,OP012,Gestionnaire du back office bancaire,SERVICES BANCAIRES,18,2.72,1,true,Publié
+OPT - NC,11041863,OP013,Chargé d'études opérationnelles postales,ACTIVITES POSTALES,17,3.18,1,true,Publié
+OPT - NC,11041864,OP014,Coordinateur courrier colis,ACTIVITES POSTALES,27,2.41,1,true,Publié
+OPT - NC,11041865,OP015,Chargé d'exploitation postal,ACTIVITES POSTALES,28,2.39,1,true,Publié
+OPT - NC,11041866,OP016,Chargé de la distribution postale,ACTIVITES POSTALES,18,2.83,1,true,Publié
+OPT - NC,11041867,OP017,Product owner,Pilotage,22,3.59,1,true,Publié
+OPT - NC,11041868,OP018,Architecte des réseaux et services des télécommunications,TELECOMMUNICATIONS,29,3.38,1,true,Publié
+OPT - NC,11041869,OP019,Concepteur des réseaux et services des télécommunications,TELECOMMUNICATIONS,28,2.71,1,true,Publié
+OPT - NC,11041870,OP020,Qualifieur réseaux,TELECOMMUNICATIONS,26,2.81,1,true,Publié
+OPT - NC,11041871,OP021,Planificateur réseaux,TELECOMMUNICATIONS,22,2.82,1,true,Publié
+OPT - NC,11041872,OP022,Ingénieur de déploiement des réseaux et services des télécommunications,TELECOMMUNICATIONS,21,3.0,1,true,Publié
+OPT - NC,11041873,OP023,Chargé d'ordonnancement,TELECOMMUNICATIONS,25,2.73,1,true,Publié
+OPT - NC,11041874,OP024,Coordinateur de travaux,TELECOMMUNICATIONS,27,2.56,1,true,Publié
+OPT - NC,11041875,OP025,Analyste qualité et performance des réseaux et services,TELECOMMUNICATIONS,24,3.54,1,true,Publié
+OPT - NC,11041876,OP026,Ingénieur des réseaux et services des télécommunications,TELECOMMUNICATIONS,25,2.75,1,true,Publié
+OPT - NC,11041877,OP027,Technicien d'exploitation des réseaux et services des télécommunications,TELECOMMUNICATIONS,28,2.79,1,true,Publié
+OPT - NC,11041878,OP028,Technicien support client,TELECOMMUNICATIONS,22,2.55,1,true,Publié
+OPT - NC,11041879,OP029,Planificateur d'intervention des réseaux et services,TELECOMMUNICATIONS,25,2.52,1,true,Publié
+OPT - NC,11041880,OP030,Pilote d'intervention client,TELECOMMUNICATIONS,23,2.91,1,true,Publié
+OPT - NC,11041881,OP031,Technicien d'intervention client,TELECOMMUNICATIONS,22,2.68,1,true,Publié
+OPT - NC,11041882,OP032,Responsable administratif,ADMINISTRATION,24,3.33,1,true,Publié
+OPT - NC,11041883,OP033,Assistant administratif,ADMINISTRATION,24,2.75,1,true,Publié
+OPT - NC,11041884,OP034,Référent RH,ADMINISTRATION,17,2.82,1,true,Publié
+OPT - NC,11041885,OP035,Chargé du développement des compétences,Ressources humaines,25,2.96,1,true,Publié
+OPT - NC,11041886,OP036,Chargé de recrutement,Ressources humaines,21,3.43,1,true,Publié
+OPT - NC,11041887,OP037,Infirmière santé,Ressources humaines,27,2.96,1,true,Publié
+OPT - NC,11041888,OP038,Gestionnaire santé,Ressources humaines,26,2.96,1,true,Publié
+OPT - NC,11041889,OP039,Psychologue du travail,Ressources humaines,29,3.14,1,true,Publié
+OPT - NC,11041890,OP040,Formateur,Ressources humaines,21,3.43,1,true,Publié
+OPT - NC,11041891,OP041,Chargé des relations sociales,Ressources humaines,27,2.96,1,true,Publié
+OPT - NC,11041892,OP042,Gestionnaire paie,Ressources humaines,26,3.12,1,true,Publié
+OPT - NC,11041893,OP043,Gestionnaire carrière,Ressources humaines,26,3.17,1,true,Publié
+OPT - NC,11041894,OP044,Conseiller en prévention,Ressources humaines,22,3.36,1,true,Publié
+OPT - NC,11041895,OP045,Agent comptable,Finances & budget,32,3.28,1,true,Publié
+OPT - NC,11041896,OP046,Gestionnaire budgétaire,Finances & budget,20,3.15,1,true,Publié
+OPT - NC,11041897,OP047,Gestionnaire comptable,Finances & budget,21,2.9,1,true,Publié
+OPT - NC,11041898,OP048,Responsable financier,Finances & budget,23,3.04,1,true,Publié
+OPT - NC,11041899,OP049,Responsable des constructions,Patrimoine bâti,27,2.67,1,true,Publié
+OPT - NC,11041900,OP050,Conducteur d'opération en batiment,Patrimoine bâti,28,2.12,1,true,Publié
+OPT - NC,11041901,OP051,Gestionnaire intervention immobilière,Patrimoine bâti,23,3.0,1,true,Publié
+OPT - NC,11041902,OP052,Agent d'entretien des locaux,LOGISTIQUE,9,3.0,1,true,Publié
+OPT - NC,11041903,OP053,Approvisionneur,LOGISTIQUE,24,2.42,1,true,Publié
+OPT - NC,11041904,OP054,Magasinier,LOGISTIQUE,21,3.0,1,true,Publié
+OPT - NC,11041905,OP055,Gestionnaire logistique,LOGISTIQUE,24,2.88,1,true,Publié
+OPT - NC,11041906,OP056,Gestionnaire de parc,LOGISTIQUE,36,2.56,1,true,Publié
+OPT - NC,11041907,OP057,Acheteur,LOGISTIQUE,23,2.87,1,true,Publié
+OPT - NC,11041908,OP058,Chargé de la transition énergétique,LOGISTIQUE,25,2.64,1,true,Publié
+OPT - NC,11041909,OP059,Agent d'entretien des espaces naturels,LOGISTIQUE,14,3.0,1,true,Publié
+OPT - NC,11041910,OP060,Chargé du dédouanement,LOGISTIQUE,23,2.91,1,true,Publié
+OPT - NC,11041911,OP061,Urbaniste du SI,Systèmes d'information,21,3.1,1,true,Publié
+OPT - NC,11041912,OP062,Responsable d'études,Systèmes d'information,21,3.1,1,true,Publié
+OPT - NC,11041913,OP063,Architecte logiciel,Systèmes d'information,28,3.11,1,true,Publié
+OPT - NC,11041914,OP064,Administrateur réseau,Systèmes d'information,25,3.04,1,true,Publié
+OPT - NC,11041915,OP065,Administrateur système,Systèmes d'information,20,3.05,1,true,Publié
+OPT - NC,11041916,OP066,Administrateur d'application,Systèmes d'information,29,3.31,1,true,Publié
+OPT - NC,11041917,OP067,Responsable de système applicatif,Systèmes d'information,24,3.08,1,true,Publié
+OPT - NC,11041918,OP068,Concepteur développeur du SI,Systèmes d'information,25,3.0,1,true,Publié
+OPT - NC,11041919,OP069,Intégrateur d'application,Systèmes d'information,23,3.13,1,true,Publié
+OPT - NC,11041920,OP070,Technicien de maintenance poste de travail,Systèmes d'information,23,2.91,1,true,Publié
+OPT - NC,11041921,OP071,Technicien support utilisateur,Systèmes d'information,24,3.3,1,true,Publié
+OPT - NC,11041922,OP072,Responsable d'exploitation du SI,Systèmes d'information,25,3.16,1,true,Publié
+OPT - NC,11041923,OP073,Responsable de la Sécurité des Systèmes d'Information - SSI,Systèmes d'information,24,3.17,1,true,Publié
+OPT - NC,11041924,OP074,Géomaticien,Systèmes d'information,21,3.0,1,true,Publié
+OPT - NC,11041925,OP075,Directeur,Pilotage,35,3.46,1,true,Publié
+OPT - NC,11041926,OP076,Contrôleur de gestion,Pilotage,24,2.46,1,true,Publié
+OPT - NC,11041927,OP077,Responsable qualité et méthodes,Pilotage,24,3.0,1,true,Publié
+OPT - NC,11041928,OP078,Responsable de projet,Pilotage,23,2.91,1,true,Publié
+OPT - NC,11041929,OP079,Auditeur interne,Pilotage,18,3.06,1,true,Publié
+OPT - NC,11041930,OP080,Controleur interne,Pilotage,27,3.0,1,true,Publié
+OPT - NC,11041931,OP081,Chef d'établissement,Pilotage,35,3.29,1,true,Publié
+OPT - NC,11041932,OP082,Chef de service,Pilotage,33,3.33,1,true,Publié
+OPT - NC,11041933,OP083,Juriste conformité,Pilotage,16,2.5,1,true,Publié
+OPT - NC,11041934,OP084,Data analyst,Pilotage,20,3.15,1,true,Publié
