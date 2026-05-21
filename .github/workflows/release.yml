@@ -24,13 +24,14 @@ jobs:
       - name: update output repository and push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          UNIQUE_BRANCH="data-update-${{ github.run_number }}"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-          git checkout -b data-update
+          git checkout -b $UNIQUE_BRANCH
           
           git add data/output/*.csv
           git commit -m "Updated output's files"
-          git push origin data-update
+          git push origin $UNIQUE_BRANCH
 
-          gh pr create --head data-update --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+          gh pr create --head UNIQUE_BRANCH --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
