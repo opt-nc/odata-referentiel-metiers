@@ -20,3 +20,11 @@ jobs:
         run: |
           mkdir dist
           duckdb dist/gem.duckdb < src/duck.sql
+
+      - name: update output repository and push to main
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/output/*.csv
+          git commit -m "Updated output's files"
+          git push
