@@ -1,13 +1,13 @@
-id_famille_metier,libelle,description,id_sous_famille_metier
-marketing_et_communication,MARKETING ET COMMUNICATION,,""
-administration,ADMINISTRATION,,""
-ressources_humaines,Ressources humaines,,""
-logistique,LOGISTIQUE,,""
-pilotage,Pilotage,,""
-services_bancaires,SERVICES BANCAIRES,,""
-patrimoine_bati,Patrimoine bâti,,""
-systemes_d_information,Systèmes d'information,,""
-vente_relation_client,Vente & relation client,,""
-activites_postales,ACTIVITES POSTALES,,""
-telecommunications,TELECOMMUNICATIONS,,""
-finances_budget,Finances & budget,,""
+id_famille_metier,libelle,description
+telecommunications,TELECOMMUNICATIONS,
+administration,ADMINISTRATION,
+pilotage,Pilotage,
+ressources_humaines,Ressources humaines,
+logistique,LOGISTIQUE,
+systemes_d_information,Systèmes d'information,
+vente_relation_client,Vente & relation client,
+marketing_et_communication,MARKETING ET COMMUNICATION,
+services_bancaires,SERVICES BANCAIRES,
+activites_postales,ACTIVITES POSTALES,
+finances_budget,Finances & budget,
+patrimoine_bati,Patrimoine bâti,
