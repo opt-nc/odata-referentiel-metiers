@@ -1,18 +1,19 @@
 DROP MACRO IF EXISTS formatter;
 
--- Cette
+-- Cette macro permet essentiellement de uniformiser le format des clés primaires et étrangères à partir des libellés.
+-- Exemple : formatter(Vente & relation client) devient "vente_relation_client"
 CREATE MACRO formatter(str) AS (
     TRIM(
         BOTH '_' FROM
         REGEXP_REPLACE(
             LOWER(
                 TRANSLATE(
-                    COALESCE(str, ''),
-                    'éèêëàâäîïôöùûüç',
+                    COALESCE(str, ''),    -- renvoie une chaîne vide, si le libelle est vide
+                    'éèêëàâäîïôöùûüç',    -- On retire les accents.
                     'eeeeaaaiioouuuc'
                 )
             ),
-            '[^a-z0-9]+',
+            '[^a-z0-9]+',                 -- Tout ce qui n'est ni une lettre alphabetique, ni un chiffre devient un '_'
             '_',
             'g'
         )
