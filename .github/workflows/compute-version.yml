@@ -20,7 +20,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
-          echo "<" + $LAST + ">"
+          GH_ERRORS=$(gh release view --json tagName -q .tagName 2>&1)
+          echo "Sortie du gh release view : $GH_ERRORS"
           VERSION=${LAST#v}
 
           MAJOR=$(echo "$VERSION" | cut -d. -f1)
