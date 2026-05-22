@@ -17,6 +17,8 @@ jobs:
     needs: compute
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - uses: opt-nc/setup-duckdb-action@v1.2.6
       
