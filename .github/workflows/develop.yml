@@ -14,8 +14,10 @@ jobs:
   build:
     name: DuckDB Integration
     runs-on: ubuntu-latest
+    needs: compute
     steps:
       - uses: actions/checkout@v4
+      
       - uses: opt-nc/setup-duckdb-action@v1.2.6
       
       - name: Load DuckDB database
@@ -25,7 +27,8 @@ jobs:
 
       - name: update output repository and push to develop
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
           NEW="${{ needs.compute.outputs.new_version }}"
@@ -45,4 +48,4 @@ jobs:
 
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
-          gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb
+          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb
