@@ -14,16 +14,13 @@ jobs:
       new_version: ${{ steps.version.outputs.new_version }}
       unique_branch: ${{ steps.version.outputs.unique_branch }}
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Compute version and branch
         id: version
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set +e
-
-          GH_ERRORS=$(gh release view --json tagName -q .tagName 2>&1)
-          echo "Sortie du gh release view : $GH_ERRORS"
-          
           LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
           
           
