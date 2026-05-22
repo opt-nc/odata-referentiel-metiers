@@ -28,8 +28,9 @@ jobs:
       - name: update output repository and push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          UNIQUE_BRANCH="${{ needs.compute.outputs }}"
-          NEW="${{ needs.compute.outputs }}"
+          cat "$GITHUB_OUTPUT" || true
+          UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
+          NEW="${{ needs.compute.outputs.new_version }}"
 
           echo "[INFO] Branche reçue : $UNIQUE_BRANCH"
           echo "[INFO] Version reçue : $NEW"
