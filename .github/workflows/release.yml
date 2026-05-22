@@ -27,6 +27,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           UNIQUE_BRANCH="data-update-${{ github.run_number }}"
+          LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
+          VERSION=${LAST#v}
+          
+          MAJOR=$(echo "$VERSION" | cut -d. -f1) 
+          MINOR=$(echo "$VERSION" | cut -d. -f2) 
+          
+          NEW="v${MAJOR}.$((MINOR + 1))" 
+          echo "Ancienne version : $LAST" 
+          echo "Nouvelle version : $NEW"
+          
+          gh release delete "$NEW" --yes --cleanup-tag 2>/dev/null || true
+
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
@@ -40,5 +52,4 @@ jobs:
 
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
-          gh release delete v0.0 --yes
-          gh release create v0.0 --title "Release v0.0" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main
+          gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main
