@@ -7,6 +7,9 @@ on:
     branches: [ "main" ]
 
 jobs:
+  compute:
+    uses: ./.github/workflows/compute-version.yml
+    secrets: inherit
   build:
     name: DuckDB Integration
     runs-on: ubuntu-latest
@@ -23,17 +26,9 @@ jobs:
 
       - name: update output repository and push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          UNIQUE_BRANCH="data-update-${{ github.run_number }}"
-          LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
-          VERSION=${LAST#v}
-          
-          MAJOR=$(echo "$VERSION" | cut -d. -f1) 
-          MINOR=$(echo "$VERSION" | cut -d. -f2) 
-          
-          NEW="v${MAJOR}.$((MINOR + 1))" 
+          UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
+          NEW="${{ needs.compute.outputs.new_version }}"
 
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -46,7 +41,7 @@ jobs:
           git merge origin/main
           git push origin $UNIQUE_BRANCH
 
-          gh pr create --head $UNIQUE_BRANCH --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+          gh pr create --head $UNIQUE_BRANCH --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
 
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
