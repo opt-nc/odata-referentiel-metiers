@@ -34,8 +34,6 @@ jobs:
           MINOR=$(echo "$VERSION" | cut -d. -f2) 
           
           NEW="v${MAJOR}.$((MINOR + 1))" 
-          echo "Ancienne version : $LAST" 
-          echo "Nouvelle version : $NEW"
           
           gh release delete "$NEW" --yes --cleanup-tag 2>/dev/null || true
 
