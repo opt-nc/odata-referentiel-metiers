@@ -44,10 +44,10 @@ jobs:
 
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
-          git merge origin/main
           
           git add data/output/*.csv
           git commit -m "Updated output's files"
+          git merge origin/main
           git push origin $UNIQUE_BRANCH
 
           gh pr create --head $UNIQUE_BRANCH --base main --title "Updated output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
