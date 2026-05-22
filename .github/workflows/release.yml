@@ -22,7 +22,7 @@ jobs:
           duckdb dist/gem.duckdb < src/duck.sql
 
       - name: update output repository and push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
