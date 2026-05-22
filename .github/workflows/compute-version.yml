@@ -1,0 +1,29 @@
+name: Compute Version
+on:
+  workflow_call:
+    outputs:
+      new_version:
+        value: ${{ jobs.compute.outputs.new_version }}
+      unique_branch:
+        value: ${{ jobs.compute.outputs.unique_branch }}
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.version.outputs.new_version }}
+      unique_branch: ${{ steps.version.outputs.unique_branch }}
+    steps:
+      - name: Compute version and branch
+        id: version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          UNIQUE_BRANCH="data-update-${{ github.run_number }}"
+          LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
+          VERSION=${LAST#v}
+          MAJOR=$(echo "$VERSION" | cut -d. -f1)
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+          NEW="v${MAJOR}.$((MINOR + 1))"
+          echo "new_version=$NEW" >> $GITHUB_OUTPUT
+          echo "unique_branch=$UNIQUE_BRANCH" >> $GITHUB_OUTPUT
