@@ -40,5 +40,6 @@ jobs:
             UNIQUE_BRANCH="main-data-update-${{ github.run_number }}"
             NEW="v${MAJOR}.$((MINOR + 1))"
           fi
+          echo "<" + $NEW + ">"
           echo "new_version=$NEW" >> $GITHUB_OUTPUT
           echo "unique_branch=$UNIQUE_BRANCH" >> $GITHUB_OUTPUT
