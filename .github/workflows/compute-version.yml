@@ -38,7 +38,10 @@ jobs:
           else
             UNIQUE_BRANCH="main-data-update-${{ github.run_number }}"
             NEW="v${MAJOR}.$((MINOR + 1))"
+            echo "  -> Nouvelle version générée (\$NEW) : $NEW"
+            echo "  -> Branche unique créée (\$UNIQUE_BRANCH) : $UNIQUE_BRANCH"
           fi
-          
+          echo "  -> Nouvelle version générée (\$NEW) : $NEW"
+          echo "  -> Branche unique créée (\$UNIQUE_BRANCH) : $UNIQUE_BRANCH"
           echo "new_version=$NEW" >> $GITHUB_OUTPUT
           echo "unique_branch=$UNIQUE_BRANCH" >> $GITHUB_OUTPUT
