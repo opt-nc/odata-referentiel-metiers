@@ -43,7 +43,6 @@ jobs:
           
           git add data/output/*.csv
           git commit -m "Updated output's files"
-          git merge origin/main
           git push origin $UNIQUE_BRANCH
 
           gh pr create --head $UNIQUE_BRANCH --base develop --title "Updated develop branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
