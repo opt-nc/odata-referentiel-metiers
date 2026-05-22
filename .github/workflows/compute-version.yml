@@ -31,7 +31,8 @@ jobs:
               DEV_NUM=$((DEV_NUM + 1))
             else
               DEV_NUM=1
-
+            fi
+            
             UNIQUE_BRANCH="develop-data-update-${{ github.run_number }}"
             NEW="v${MAJOR}.$((MINOR + 1))-develop.$DEV_NUM"
           else
