@@ -44,3 +44,5 @@ jobs:
           fi
           echo "new_version=$NEW" >> $GITHUB_OUTPUT
           echo "unique_branch=$UNIQUE_BRANCH" >> $GITHUB_OUTPUT
+
+          cat $GITHUB_OUTPUT || true
