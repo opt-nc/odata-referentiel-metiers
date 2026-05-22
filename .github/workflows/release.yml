@@ -10,10 +10,11 @@ jobs:
   compute:
     uses: ./.github/workflows/compute-version.yml
     secrets: inherit
+    
   build:
     name: DuckDB Integration
     runs-on: ubuntu-latest
-
+    needs: compute
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +29,16 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
-          NEW="${{ needs.compute.outputs.new_version }}"
+          NEW="${{ needs.compute.outputs }}"
+
+          echo "[INFO] Branche reçue : $UNIQUE_BRANCH"
+          echo "[INFO] Version reçue : $NEW"
+
+          # Si l'un des deux est vide, on arrête tout proprement avant que Git ne râle
+          if [ -z "$UNIQUE_BRANCH" ] || [ -z "$NEW" ]; then
+            echo "[ERROR] Les variables partagées depuis le workflow réutilisable sont vides !"
+            exit 1
+          fi
 
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
