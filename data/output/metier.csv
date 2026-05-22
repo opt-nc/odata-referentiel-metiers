@@ -1,4 +1,45 @@
 code_metier,id_neobrain_metier,metier_collaborateur,id_famille_metier,id_statut_metier,metier_actif
+OP009,11041859,Chargé de communication,marketing_et_communication,PUBLIE,true
+OP010,11041860,Analyste LCBFT,services_bancaires,PUBLIE,true
+OP013,11041863,Chargé d'études opérationnelles postales,activites_postales,PUBLIE,true
+OP015,11041865,Chargé d'exploitation postal,activites_postales,PUBLIE,true
+OP016,11041866,Chargé de la distribution postale,activites_postales,PUBLIE,true
+OP018,11041868,Architecte des réseaux et services des télécommunications,telecommunications,PUBLIE,true
+OP020,11041870,Qualifieur réseaux,telecommunications,PUBLIE,true
+OP026,11041876,Ingénieur des réseaux et services des télécommunications,telecommunications,PUBLIE,true
+OP035,11041885,Chargé du développement des compétences,ressources_humaines,PUBLIE,true
+OP037,11041887,Infirmière santé,ressources_humaines,PUBLIE,true
+OP038,11041888,Gestionnaire santé,ressources_humaines,PUBLIE,true
+OP039,11041889,Psychologue du travail,ressources_humaines,PUBLIE,true
+OP040,11041890,Formateur,ressources_humaines,PUBLIE,true
+OP043,11041893,Gestionnaire carrière,ressources_humaines,PUBLIE,true
+OP044,11041894,Conseiller en prévention,ressources_humaines,PUBLIE,true
+OP047,11041897,Gestionnaire comptable,finances_budget,PUBLIE,true
+OP049,11041899,Responsable des constructions,patrimoine_bati,PUBLIE,true
+OP051,11041901,Gestionnaire intervention immobilière,patrimoine_bati,PUBLIE,true
+OP067,11041917,Responsable de système applicatif,systemes_d_information,PUBLIE,true
+OP069,11041919,Intégrateur d'application,systemes_d_information,PUBLIE,true
+OP075,11041925,Directeur,pilotage,PUBLIE,true
+OP081,11041931,Chef d'établissement,pilotage,PUBLIE,true
+OP084,11041934,Data analyst,pilotage,PUBLIE,true
+OP005,11041855,Chargé de contact clientèle,vente_relation_client,PUBLIE,true
+OP011,11041861,Responsable LCBTF,services_bancaires,PUBLIE,true
+OP012,11041862,Gestionnaire du back office bancaire,services_bancaires,PUBLIE,true
+OP017,11041867,Product owner,pilotage,PUBLIE,true
+OP021,11041871,Planificateur réseaux,telecommunications,PUBLIE,true
+OP023,11041873,Chargé d'ordonnancement,telecommunications,PUBLIE,true
+OP024,11041874,Coordinateur de travaux,telecommunications,PUBLIE,true
+OP033,11041883,Assistant administratif,administration,PUBLIE,true
+OP036,11041886,Chargé de recrutement,ressources_humaines,PUBLIE,true
+OP052,11041902,Agent d'entretien des locaux,logistique,PUBLIE,true
+OP056,11041906,Gestionnaire de parc,logistique,PUBLIE,true
+OP057,11041907,Acheteur,logistique,PUBLIE,true
+OP058,11041908,Chargé de la transition énergétique,logistique,PUBLIE,true
+OP064,11041914,Administrateur réseau,systemes_d_information,PUBLIE,true
+OP065,11041915,Administrateur système,systemes_d_information,PUBLIE,true
+OP066,11041916,Administrateur d'application,systemes_d_information,PUBLIE,true
+OP071,11041921,Technicien support utilisateur,systemes_d_information,PUBLIE,true
+OP073,11041923,Responsable de la Sécurité des Systèmes d'Information - SSI,systemes_d_information,PUBLIE,true
 OP002,11041852,Chargé d'affaires,vente_relation_client,PUBLIE,true
 OP004,11041854,Coordonateur de l'exploitation commerciale,vente_relation_client,PUBLIE,true
 OP006,11041856,Responsable marketing stratégique,marketing_et_communication,PUBLIE,true
@@ -28,29 +69,6 @@ OP077,11041927,Responsable qualité et méthodes,pilotage,PUBLIE,true
 OP079,11041929,Auditeur interne,pilotage,PUBLIE,true
 OP080,11041930,Controleur interne,pilotage,PUBLIE,true
 OP082,11041932,Chef de service,pilotage,PUBLIE,true
-OP009,11041859,Chargé de communication,marketing_et_communication,PUBLIE,true
-OP010,11041860,Analyste LCBFT,services_bancaires,PUBLIE,true
-OP013,11041863,Chargé d'études opérationnelles postales,activites_postales,PUBLIE,true
-OP015,11041865,Chargé d'exploitation postal,activites_postales,PUBLIE,true
-OP016,11041866,Chargé de la distribution postale,activites_postales,PUBLIE,true
-OP018,11041868,Architecte des réseaux et services des télécommunications,telecommunications,PUBLIE,true
-OP020,11041870,Qualifieur réseaux,telecommunications,PUBLIE,true
-OP026,11041876,Ingénieur des réseaux et services des télécommunications,telecommunications,PUBLIE,true
-OP035,11041885,Chargé du développement des compétences,ressources_humaines,PUBLIE,true
-OP037,11041887,Infirmière santé,ressources_humaines,PUBLIE,true
-OP038,11041888,Gestionnaire santé,ressources_humaines,PUBLIE,true
-OP039,11041889,Psychologue du travail,ressources_humaines,PUBLIE,true
-OP040,11041890,Formateur,ressources_humaines,PUBLIE,true
-OP043,11041893,Gestionnaire carrière,ressources_humaines,PUBLIE,true
-OP044,11041894,Conseiller en prévention,ressources_humaines,PUBLIE,true
-OP047,11041897,Gestionnaire comptable,finances_budget,PUBLIE,true
-OP049,11041899,Responsable des constructions,patrimoine_bati,PUBLIE,true
-OP051,11041901,Gestionnaire intervention immobilière,patrimoine_bati,PUBLIE,true
-OP067,11041917,Responsable de système applicatif,systemes_d_information,PUBLIE,true
-OP069,11041919,Intégrateur d'application,systemes_d_information,PUBLIE,true
-OP075,11041925,Directeur,pilotage,PUBLIE,true
-OP081,11041931,Chef d'établissement,pilotage,PUBLIE,true
-OP084,11041934,Data analyst,pilotage,PUBLIE,true
 OP001,11041851,Chargé de soutien des réseaux de vente,vente_relation_client,PUBLIE,true
 OP003,11041853,Conseiller clientèle,vente_relation_client,PUBLIE,true
 OP008,11041858,Chef de produits,marketing_et_communication,PUBLIE,true
@@ -65,21 +83,3 @@ OP059,11041909,Agent d'entretien des espaces naturels,logistique,PUBLIE,true
 OP076,11041926,Contrôleur de gestion,pilotage,PUBLIE,true
 OP078,11041928,Responsable de projet,pilotage,PUBLIE,true
 OP083,11041933,Juriste conformité,pilotage,PUBLIE,true
-OP005,11041855,Chargé de contact clientèle,vente_relation_client,PUBLIE,true
-OP011,11041861,Responsable LCBTF,services_bancaires,PUBLIE,true
-OP012,11041862,Gestionnaire du back office bancaire,services_bancaires,PUBLIE,true
-OP017,11041867,Product owner,pilotage,PUBLIE,true
-OP021,11041871,Planificateur réseaux,telecommunications,PUBLIE,true
-OP023,11041873,Chargé d'ordonnancement,telecommunications,PUBLIE,true
-OP024,11041874,Coordinateur de travaux,telecommunications,PUBLIE,true
-OP033,11041883,Assistant administratif,administration,PUBLIE,true
-OP036,11041886,Chargé de recrutement,ressources_humaines,PUBLIE,true
-OP052,11041902,Agent d'entretien des locaux,logistique,PUBLIE,true
-OP056,11041906,Gestionnaire de parc,logistique,PUBLIE,true
-OP057,11041907,Acheteur,logistique,PUBLIE,true
-OP058,11041908,Chargé de la transition énergétique,logistique,PUBLIE,true
-OP064,11041914,Administrateur réseau,systemes_d_information,PUBLIE,true
-OP065,11041915,Administrateur système,systemes_d_information,PUBLIE,true
-OP066,11041916,Administrateur d'application,systemes_d_information,PUBLIE,true
-OP071,11041921,Technicien support utilisateur,systemes_d_information,PUBLIE,true
-OP073,11041923,Responsable de la Sécurité des Systèmes d'Information - SSI,systemes_d_information,PUBLIE,true
