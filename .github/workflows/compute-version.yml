@@ -19,9 +19,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
           GH_ERRORS=$(gh release view --json tagName -q .tagName 2>&1)
           echo "Sortie du gh release view : $GH_ERRORS"
+          
+          LAST=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "v0.0")
+          
+          
           VERSION=${LAST#v}
 
           MAJOR=$(echo "$VERSION" | cut -d. -f1)
@@ -42,6 +45,5 @@ jobs:
             UNIQUE_BRANCH="main-data-update-${{ github.run_number }}"
             NEW="v${MAJOR}.$((MINOR + 1))"
           fi
-          echo "<" + $NEW + ">"
           echo "new_version=$NEW" >> $GITHUB_OUTPUT
           echo "unique_branch=$UNIQUE_BRANCH" >> $GITHUB_OUTPUT
