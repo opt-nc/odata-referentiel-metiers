@@ -49,4 +49,4 @@ jobs:
 
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
-          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb
+          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb dist/gem.db
