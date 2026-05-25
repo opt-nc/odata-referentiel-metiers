@@ -39,7 +39,7 @@ jobs:
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
           
-          git add data/output/*.csv
+          git add -f data/output/*.csv
           git commit -m "Updated output's files"
           git push origin $UNIQUE_BRANCH
 
