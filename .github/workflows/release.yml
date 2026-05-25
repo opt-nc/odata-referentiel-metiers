@@ -62,3 +62,31 @@ jobs:
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
           gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main dist/gem.duckdb dist/gem.db
+
+  auto-merge-pr:
+    name: Auto resolve output conflicts on manual PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.head_ref != '' && github.base_ref == 'main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto resolve data/output conflicts and merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config merge.ours.driver true
+
+          git checkout main
+          git merge origin/${{ github.head_ref }} --no-edit || true
+
+          git checkout origin/${{ github.head_ref }} -- data/output/about.csv data/output/categorie_detention.csv data/output/competence.csv data/output/competence_utilisateur.csv data/output/famille_metier.csv data/output/gem_competence.csv data/output/gem_metier.csv data/output/gem_metier_competence.csv data/output/groupe_competence.csv data/output/metier.csv data/output/metier_competence.csv data/output/niveau_description_competence.csv data/output/referentiel_competence.csv data/output/sous_famille_metier.csv data/output/statut_metier.csv
+  
+
+          git add data/output/
+          git commit -m "Auto-resolve output conflicts from ${{ github.head_ref }}" || echo "Nothing to commit"
+          git push origin main
