@@ -42,6 +42,7 @@ jobs:
 
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
+          git merge origin/main -X ours --no-edit || true
           
           git add -f data/output/about.csv
           git add -f data/output/categorie_detention.csv
