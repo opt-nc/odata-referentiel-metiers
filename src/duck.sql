@@ -560,4 +560,4 @@ SELECT * FROM metier_competence;
 CREATE TABLE sqlite_db.about AS
 SELECT * FROM about;
 
-EXPORT DATABASE 'data/output';  
+EXPORT DATABASE 'data/output';
