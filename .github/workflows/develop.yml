@@ -5,12 +5,12 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
-    
+
 jobs:
   compute:
     uses: ./.github/workflows/compute-version.yml
     secrets: inherit
-    
+
   build:
     name: DuckDB Integration
     runs-on: ubuntu-latest
@@ -19,9 +19,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - uses: opt-nc/setup-duckdb-action@v1.2.6
-      
+
       - name: Load DuckDB database
         run: |
           mkdir dist
@@ -32,8 +32,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config merge.ours.driver true
-          
           UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
           NEW="${{ needs.compute.outputs.new_version }}"
           
@@ -42,7 +40,7 @@ jobs:
 
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
-          git merge origin/main -X ours --no-edit || true
+          git merge origin/main --no-edit || true
           
           git add -f data/output/about.csv
           git add -f data/output/categorie_detention.csv
@@ -63,7 +61,5 @@ jobs:
           git push origin $UNIQUE_BRANCH
 
           gh pr create --head $UNIQUE_BRANCH --base develop --title "Updated develop branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
-
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
-
           gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb dist/gem.db
