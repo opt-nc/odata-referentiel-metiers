@@ -62,4 +62,4 @@ jobs:
 
           gh pr create --head $UNIQUE_BRANCH --base develop --title "Updated develop branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
-          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb dist/gem.db
+          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/gem.duckdb dist/gem.sqlite

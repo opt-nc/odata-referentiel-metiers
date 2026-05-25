@@ -513,7 +513,7 @@ FROM vw_competences_orphelines;
 INSTALL sqlite;
 LOAD sqlite;
 
-ATTACH 'dist/gem.db' AS sqlite_db (TYPE sqlite);
+ATTACH 'dist/gem.sqlite' AS sqlite_db (TYPE sqlite);
 
 DROP TABLE IF EXISTS sqlite_db.famille_metier;
 DROP TABLE IF EXISTS sqlite_db.statut_metier;
