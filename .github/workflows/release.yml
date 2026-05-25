@@ -39,7 +39,21 @@ jobs:
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
           
-          git add -f data/output/*.csv
+          git add -f data/output/about.csv
+          git add -f data/output/categorie_detention.csv
+          git add -f data/output/competence.csv
+          git add -f data/output/competence_utilisateur.csv
+          git add -f data/output/famille_metier.csv
+          git add -f data/output/gem_competence.csv
+          git add -f data/output/gem_metier.csv
+          git add -f data/output/gem_metier_competence.csv
+          git add -f data/output/groupe_competence.csv
+          git add -f data/output/metier.csv
+          git add -f data/output/metier_competence.csv
+          git add -f data/output/niveau_description_competence.csv
+          git add -f data/output/referentiel_competence.csv
+          git add -f data/output/sous_famille_metier.csv
+          git add -f data/output/statut_metier.csv
           git commit -m "Updated output's files"
           git push origin $UNIQUE_BRANCH
 
@@ -47,4 +61,4 @@ jobs:
 
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
 
-          gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main dist/gem.duckdb
+          gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main dist/gem.duckdb dist/gem.db

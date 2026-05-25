@@ -509,4 +509,55 @@ COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier es
 FROM vw_metiers_orphelins;
 FROM vw_competences_orphelines;
 
+-- EXPORTS
+INSTALL sqlite;
+LOAD sqlite;
+
+ATTACH 'dist/gem.db' AS sqlite_db (TYPE sqlite);
+
+DROP TABLE IF EXISTS sqlite_db.famille_metier;
+DROP TABLE IF EXISTS sqlite_db.statut_metier;
+DROP TABLE IF EXISTS sqlite_db.metier;
+DROP TABLE IF EXISTS sqlite_db.referentiel_competence;
+DROP TABLE IF EXISTS sqlite_db.groupe_competence;
+DROP TABLE IF EXISTS sqlite_db.categorie_detention;
+DROP TABLE IF EXISTS sqlite_db.competence;
+DROP TABLE IF EXISTS sqlite_db.competence_utilisateur;
+DROP TABLE IF EXISTS sqlite_db.niveau_description_competence;
+DROP TABLE IF EXISTS sqlite_db.metier_competence;
+DROP TABLE IF EXISTS sqlite_db.about;
+
+CREATE TABLE sqlite_db.famille_metier AS
+SELECT * FROM famille_metier;
+
+CREATE TABLE sqlite_db.statut_metier AS
+SELECT * FROM statut_metier;
+
+CREATE TABLE sqlite_db.metier AS
+SELECT * FROM metier;
+
+CREATE TABLE sqlite_db.referentiel_competence AS
+SELECT * FROM referentiel_competence;
+
+CREATE TABLE sqlite_db.groupe_competence AS
+SELECT * FROM groupe_competence;
+
+CREATE TABLE sqlite_db.categorie_detention AS
+SELECT * FROM categorie_detention;
+
+CREATE TABLE sqlite_db.competence AS
+SELECT * FROM competence;
+
+CREATE TABLE sqlite_db.competence_utilisateur AS
+SELECT * FROM competence_utilisateur;
+
+CREATE TABLE sqlite_db.niveau_description_competence AS
+SELECT * FROM niveau_description_competence;
+
+CREATE TABLE sqlite_db.metier_competence AS
+SELECT * FROM metier_competence;
+
+CREATE TABLE sqlite_db.about AS
+SELECT * FROM about;
+
 EXPORT DATABASE 'data/output';  
