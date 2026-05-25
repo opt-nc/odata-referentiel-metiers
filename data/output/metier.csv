@@ -1,33 +1,4 @@
 code_metier,id_neobrain_metier,metier_collaborateur,id_famille_metier,id_statut_metier,metier_actif
-OP002,11041852,Chargé d'affaires,vente_relation_client,PUBLIE,true
-OP004,11041854,Coordonateur de l'exploitation commerciale,vente_relation_client,PUBLIE,true
-OP006,11041856,Responsable marketing stratégique,marketing_et_communication,PUBLIE,true
-OP007,11041857,Chargé d'études marketing,marketing_et_communication,PUBLIE,true
-OP022,11041872,Ingénieur de déploiement des réseaux et services des télécommunications,telecommunications,PUBLIE,true
-OP025,11041875,Analyste qualité et performance des réseaux et services,telecommunications,PUBLIE,true
-OP027,11041877,Technicien d'exploitation des réseaux et services des télécommunications,telecommunications,PUBLIE,true
-OP028,11041878,Technicien support client,telecommunications,PUBLIE,true
-OP029,11041879,Planificateur d'intervention des réseaux et services,telecommunications,PUBLIE,true
-OP031,11041881,Technicien d'intervention client,telecommunications,PUBLIE,true
-OP032,11041882,Responsable administratif,administration,PUBLIE,true
-OP034,11041884,Référent RH,administration,PUBLIE,true
-OP041,11041891,Chargé des relations sociales,ressources_humaines,PUBLIE,true
-OP045,11041895,Agent comptable,finances_budget,PUBLIE,true
-OP048,11041898,Responsable financier,finances_budget,PUBLIE,true
-OP050,11041900,Conducteur d'opération en batiment,patrimoine_bati,PUBLIE,true
-OP054,11041904,Magasinier,logistique,PUBLIE,true
-OP060,11041910,Chargé du dédouanement,logistique,PUBLIE,true
-OP061,11041911,Urbaniste du SI,systemes_d_information,PUBLIE,true
-OP062,11041912,Responsable d'études,systemes_d_information,PUBLIE,true
-OP063,11041913,Architecte logiciel,systemes_d_information,PUBLIE,true
-OP068,11041918,Concepteur développeur du SI,systemes_d_information,PUBLIE,true
-OP070,11041920,Technicien de maintenance poste de travail,systemes_d_information,PUBLIE,true
-OP072,11041922,Responsable d'exploitation du SI,systemes_d_information,PUBLIE,true
-OP074,11041924,Géomaticien,systemes_d_information,PUBLIE,true
-OP077,11041927,Responsable qualité et méthodes,pilotage,PUBLIE,true
-OP079,11041929,Auditeur interne,pilotage,PUBLIE,true
-OP080,11041930,Controleur interne,pilotage,PUBLIE,true
-OP082,11041932,Chef de service,pilotage,PUBLIE,true
 OP009,11041859,Chargé de communication,marketing_et_communication,PUBLIE,true
 OP010,11041860,Analyste LCBFT,services_bancaires,PUBLIE,true
 OP013,11041863,Chargé d'études opérationnelles postales,activites_postales,PUBLIE,true
@@ -83,3 +54,32 @@ OP059,11041909,Agent d'entretien des espaces naturels,logistique,PUBLIE,true
 OP076,11041926,Contrôleur de gestion,pilotage,PUBLIE,true
 OP078,11041928,Responsable de projet,pilotage,PUBLIE,true
 OP083,11041933,Juriste conformité,pilotage,PUBLIE,true
+OP002,11041852,Chargé d'affaires,vente_relation_client,PUBLIE,true
+OP004,11041854,Coordonateur de l'exploitation commerciale,vente_relation_client,PUBLIE,true
+OP006,11041856,Responsable marketing stratégique,marketing_et_communication,PUBLIE,true
+OP007,11041857,Chargé d'études marketing,marketing_et_communication,PUBLIE,true
+OP022,11041872,Ingénieur de déploiement des réseaux et services des télécommunications,telecommunications,PUBLIE,true
+OP025,11041875,Analyste qualité et performance des réseaux et services,telecommunications,PUBLIE,true
+OP027,11041877,Technicien d'exploitation des réseaux et services des télécommunications,telecommunications,PUBLIE,true
+OP028,11041878,Technicien support client,telecommunications,PUBLIE,true
+OP029,11041879,Planificateur d'intervention des réseaux et services,telecommunications,PUBLIE,true
+OP031,11041881,Technicien d'intervention client,telecommunications,PUBLIE,true
+OP032,11041882,Responsable administratif,administration,PUBLIE,true
+OP034,11041884,Référent RH,administration,PUBLIE,true
+OP041,11041891,Chargé des relations sociales,ressources_humaines,PUBLIE,true
+OP045,11041895,Agent comptable,finances_budget,PUBLIE,true
+OP048,11041898,Responsable financier,finances_budget,PUBLIE,true
+OP050,11041900,Conducteur d'opération en batiment,patrimoine_bati,PUBLIE,true
+OP054,11041904,Magasinier,logistique,PUBLIE,true
+OP060,11041910,Chargé du dédouanement,logistique,PUBLIE,true
+OP061,11041911,Urbaniste du SI,systemes_d_information,PUBLIE,true
+OP062,11041912,Responsable d'études,systemes_d_information,PUBLIE,true
+OP063,11041913,Architecte logiciel,systemes_d_information,PUBLIE,true
+OP068,11041918,Concepteur développeur du SI,systemes_d_information,PUBLIE,true
+OP070,11041920,Technicien de maintenance poste de travail,systemes_d_information,PUBLIE,true
+OP072,11041922,Responsable d'exploitation du SI,systemes_d_information,PUBLIE,true
+OP074,11041924,Géomaticien,systemes_d_information,PUBLIE,true
+OP077,11041927,Responsable qualité et méthodes,pilotage,PUBLIE,true
+OP079,11041929,Auditeur interne,pilotage,PUBLIE,true
+OP080,11041930,Controleur interne,pilotage,PUBLIE,true
+OP082,11041932,Chef de service,pilotage,PUBLIE,true
