@@ -23,7 +23,7 @@ jobs:
       - name: Load DuckDB database
         run: |
           mkdir dist
-          duckdb dist/gem.duckdb < src/duck.sql
+          duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
 
       - name: update output repository and push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -60,4 +60,4 @@ jobs:
 
           gh pr create --head $UNIQUE_BRANCH --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
-          gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main dist/gem.duckdb dist/gem.sqlite
+          gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
