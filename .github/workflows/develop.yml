@@ -40,7 +40,10 @@ jobs:
 
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
-          git merge origin/main --no-edit || true
+          
+          git stash
+          git merge origin/develop --no-edit -X theirs || true
+          git stash pop || true
           
           git add -f data/output/about.csv
           git add -f data/output/categorie_detention.csv
