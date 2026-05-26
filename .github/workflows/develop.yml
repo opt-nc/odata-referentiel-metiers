@@ -27,6 +27,10 @@ jobs:
           mkdir dist
           duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
 
+      - name: Load SQLite database
+        run: |
+          sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
+
       - name: update output repository and push to develop
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         env:
