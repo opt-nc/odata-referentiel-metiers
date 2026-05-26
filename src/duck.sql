@@ -455,8 +455,8 @@ SELECT
     cu.nom_competence,
     g.libelle AS groupe_competence
 FROM competence c
-    JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
-    JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
+JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
+JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
 WHERE c.code_competence NOT IN (SELECT DISTINCT code_competence FROM metier_competence);
 
 COMMENT ON VIEW vw_competences_orphelines IS 'Liste des compétences du catalogue qui ne sont requises par aucun métier actif';
@@ -494,8 +494,8 @@ SELECT
     stm.libelle AS statut_metier,
     m.metier_actif
 FROM metier m
-    JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
-    JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
+JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
+JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
 WHERE m.code_metier NOT IN (SELECT DISTINCT code_metier FROM metier_competence);
 
 COMMENT ON VIEW vw_metiers_orphelins IS 'Liste des métiers sans aucune compétence associée';
@@ -515,49 +515,132 @@ LOAD sqlite;
 
 ATTACH 'dist/ref-metiers-opt-nc.sqlite' AS sqlite_db (TYPE sqlite);
 
-DROP TABLE IF EXISTS sqlite_db.famille_metier;
-DROP TABLE IF EXISTS sqlite_db.statut_metier;
-DROP TABLE IF EXISTS sqlite_db.metier;
-DROP TABLE IF EXISTS sqlite_db.referentiel_competence;
-DROP TABLE IF EXISTS sqlite_db.groupe_competence;
-DROP TABLE IF EXISTS sqlite_db.categorie_detention;
-DROP TABLE IF EXISTS sqlite_db.competence;
-DROP TABLE IF EXISTS sqlite_db.competence_utilisateur;
-DROP TABLE IF EXISTS sqlite_db.niveau_description_competence;
-DROP TABLE IF EXISTS sqlite_db.metier_competence;
+DROP VIEW IF EXISTS sqlite_db.vw_metiers_orphelins;
+DROP VIEW IF EXISTS sqlite_db.vw_competences_architecte_logiciel;
+DROP VIEW IF EXISTS sqlite_db.vw_competences_orphelines;
+DROP VIEW IF EXISTS sqlite_db.vw_compter_competences_par_metier;
+DROP VIEW IF EXISTS sqlite_db.vw_lister_competences_metier;
+
 DROP TABLE IF EXISTS sqlite_db.about;
+DROP TABLE IF EXISTS sqlite_db.metier_competence;
+DROP TABLE IF EXISTS sqlite_db.niveau_description_competence;
+DROP TABLE IF EXISTS sqlite_db.competence_utilisateur;
+DROP TABLE IF EXISTS sqlite_db.competence;
+DROP TABLE IF EXISTS sqlite_db.categorie_detention;
+DROP TABLE IF EXISTS sqlite_db.groupe_competence;
+DROP TABLE IF EXISTS sqlite_db.referentiel_competence;
+DROP TABLE IF EXISTS sqlite_db.metier;
+DROP TABLE IF EXISTS sqlite_db.statut_metier;
+DROP TABLE IF EXISTS sqlite_db.famille_metier;
 
 CREATE TABLE sqlite_db.famille_metier AS
-SELECT * FROM famille_metier;
+SELECT id_famille_metier, libelle, description
+FROM famille_metier;
 
 CREATE TABLE sqlite_db.statut_metier AS
-SELECT * FROM statut_metier;
-
-CREATE TABLE sqlite_db.metier AS
-SELECT * FROM metier;
+SELECT id_statut_metier, libelle
+FROM statut_metier;
 
 CREATE TABLE sqlite_db.referentiel_competence AS
-SELECT * FROM referentiel_competence;
+SELECT id_referentiel_competence, libelle, type_referentiel, type_referentiel_detaille
+FROM referentiel_competence;
 
 CREATE TABLE sqlite_db.groupe_competence AS
-SELECT * FROM groupe_competence;
+SELECT id_groupe_competence, libelle, type_groupe
+FROM groupe_competence;
 
 CREATE TABLE sqlite_db.categorie_detention AS
-SELECT * FROM categorie_detention;
+SELECT id_categorie_detention, libelle, gamme_detention
+FROM categorie_detention;
+
+CREATE TABLE sqlite_db.metier AS
+SELECT code_metier, id_neobrain_metier, metier_collaborateur, id_famille_metier, id_statut_metier, metier_actif
+FROM metier;
 
 CREATE TABLE sqlite_db.competence AS
-SELECT * FROM competence;
+SELECT code_competence, id_neobrain_competence, id_groupe_competence, id_referentiel_competence
+FROM competence;
 
 CREATE TABLE sqlite_db.competence_utilisateur AS
-SELECT * FROM competence_utilisateur;
+SELECT code_competence, nom_competence, id_categorie_detention, date_mise_a_jour
+FROM competence_utilisateur;
 
 CREATE TABLE sqlite_db.niveau_description_competence AS
-SELECT * FROM niveau_description_competence;
+SELECT code_competence, niveau, description
+FROM niveau_description_competence;
 
 CREATE TABLE sqlite_db.metier_competence AS
-SELECT * FROM metier_competence;
+SELECT code_metier, code_competence, nom_competence, poids, niveau_requis, est_actif, date_creation, date_mise_a_jour
+FROM metier_competence;
 
 CREATE TABLE sqlite_db.about AS
-SELECT * FROM about;
+SELECT key, value
+FROM about;
+
+CREATE VIEW sqlite_db.vw_lister_competences_metier AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    c.code_competence,
+    mc.nom_competence,
+    (SELECT g.libelle FROM groupe_competence g WHERE c.id_groupe_competence = g.id_groupe_competence) AS groupe_competence,
+    (SELECT r.libelle FROM referentiel_competence r WHERE c.id_referentiel_competence = r.id_referentiel_competence) AS referentiel_competence
+FROM metier m
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+JOIN competence c ON mc.code_competence = c.code_competence
+ORDER BY m.code_metier;
+
+CREATE VIEW sqlite_db.vw_compter_competences_par_metier AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    (SELECT COUNT(1) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS nb_competences,
+    (SELECT COUNT(1) FROM metier_competence mc WHERE mc.code_metier = m.code_metier AND mc.est_actif = 1) AS nb_competences_actives,
+    (SELECT AVG(mc.niveau_requis) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS niveau_moyen_requis,
+    (SELECT SUM(mc.poids) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS poids_total
+FROM metier m
+ORDER BY nb_competences;
+
+CREATE VIEW sqlite_db.vw_competences_orphelines AS
+SELECT
+    c.code_competence,
+    cu.nom_competence,
+    g.libelle AS groupe_competence
+FROM competence c
+JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
+JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
+WHERE NOT EXISTS (
+    SELECT 1 FROM metier_competence mc WHERE mc.code_competence = c.code_competence
+);
+
+CREATE VIEW sqlite_db.vw_competences_architecte_logiciel AS
+SELECT
+    gc.libelle AS groupe_competence,
+    m.metier_collaborateur,
+    cu.code_competence,
+    mc.nom_competence AS nom_competence_metier,
+    mc.niveau_requis,
+    ndc.description AS description_niveau_requis
+FROM metier m
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+JOIN competence_utilisateur cu ON mc.code_competence = cu.code_competence
+JOIN competence c ON mc.code_competence = c.code_competence
+LEFT JOIN groupe_competence gc ON c.id_groupe_competence = gc.id_groupe_competence
+LEFT JOIN niveau_description_competence ndc ON cu.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
+WHERE lower(m.metier_collaborateur) = 'architecte logiciel';
+
+CREATE VIEW sqlite_db.vw_metiers_orphelins AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    fm.libelle AS famille_metier,
+    stm.libelle AS statut_metier,
+    m.metier_actif
+FROM metier m
+JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
+JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
+WHERE NOT EXISTS (
+    SELECT 1 FROM metier_competence mc WHERE mc.code_metier = m.code_metier
+);
 
 EXPORT DATABASE 'data/output';
