@@ -1,40 +1,13 @@
 id_famille_metier,libelle,description
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-vente_relation_client,Vente & relation client,
 telecommunications,TELECOMMUNICATIONS,
 administration,ADMINISTRATION,
+pilotage,Pilotage,
+ressources_humaines,Ressources humaines,
+logistique,LOGISTIQUE,
+systemes_d_information,Systèmes d'information,
+vente_relation_client,Vente & relation client,
 marketing_et_communication,MARKETING ET COMMUNICATION,
 services_bancaires,SERVICES BANCAIRES,
 activites_postales,ACTIVITES POSTALES,
 finances_budget,Finances & budget,
 patrimoine_bati,Patrimoine bâti,
->>>>>>> Stashed changes
-pilotage,Pilotage,
-ressources_humaines,Ressources humaines,
-logistique,LOGISTIQUE,
-systemes_d_information,Systèmes d'information,
-<<<<<<< Updated upstream
-telecommunications,TELECOMMUNICATIONS,
-administration,ADMINISTRATION,
-=======
-vente_relation_client,Vente & relation client,
-telecommunications,TELECOMMUNICATIONS,
-administration,ADMINISTRATION,
->>>>>>> Stashed changes
-marketing_et_communication,MARKETING ET COMMUNICATION,
-services_bancaires,SERVICES BANCAIRES,
-activites_postales,ACTIVITES POSTALES,
-finances_budget,Finances & budget,
-patrimoine_bati,Patrimoine bâti,
-<<<<<<< Updated upstream
-vente_relation_client,Vente & relation client,
-=======
->>>>>>> Stashed changes
-=======
-pilotage,Pilotage,
-ressources_humaines,Ressources humaines,
-logistique,LOGISTIQUE,
-systemes_d_information,Systèmes d'information,
->>>>>>> Stashed changes
