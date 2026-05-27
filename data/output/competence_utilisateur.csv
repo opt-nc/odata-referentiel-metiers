@@ -1,5 +1,6 @@
 code_competence,nom_competence,id_categorie_detention,date_mise_a_jour
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 COMP257,"Maitrise des progiciels : Plateforme ArcGIS (Pro, Desktop, Entreprise, Online et Mobile), MS 365",poorly_held,2025-09-03 13:38:13
 COMP532,Mener une veille,moderately_held,2025-09-03 13:38:40
 COMP3,Méthode d'achat et d'approvisionnement et de gestion de stock.,poorly_held,2025-09-03 13:38:01
@@ -125,6 +126,8 @@ COMP554,Rédiger,well_held,2025-09-03 13:38:43
 COMP89,Aptitude à gérer le stress et les situatons d'urgence,poorly_held,2025-09-03 13:38:03
 COMP600,"Communication - Capacité à transmettre clairement des informations, à écouter activement, et à établir un échange efficace pour atteindre des objectifs communs",moderately_held,2025-09-03 13:38:49
 =======
+=======
+>>>>>>> Stashed changes
 COMP77,Droit/Réglementation,moderately_held,2025-09-03 13:38:02
 COMP262,Procédures comptables et budgétaires en vigueur,poorly_held,2025-09-03 13:38:13
 COMP356,Tests d'évaluation psychologique,poorly_held,2025-09-03 13:38:21
@@ -154,6 +157,9 @@ COMP18,Système d'exploitation Linux,poorly_held,2025-09-03 13:38:01
 COMP187,Connaissance d'approches Agiles ou Lean,poorly_held,2025-09-03 13:38:08
 COMP547,"Prendre en compte un contexte, une contrainte, une complexité",well_held,2025-09-03 13:38:42
 COMP480,Conduire le changement,moderately_held,2026-03-30 04:44:09
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 COMP367,"Procédures administratives et règles internes de commande de l'OPT-NC,",poorly_held,2025-09-03 13:38:22
 COMP460,"Animer un réseau, une communauté",poorly_held,2025-09-03 13:38:32
@@ -214,6 +220,7 @@ COMP98,Techniques de gestes et postures,moderately_held,2025-09-03 13:38:03
 COMP86,Connaissance de l'environnement des médias supports et leurs spécificités,poorly_held,2025-09-03 13:38:03
 COMP562,Sélectionner,well_held,2025-09-03 13:38:44
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 COMP77,Droit/Réglementation,moderately_held,2025-09-03 13:38:02
 COMP262,Procédures comptables et budgétaires en vigueur,poorly_held,2025-09-03 13:38:13
 COMP356,Tests d'évaluation psychologique,poorly_held,2025-09-03 13:38:21
@@ -271,6 +278,8 @@ COMP546,Pratiquer son art,well_held,2025-09-03 13:38:42
 COMP464,"Appliquer une règle, une procédure, un dispositif",well_held,2025-09-03 13:38:32
 COMP446,Connaissance dans les domaines de l'infrastructure matérielle et des réseaux,poorly_held,2025-09-03 13:38:30
 =======
+=======
+>>>>>>> Stashed changes
 COMP73,Gestion de l'information,moderately_held,2026-04-01 23:43:20
 COMP612,Connaissance de l'organisation et du plan stratégique de l'Office,moderately_held,2026-02-26 00:57:18
 COMP576,Curiosité intellectuelle,well_held,2025-09-03 13:38:46
@@ -568,6 +577,7 @@ COMP499,"Diffuser une information, une publication",well_held,2025-09-03 13:38:3
 COMP173,Maitriser la règlementation liée aux produits et services commercialisées par l'office,moderately_held,2025-09-03 13:38:07
 COMP188,"Connaissances des principaux systèmes d'exploitation, SGBD et langages Java, Javascript, PL/SQL...",poorly_held,2025-09-03 13:38:08
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 COMP449,"Accompagner une personne, un groupe",well_held,2025-09-03 13:38:30
 COMP329,Méthodes de colisage,poorly_held,2025-09-03 13:38:19
 COMP604,"Esprit d'équipe - Capacité à favoriser la cohésion, la collaboration et l'engagement des membres pour atteindre les objectifs collectifs",moderately_held,2025-09-03 13:38:49
@@ -686,6 +696,8 @@ COMP357,Droit du travail,well_held,2025-10-27 06:12:43
 COMP214,Modélisation des processus,poorly_held,2026-04-07 23:22:49
 COMP174,Maitrise de la comptabilité des agences,moderately_held,2025-09-03 13:38:07
 =======
+=======
+>>>>>>> Stashed changes
 COMP99,Quartiers et secteurs géographiques,moderately_held,2025-09-03 13:38:03
 COMP591,Faire preuve de discrétion,well_held,2025-09-03 13:38:48
 COMP474,Communiquer,well_held,2025-09-03 13:38:33
@@ -713,4 +725,7 @@ COMP355,Techniques d'entretiens,poorly_held,2025-09-03 13:38:21
 COMP546,Pratiquer son art,well_held,2025-09-03 13:38:42
 COMP464,"Appliquer une règle, une procédure, un dispositif",well_held,2025-09-03 13:38:32
 COMP446,Connaissance dans les domaines de l'infrastructure matérielle et des réseaux,poorly_held,2025-09-03 13:38:30
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

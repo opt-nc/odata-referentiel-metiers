@@ -1,5 +1,6 @@
 code_competence,id_neobrain_competence,id_groupe_competence,id_referentiel_competence
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 COMP157,21967328,savoir,opt_nc_2025
 COMP382,21967553,savoir,opt_nc_2025
 COMP514,21967685,savoir_faire,opt_nc_2025
@@ -376,6 +377,8 @@ COMP117,21967288,savoir,opt_nc_2025
 COMP84,21967255,savoir,opt_nc_2025
 COMP600,21967771,manager,opt_nc_2025
 =======
+=======
+>>>>>>> Stashed changes
 COMP469,21967640,savoir_faire,opt_nc_2025
 COMP570,21967741,savoir_faire,opt_nc_2025
 COMP496,21967667,savoir_faire,opt_nc_2025
@@ -543,11 +546,15 @@ COMP503,21967674,savoir_faire,opt_nc_2025
 COMP482,21967653,savoir_faire,opt_nc_2025
 COMP238,21967409,savoir,opt_nc_2025
 COMP505,21967676,savoir_faire,opt_nc_2025
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 COMP515,21967686,savoir_faire,opt_nc_2025
 COMP538,21967709,savoir_faire,opt_nc_2025
 COMP395,21967566,savoir,opt_nc_2025
 COMP129,21967300,savoir,opt_nc_2025
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 COMP293,21967464,savoir,opt_nc_2025
 COMP613,22020766,savoir,opt_nc_2025
@@ -580,6 +587,8 @@ COMP355,21967526,savoir,opt_nc_2025
 COMP147,21967318,savoir,opt_nc_2025
 COMP151,21967322,savoir,opt_nc_2025
 =======
+=======
+>>>>>>> Stashed changes
 COMP603,21967774,manager,opt_nc_2025
 COMP609,22020763,savoir,opt_nc_2025
 COMP446,21967617,savoir,opt_nc_2025
@@ -818,4 +827,7 @@ COMP531,21967702,savoir_faire,opt_nc_2025
 COMP411,21967582,savoir,opt_nc_2025
 COMP389,21967560,savoir,opt_nc_2025
 COMP443,21967614,savoir,opt_nc_2025
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
