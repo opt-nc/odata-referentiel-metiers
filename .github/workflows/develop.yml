@@ -32,6 +32,12 @@ jobs:
           name: duckdb-file
           path: dist/ref-metiers-opt-nc.duckdb
 
+      - name: Upload CSV artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: csv-files
+          path: data/output/
+
   generate_sqlite:
     name: Generating SQLite File
     runs-on: ubuntu-latest
@@ -70,6 +76,12 @@ jobs:
           name: duckdb-file
           path: dist
           
+      - name: Download SQLite artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sqlite-file
+          path: dist
+
       - name: Download SQLite artifact
         uses: actions/download-artifact@v4
         with:
