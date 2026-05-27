@@ -11,12 +11,13 @@ jobs:
     uses: ./.github/workflows/compute-version.yml
     secrets: inherit
 
-  build:
-    name: DuckDB Integration
+  generate_duckdb:
+    name: Generating DuckDB File
     runs-on: ubuntu-latest
-    needs: compute
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: opt-nc/setup-duckdb-action@v1.2.6
 
@@ -25,24 +26,81 @@ jobs:
           mkdir dist
           duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
 
-      - name: update output repository and push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload DuckDB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: duckdb-file
+          path: dist/ref-metiers-opt-nc.duckdb
+
+      - name: Upload CSV artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: csv-files
+          path: data/output/
+
+  generate_sqlite:
+    name: Generating SQLite File
+    runs-on: ubuntu-latest
+    needs: generate_duckdb
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Load SQLite database
+        run: |
+          mkdir dist
+          sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
+
+      - name: Upload SQLite artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sqlite-file
+          path: dist/ref-metiers-opt-nc.sqlite
+
+  generate_release:
+    name: Generating Release
+    runs-on: ubuntu-latest
+    needs: [ compute, generate_duckdb, generate_sqlite ]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download DuckDB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: duckdb-file
+          path: dist
+
+      - name: Download SQLite artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sqlite-file
+          path: dist
+
+      - name: Download CSV artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: csv-files
+          path: data/output
+
+      - name: Push CSV outputs to main using PR
         run: |
           UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
-          NEW="${{ needs.compute.outputs.new_version }}"
 
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
 
           git stash
           git merge origin/main --no-edit -X theirs || true
           git stash pop || true
-          
+
           git add -f data/output/about.csv
           git add -f data/output/categorie_detention.csv
           git add -f data/output/competence.csv
@@ -58,9 +116,15 @@ jobs:
           git add -f data/output/referentiel_competence.csv
           git add -f data/output/sous_famille_metier.csv
           git add -f data/output/statut_metier.csv
+
           git commit -m "Updated output's files"
           git push origin $UNIQUE_BRANCH
-
           gh pr create --head $UNIQUE_BRANCH --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
-          gh pr merge $UNIQUE_BRANCH --merge --delete-branch 
+          gh pr merge $UNIQUE_BRANCH --merge --delete-branch
+
+      - name: Create Release
+        run: |
+          NEW="${{ needs.compute.outputs.new_version }}"
+
           gh release create $NEW --title "Release $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target main dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
+          
