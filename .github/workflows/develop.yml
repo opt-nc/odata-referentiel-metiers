@@ -75,17 +75,16 @@ jobs:
         with:
           name: sqlite-file
           path: dist
-          
-      - name: Update output repository and push to develop
+
+      - name: Push CSV outputs to develop using PR
         run: |
           UNIQUE_BRANCH="${{ needs.compute.outputs.unique_branch }}"
-          NEW="${{ needs.compute.outputs.new_version }}"
 
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git fetch origin
           git checkout -b $UNIQUE_BRANCH
-
+          
           git stash
           git merge origin/develop --no-edit -X theirs || true
           git stash pop || true
@@ -105,9 +104,15 @@ jobs:
           git add -f data/output/referentiel_competence.csv
           git add -f data/output/sous_famille_metier.csv
           git add -f data/output/statut_metier.csv
+
           git commit -m "Updated output's files"
           git push origin $UNIQUE_BRANCH
           gh pr create --head $UNIQUE_BRANCH --base develop --title "Updated develop branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
           gh pr merge $UNIQUE_BRANCH --merge --delete-branch
+
+      - name: Create Pre Release
+        run: |
+          NEW="${{ needs.compute.outputs.new_version }}"
+          
           gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
           
