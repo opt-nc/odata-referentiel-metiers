@@ -39,25 +39,6 @@ jobs:
           name: csv-files
           path: data/output/csv/
 
-      - name: Download DuckDB JDBC for Alpine (musl)
-        run: |
-          mkdir -p .github/schemacrawler/lib
-          curl -L https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/1.5.2.1/duckdb_jdbc-1.5.2.1-linux-amd64-musl.jar -o .github/schemacrawler/lib/duckdb_jdbc.jar
-
-      - id: schemacrawler
-        name: Run SchemaCrawler on DuckDB
-        uses: schemacrawler/SchemaCrawler-Action@v17.11.1
-        with:
-          entrypoint: /schemacrawler.sh
-          args: >
-            --info-level=standard
-            --driver=org.duckdb.DuckDBDriver
-            --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb"
-            --command=schema
-            --table-types=TABLE
-            --output-format=html
-            --output-file=dist/gem_duckdb_schema.html
-
   generate_sqlite:
     name: Generating SQLite File
     runs-on: ubuntu-latest
@@ -77,7 +58,21 @@ jobs:
         run: |
           mkdir dist
           sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
-          
+
+      - id: schemacrawler
+        name: Run SchemaCrawler on SQLite
+        uses: schemacrawler/SchemaCrawler-Action@v17.11.1
+        with:
+          entrypoint: /schemacrawler.sh
+          args: >
+            --server=sqlite
+            --database=dist/schema_export.sqlite
+            --info-level=standard
+            --command=schema
+            --table-types=TABLE
+            --output-format=html
+            --output-file=dist/ref-metiers-opt-nc-schema.html
+                
       - name: Upload SQLite artifact
         uses: actions/upload-artifact@v4
         with:
