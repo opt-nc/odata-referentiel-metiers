@@ -50,6 +50,7 @@ jobs:
       - name: Load SQLite database
         run: |
           mkdir dist
+          mkdir data/output/csv
           sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
 
       - name: Upload SQLite artifact
