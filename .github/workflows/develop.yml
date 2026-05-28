@@ -118,7 +118,7 @@ jobs:
       - name: Download html schema artifacts
         uses: actions/download-artifact@v4
         with:
-          name: html-schema-files
+          name: html-schema-file
           path: dist/ref-metiers-opt-nc-schema.html
 
       - name: Push CSV outputs to develop using PR
