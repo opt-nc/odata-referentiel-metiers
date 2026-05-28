@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: csv-files
-          path: data/output/
+          path: data/output/csv/
 
   generate_sqlite:
     name: Generating SQLite File
@@ -101,21 +101,21 @@ jobs:
           git merge origin/main --no-edit -X theirs || true
           git stash pop || true
 
-          git add -f data/output/about.csv
-          git add -f data/output/categorie_detention.csv
-          git add -f data/output/competence.csv
-          git add -f data/output/competence_utilisateur.csv
-          git add -f data/output/famille_metier.csv
-          git add -f data/output/gem_competence.csv
-          git add -f data/output/gem_metier.csv
-          git add -f data/output/gem_metier_competence.csv
-          git add -f data/output/groupe_competence.csv
-          git add -f data/output/metier.csv
-          git add -f data/output/metier_competence.csv
-          git add -f data/output/niveau_description_competence.csv
-          git add -f data/output/referentiel_competence.csv
-          git add -f data/output/sous_famille_metier.csv
-          git add -f data/output/statut_metier.csv
+          git add -f data/output/csv/about.csv
+          git add -f data/output/csv/categorie_detention.csv
+          git add -f data/output/csv/competence.csv
+          git add -f data/output/csv/competence_utilisateur.csv
+          git add -f data/output/csv/famille_metier.csv
+          git add -f data/output/csv/gem_competence.csv
+          git add -f data/output/csv/gem_metier.csv
+          git add -f data/output/csv/gem_metier_competence.csv
+          git add -f data/output/csv/groupe_competence.csv
+          git add -f data/output/csv/metier.csv
+          git add -f data/output/csv/metier_competence.csv
+          git add -f data/output/csv/niveau_description_competence.csv
+          git add -f data/output/csv/referentiel_competence.csv
+          git add -f data/output/csv/sous_famille_metier.csv
+          git add -f data/output/csv/statut_metier.csv
 
           git commit -m "Updated output's files"
           git push origin $UNIQUE_BRANCH
