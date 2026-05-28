@@ -86,7 +86,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: csv-files
-          path: data/output
+          path: data/output/csv/
 
       - name: Push CSV outputs to main using PR
         run: |
