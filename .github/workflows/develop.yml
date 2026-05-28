@@ -79,6 +79,12 @@ jobs:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
+      - name: Upload html schema artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-schema-file
+          path: dist/ref-metiers-opt-nc-schema.html
+
   generate_prerelease:
     name: Generating Pre Release
     runs-on: ubuntu-latest
@@ -108,6 +114,12 @@ jobs:
         with:
           name: csv-files
           path: data/output/csv/
+
+      - name: Download html schema artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: html-schema-files
+          path: dist/ref-metiers-opt-nc-schema.html
 
       - name: Push CSV outputs to develop using PR
         run: |
@@ -146,5 +158,5 @@ jobs:
         run: |
           NEW="${{ needs.compute.outputs.new_version }}"
           
-          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
+          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.html
           
