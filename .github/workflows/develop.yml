@@ -74,20 +74,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download SQLite artifact
+      - name: Download DuckDB artifact
         uses: actions/download-artifact@v4
         with:
-          name: sqlite-file
+          name: duckdb-file
           path: dist
 
       - id: schemacrawler
-        name: Run SchemaCrawler on SQLite
+        name: Run SchemaCrawler on DuckDB
         uses: schemacrawler/SchemaCrawler-Action@v17.11.1
         with:
           entrypoint: /schemacrawler.sh
           args: >
-            --server=sqlite
-            --database=/github/workspace/dist/ref-metiers-opt-nc.sqlite
+            --url=jdbc:duckdb:/github/workspace/dist/ref-metiers-opt-nc.duckdb
+            --driver=org.duckdb.DuckDBDriver
             --info-level=standard
             --command=schema
             --table-types=TABLE
