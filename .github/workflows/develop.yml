@@ -65,6 +65,28 @@ jobs:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
+      - name: Download DuckDB JDBC driver
+        run: |
+          mkdir -p .github/schemacrawler/lib
+          curl -L \
+            https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/1.4.3.0/duckdb_jdbc-1.4.3.0.jar \
+            -o .github/schemacrawler/lib/duckdb_jdbc.jar
+
+      - id: schemacrawler
+        name: Run SchemaCrawler on DuckDB
+        uses: schemacrawler/SchemaCrawler-Action@v17.11.1
+        with:
+          entrypoint: /schemacrawler.sh
+          args: >
+            --server=duckdb
+            --database=mydb.duckdb
+            --driver=org.duckdb.DuckDBDriver
+            --info-level=standard
+            --command=schema
+            --output-format=html
+            --output-file=schema.html
+            --log-level=CONFIG
+
   generate_prerelease:
     name: Generating Pre Release
     runs-on: ubuntu-latest
