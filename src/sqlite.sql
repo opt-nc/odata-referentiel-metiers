@@ -116,17 +116,17 @@ CREATE TABLE about (
     value TEXT NOT NULL
 );
 
-.import --csv --skip 1 data/output/famille_metier.csv famille_metier
-.import --csv --skip 1 data/output/statut_metier.csv statut_metier
-.import --csv --skip 1 data/output/referentiel_competence.csv referentiel_competence
-.import --csv --skip 1 data/output/groupe_competence.csv groupe_competence
-.import --csv --skip 1 data/output/categorie_detention.csv categorie_detention
-.import --csv --skip 1 data/output/metier.csv metier
-.import --csv --skip 1 data/output/competence.csv competence
-.import --csv --skip 1 data/output/competence_utilisateur.csv competence_utilisateur
-.import --csv --skip 1 data/output/niveau_description_competence.csv niveau_description_competence
-.import --csv --skip 1 data/output/metier_competence.csv metier_competence
-.import --csv --skip 1 data/output/about.csv about
+.import --csv --skip 1 data/output/csv/famille_metier.csv famille_metier
+.import --csv --skip 1 data/output/csv/statut_metier.csv statut_metier
+.import --csv --skip 1 data/output/csv/referentiel_competence.csv referentiel_competence
+.import --csv --skip 1 data/output/csv/groupe_competence.csv groupe_competence
+.import --csv --skip 1 data/output/csv/categorie_detention.csv categorie_detention
+.import --csv --skip 1 data/output/csv/metier.csv metier
+.import --csv --skip 1 data/output/csv/competence.csv competence
+.import --csv --skip 1 data/output/csv/competence_utilisateur.csv competence_utilisateur
+.import --csv --skip 1 data/output/csv/niveau_description_competence.csv niveau_description_competence
+.import --csv --skip 1 data/output/csv/metier_competence.csv metier_competence
+.import --csv --skip 1 data/output/csv/about.csv about
 
 
 CREATE VIEW vw_lister_competences_metier AS
