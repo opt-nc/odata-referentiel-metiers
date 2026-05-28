@@ -52,7 +52,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: csv-files
-          path: data/output/csv/
+          path: data/output/csv
 
       - name: Load SQLite database
         run: |
@@ -113,13 +113,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: csv-files
-          path: data/output/csv/
+          path: data/output/csv
 
       - name: Download html schema artifacts
         uses: actions/download-artifact@v4
         with:
           name: html-schema-file
-          path: dist/ref-metiers-opt-nc-schema.html
+          path: dist
 
       - name: Push CSV outputs to develop using PR
         run: |
