@@ -114,7 +114,6 @@ jobs:
           git add -f data/output/csv/metier_competence.csv
           git add -f data/output/csv/niveau_description_competence.csv
           git add -f data/output/csv/referentiel_competence.csv
-          git add -f data/output/csv/sous_famille_metier.csv
           git add -f data/output/csv/statut_metier.csv
 
           git commit -m "Updated output's files"
