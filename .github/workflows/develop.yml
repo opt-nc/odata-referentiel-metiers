@@ -64,41 +64,6 @@ jobs:
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
-
-  generate_schema:
-    name: Generating HTML Schema
-    runs-on: ubuntu-latest
-    needs: generate_sqlite
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Download DuckDB artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: duckdb-file
-          path: dist
-
-      - id: schemacrawler
-        name: Run SchemaCrawler on DuckDB
-        uses: schemacrawler/SchemaCrawler-Action@v17.11.1
-        with:
-          entrypoint: /schemacrawler.sh
-          args: >
-            --url=jdbc:duckdb:/github/workspace/dist/ref-metiers-opt-nc.duckdb
-            --driver=org.duckdb.DuckDBDriver
-            --info-level=standard
-            --command=schema
-            --table-types=TABLE
-            --output-format=html
-            --output-file=/github/workspace/dist/ref-metiers-opt-nc-schema.html
-
-      - name: Upload html schema artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: html-schema-file
-          path: dist/ref-metiers-opt-nc-schema.html
           
   generate_prerelease:
     name: Generating Pre Release
@@ -129,12 +94,6 @@ jobs:
         with:
           name: csv-files
           path: data/output/csv
-
-      - name: Download html schema artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: html-schema-file
-          path: dist
 
       - name: Push CSV outputs to develop using PR
         run: |
@@ -173,5 +132,5 @@ jobs:
         run: |
           NEW="${{ needs.compute.outputs.new_version }}"
           
-          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.html
+          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
           
