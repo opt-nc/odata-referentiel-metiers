@@ -68,7 +68,7 @@ jobs:
   generate_prerelease:
     name: Generating Pre Release
     runs-on: ubuntu-latest
-    needs: [ compute, generate_duckdb, generate_sqlite, generate_schema ]
+    needs: [ compute, generate_duckdb, generate_sqlite ]
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
