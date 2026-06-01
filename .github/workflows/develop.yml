@@ -58,13 +58,60 @@ jobs:
         run: |
           mkdir dist
           sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
-                
+
       - name: Upload SQLite artifact
         uses: actions/upload-artifact@v4
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
-          
+
+  generate_schemas:
+    name: Generating DuckDB Schema Diagram
+    runs-on: ubuntu-slim
+    needs: generate_duckdb
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download CSV artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: csv-files
+          path: data/output/csv
+
+      - id: install-schemacrawler
+        name: Install SchemaCrawler on the GitHub Actions runner
+        uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
+
+      - name: Upload SQLite artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sqlite-file
+          path: dist/ref-metiers-opt-nc.sqlite
+
+      - id: schemacrawler
+        name: Run SchemaCrawler on DuckDB Database
+        shell: bash
+        env:
+          SDKMAN_DIR: ${{ github.workspace }}/.sdkman
+        run: |
+          source "$SDKMAN_DIR/bin/sdkman-init.sh"
+          schemacrawler.sh \
+            --url=jdbc:duckdb:/github/workspace/dist/ref-metiers-opt-nc.duckdb
+            --driver=org.duckdb.DuckDBDriver
+            --info-level=standard
+            --command=schema
+            --table-types=TABLE
+            --output-format=html
+            --output-file=/github/workspace/dist/ref-metiers-opt-nc-schema.html
+
+      - name: Upload schemacrawler artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: schemacrawler-file
+          path: dist/ref-metiers-opt-nc-schema.html
+
   generate_prerelease:
     name: Generating Pre Release
     runs-on: ubuntu-latest
@@ -77,7 +124,7 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Download DuckDB artifact
+      - name: Download dist artifacts
         uses: actions/download-artifact@v4
         with:
           name: duckdb-file
@@ -132,5 +179,5 @@ jobs:
         run: |
           NEW="${{ needs.compute.outputs.new_version }}"
           
-          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
+          gh release create $NEW --title "prerelease $NEW" --notes "Mise à jour automatique du référentiel d'export des métiers." --target develop dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.html
           
