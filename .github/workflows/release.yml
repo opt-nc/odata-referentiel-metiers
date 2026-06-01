@@ -126,7 +126,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git fetch origin
-          git checkout -b $UNIQUE_BRANCH
+          git checkout -b $VERSION
 
           git stash
           git merge origin/main --no-edit -X theirs || true
@@ -148,9 +148,9 @@ jobs:
           git add -f data/output/csv/statut_metier.csv
 
           git commit -m "Updated output's files"
-          git push origin $UNIQUE_BRANCH
-          gh pr create --head $UNIQUE_BRANCH --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
-          gh pr merge $UNIQUE_BRANCH --merge --delete-branch
+          git push origin $VERSION
+          gh pr create --head $VERSION --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+          gh pr merge $VERSION --merge --delete-branch
 
       - name: Upload Release assets
         run: |
