@@ -121,8 +121,6 @@ jobs:
 
       - name: Push CSV outputs to main using PR
         run: |
-          UNIQUE_BRANCH="${{ needs.compute.outputs.new_release_version }}"
-
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git fetch origin
