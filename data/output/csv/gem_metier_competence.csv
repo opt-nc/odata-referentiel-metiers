@@ -1,4 +1,4 @@
-id_neobrain_metier,code_metier,nom_metier,famille_metier,nom_competence,referentiel_competence,code_competence,id_neobrain_competence,groupe_competence,poids,niveau_requis,date_creation,date_mise_a_jour,relation_metier_competence_active
+neobrain_metier_id,code_metier,nom_metier,famille_metier,nom_competence,referentiel_competence,code_competence,neobrain_competence_id,groupe_competence,poids,niveau_requis,date_creation,date_mise_a_jour,relation_metier_competence_active
 11041851,OP001,Chargé de soutien des réseaux de vente,Vente & relation client,Aisance relationnelle,OPT-NC 2025,COMP585,21967756,Savoir être,2.0,4.0,2025-09-03 13:56:17,2025-09-11 07:27:23,true
 11041851,OP001,Chargé de soutien des réseaux de vente,Vente & relation client,"Analyser un contexte, une problématique, une complexité",OPT-NC 2025,COMP456,21967627,savoir faire,2.0,4.0,2025-09-03 13:56:16,2025-09-11 07:26:56,true
 11041851,OP001,Chargé de soutien des réseaux de vente,Vente & relation client,"Analyser une information, une donnée, une situation, un dispositif",OPT-NC 2025,COMP459,21967630,savoir faire,2.0,4.0,2025-09-03 13:56:16,2025-09-11 07:26:58,true

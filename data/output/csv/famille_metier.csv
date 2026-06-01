@@ -1,9 +1,8 @@
-id_famille_metier,libelle,description
+famille_metier_id,libelle,description
 pilotage,Pilotage,
 ressources_humaines,Ressources humaines,
 logistique,LOGISTIQUE,
 systemes_d_information,Systèmes d'information,
-vente_relation_client,Vente & relation client,
 telecommunications,TELECOMMUNICATIONS,
 administration,ADMINISTRATION,
 marketing_et_communication,MARKETING ET COMMUNICATION,
@@ -11,3 +10,4 @@ services_bancaires,SERVICES BANCAIRES,
 activites_postales,ACTIVITES POSTALES,
 finances_budget,Finances & budget,
 patrimoine_bati,Patrimoine bâti,
+vente_relation_client,Vente & relation client,
