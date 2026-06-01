@@ -121,40 +121,58 @@ jobs:
 
       - name: Push CSV outputs to main using PR
         run: |
-          VERSION="${{ needs.release.outputs.new_release_version }}"
+          BRANCH_NAME="data-update-${{ github.run_number }}"
 
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git fetch origin
-          git checkout -b $VERSION
+          git checkout -b $BRANCH_NAME
 
-          git stash
-          git merge origin/main --no-edit -X theirs || true
-          git stash pop || true
+          git add data/output/csv/about.csv
+          git add data/output/csv/categorie_detention.csv
+          git add data/output/csv/competence.csv
+          git add data/output/csv/competence_utilisateur.csv
+          git add data/output/csv/famille_metier.csv
+          git add data/output/csv/gem_competence.csv
+          git add data/output/csv/gem_metier.csv
+          git add data/output/csv/gem_metier_competence.csv
+          git add data/output/csv/groupe_competence.csv
+          git add data/output/csv/metier.csv
+          git add data/output/csv/metier_competence.csv
+          git add data/output/csv/niveau_description_competence.csv
+          git add data/output/csv/referentiel_competence.csv
+          git add data/output/csv/statut_metier.csv
 
-          git add -f data/output/csv/about.csv
-          git add -f data/output/csv/categorie_detention.csv
-          git add -f data/output/csv/competence.csv
-          git add -f data/output/csv/competence_utilisateur.csv
-          git add -f data/output/csv/famille_metier.csv
-          git add -f data/output/csv/gem_competence.csv
-          git add -f data/output/csv/gem_metier.csv
-          git add -f data/output/csv/gem_metier_competence.csv
-          git add -f data/output/csv/groupe_competence.csv
-          git add -f data/output/csv/metier.csv
-          git add -f data/output/csv/metier_competence.csv
-          git add -f data/output/csv/niveau_description_competence.csv
-          git add -f data/output/csv/referentiel_competence.csv
-          git add -f data/output/csv/statut_metier.csv
-
-          git commit -m "Updated output's files"
-          git push origin $VERSION
-          gh pr create --head $VERSION --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
-          gh pr merge $VERSION --merge --delete-branch
+          git commit -m "chore: updated output's files [skip ci]"
+          git push origin $BRANCH_NAME
+          gh pr create --head $BRANCH_NAME --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+          gh pr merge $BRANCH_NAME --merge --delete-branch
 
       - name: Upload Release assets
         run: |
-          gh release upload $VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.html
+          gh release upload $BRANCH_NAME dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
+
+  post-release:
+    name: Post-Release Tasks
+    runs-on: ubuntu-latest
+    needs: [ update_output_repository ]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        with:
+          fetch-depth: 0
+
+      - name: Merge main back to dev to avoid conflicts
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git fetch
+          git checkout develop
+          git branch --set-upstream-to=origin/develop develop
+          git pull
+          git merge --no-ff main -m "Auto-merge main back to dev"
+          git push
 
   cleanup:
     name: Cleanup Pre-Releases
