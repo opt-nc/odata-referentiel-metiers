@@ -48,6 +48,7 @@ jobs:
       - name: Load DuckDB database
         run: |
           mkdir dist
+          mkdir -p data/output/csv
           duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
 
       - name: Upload DuckDB artifact
