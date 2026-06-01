@@ -119,7 +119,7 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Download dist artifacts
+      - name: Download DuckDB artifacts
         uses: actions/download-artifact@v4
         with:
           name: duckdb-file
@@ -136,6 +136,12 @@ jobs:
         with:
           name: csv-files
           path: data/output/csv
+
+      - name: Download SchemaCrawler artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: schemacrawler-file
+          path: dist
 
       - name: Push CSV outputs to develop using PR
         run: |
