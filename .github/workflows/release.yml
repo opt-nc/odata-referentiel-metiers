@@ -152,7 +152,8 @@ jobs:
 
       - name: Upload Release assets
         run: |
-          gh release upload $BRANCH_NAME dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
+          TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
+          gh release upload TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
 
   post-release:
     name: Post-Release Tasks
