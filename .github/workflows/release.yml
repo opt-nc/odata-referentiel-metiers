@@ -122,7 +122,8 @@ jobs:
 
       - name: Push CSV outputs to main using PR
         run: |
-          BRANCH_NAME="data-update-${{ github.run_number }}"
+          TARGET_BRANCH="${{ github.ref_name }}"
+          BRANCH_NAME="data-update-${TARGET_BRANCH}-${{ github.run_number }}"
 
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -144,9 +145,9 @@ jobs:
           git add data/output/csv/referentiel_competence.csv
           git add data/output/csv/statut_metier.csv
 
-          git commit -m "chore: updated output's files [skip ci]"
+          git commit -m "chore: updated output's files for $TARGET_BRANCH [skip ci]"
           git push origin $BRANCH_NAME
-          gh pr create --head $BRANCH_NAME --base main --title "Updated main branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+          gh pr create --head $BRANCH_NAME --base $TARGET_BRANCH --title "Updated $TARGET_BRANCH branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
           gh pr merge $BRANCH_NAME --merge --delete-branch
 
       - name: Upload Release assets
