@@ -92,14 +92,14 @@ jobs:
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
           schemacrawler.sh \
-            --config-file=/github/workspace/.github/schemacrawler/config/schemacrawler.config.properties \
-            --url=jdbc:duckdb:/github/workspace/dist/ref-metiers-opt-nc.duckdb \
+            --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+            --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb \
             --driver=org.duckdb.DuckDBDriver \
             --info-level=standard \
             --command=schema \
             --table-types=TABLE \
             --output-format=html \
-            --output-file=/github/workspace/dist/ref-metiers-opt-nc-schema.html
+            --output-file=dist/ref-metiers-opt-nc-schema.html
 
       - name: Upload schemacrawler artifacts
         uses: actions/upload-artifact@v4
@@ -110,7 +110,7 @@ jobs:
   generate_prerelease:
     name: Generating Pre Release
     runs-on: ubuntu-latest
-    needs: [ compute, generate_duckdb, generate_sqlite ]
+    needs: [ compute, generate_duckdb, generate_sqlite, generate_schemas ]
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
