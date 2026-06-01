@@ -1,4 +1,4 @@
-nom_client,id_neobrain_metier,code_metier,nom_metier,famille_metier,nb_competence_metier,niveau_competence_moyen_requis,metier_active_count,metier_actif,statut_metier
+nom_client,neobrain_metier_id,code_metier,nom_metier,famille_metier,nb_competence_metier,niveau_competence_moyen_requis,metier_active_count,metier_actif,statut_metier
 OPT - NC,11041851,OP001,Chargé de soutien des réseaux de vente,Vente & relation client,25,3.6,1,true,Publié
 OPT - NC,11041852,OP002,Chargé d'affaires,Vente & relation client,17,3.0,1,true,Publié
 OPT - NC,11041853,OP003,Conseiller clientèle,Vente & relation client,21,2.81,1,true,Publié
