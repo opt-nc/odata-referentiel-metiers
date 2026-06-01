@@ -37,17 +37,17 @@
       SELECT table_name
       FROM information_schema.tables
       WHERE table_schema = 'main'
-        AND table_name !~ '^[a-z][a-z0-9_]*$'
+      AND table_name !~ '^[a-z][a-z0-9_]*$'
       LIMIT 1
 
 - id: schemacrawler.tools.linter.LinterCatalogSql
   run: true
   config:
-    message: "id column must start with id_"
+    message: "id column must end with _id"
     sql: |
       SELECT table_name || '.' || column_name
       FROM information_schema.columns
       WHERE table_schema = 'main'
-        AND column_name LIKE '%id'
-        AND column_name NOT LIKE 'id_%'
+      AND column_name LIKE '%id'
+      AND column_name NOT LIKE 'id_%'
       LIMIT 1

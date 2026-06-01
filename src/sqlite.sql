@@ -17,72 +17,72 @@ DROP TABLE IF EXISTS statut_metier;
 DROP TABLE IF EXISTS famille_metier;
 
 CREATE TABLE famille_metier (
-    id_famille_metier TEXT PRIMARY KEY NOT NULL,
+    famille_metier_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
     description TEXT
 );
 
 CREATE TABLE statut_metier (
-    id_statut_metier TEXT PRIMARY KEY NOT NULL,
+    statut_metier_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL
 );
 
 CREATE TABLE referentiel_competence (
-    id_referentiel_competence TEXT PRIMARY KEY NOT NULL,
+    referentiel_competence_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
     type_referentiel TEXT NOT NULL,
     type_referentiel_detaille TEXT NOT NULL
 );
 
 CREATE TABLE groupe_competence (
-    id_groupe_competence TEXT PRIMARY KEY NOT NULL,
+    groupe_competence_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
     type_groupe TEXT
 );
 
 CREATE TABLE categorie_detention (
-    id_categorie_detention TEXT PRIMARY KEY NOT NULL,
+    categorie_detention_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
     gamme_detention TEXT NOT NULL
 );
 
 CREATE TABLE metier (
     code_metier TEXT PRIMARY KEY NOT NULL,
-    id_neobrain_metier INTEGER NOT NULL,
+    neobrain_metier_id INTEGER NOT NULL,
     metier_collaborateur TEXT NOT NULL,
-    id_famille_metier TEXT NOT NULL,
-    id_statut_metier TEXT NOT NULL,
+    famille_metier_id TEXT NOT NULL,
+    statut_metier_id TEXT NOT NULL,
     metier_actif INTEGER NOT NULL, -- en sqlite, le type BOOLEAN peut etre représenté par un 0/1
-    FOREIGN KEY (id_famille_metier) REFERENCES famille_metier(id_famille_metier),
-    FOREIGN KEY (id_statut_metier) REFERENCES statut_metier(id_statut_metier)
+    FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id),
+    FOREIGN KEY (statut_metier_id) REFERENCES statut_metier(statut_metier_id)
 );
 
-CREATE INDEX idx_metier_famille ON metier(id_famille_metier);
-CREATE INDEX idx_metier_statut ON metier(id_statut_metier);
+CREATE INDEX idx_metier_famille ON metier(famille_metier_id);
+CREATE INDEX idx_metier_statut ON metier(statut_metier_id);
 
 CREATE TABLE competence (
     code_competence TEXT PRIMARY KEY NOT NULL,
-    id_neobrain_competence INTEGER NOT NULL,
-    id_groupe_competence TEXT NOT NULL,
-    id_referentiel_competence TEXT NOT NULL,
-    FOREIGN KEY (id_groupe_competence) REFERENCES groupe_competence(id_groupe_competence),
-    FOREIGN KEY (id_referentiel_competence) REFERENCES referentiel_competence(id_referentiel_competence)
+    neobrain_competence_id INTEGER NOT NULL,
+    groupe_competence_id TEXT NOT NULL,
+    referentiel_competence_id TEXT NOT NULL,
+    FOREIGN KEY (groupe_competence_id) REFERENCES groupe_competence(groupe_competence_id),
+    FOREIGN KEY (referentiel_competence_id) REFERENCES referentiel_competence(referentiel_competence_id)
 );
 
-CREATE INDEX idx_competence_id_groupe ON competence(id_groupe_competence);
-CREATE INDEX idx_competence_id_referentiel ON competence(id_referentiel_competence);
+CREATE INDEX idx_competence_groupe_id ON competence(groupe_competence_id);
+CREATE INDEX idx_competence_referentiel_id ON competence(referentiel_competence_id);
 
 CREATE TABLE competence_utilisateur (
     code_competence TEXT PRIMARY KEY NOT NULL,
     nom_competence TEXT NOT NULL,
-    id_categorie_detention TEXT NOT NULL,
+    categorie_detention_id TEXT NOT NULL,
     date_mise_a_jour TEXT NOT NULL, -- En sqlite, le TIMESTAMP est un TEXT en ISO8601
     FOREIGN KEY (code_competence) REFERENCES competence(code_competence),
-    FOREIGN KEY (id_categorie_detention) REFERENCES categorie_detention(id_categorie_detention)
+    FOREIGN KEY (categorie_detention_id) REFERENCES categorie_detention(categorie_detention_id)
 );
 
 CREATE INDEX idx_competence_utilisateur_competence ON competence_utilisateur(code_competence);
-CREATE INDEX idx_competence_utilisateur_categorie ON competence_utilisateur(id_categorie_detention);
+CREATE INDEX idx_competence_utilisateur_categorie ON competence_utilisateur(categorie_detention_id);
 
 CREATE TABLE niveau_description_competence (
     code_competence TEXT NOT NULL,
@@ -135,8 +135,8 @@ SELECT
     m.metier_collaborateur,
     c.code_competence,
     mc.nom_competence,
-    (SELECT g.libelle FROM groupe_competence g WHERE c.id_groupe_competence = g.id_groupe_competence) AS groupe_competence,
-    (SELECT r.libelle FROM referentiel_competence r WHERE c.id_referentiel_competence = r.id_referentiel_competence) AS referentiel_competence
+    (SELECT g.libelle FROM groupe_competence g WHERE c.groupe_competence_id = g.groupe_competence_id) AS groupe_competence,
+    (SELECT r.libelle FROM referentiel_competence r WHERE c.referentiel_competence_id = r.referentiel_competence_id) AS referentiel_competence
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence c ON mc.code_competence = c.code_competence
@@ -160,7 +160,7 @@ SELECT
     g.libelle AS groupe_competence
 FROM competence c
 JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
-JOIN groupe_competence g ON c.id_groupe_competence = g.id_groupe_competence
+JOIN groupe_competence g ON c.groupe_competence_id = g.groupe_competence_id
 WHERE NOT EXISTS (
     SELECT 1 FROM metier_competence mc WHERE mc.code_competence = c.code_competence
 );
@@ -177,7 +177,7 @@ FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence_utilisateur cu ON mc.code_competence = cu.code_competence
 JOIN competence c ON mc.code_competence = c.code_competence
-LEFT JOIN groupe_competence gc ON c.id_groupe_competence = gc.id_groupe_competence
+LEFT JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
 LEFT JOIN niveau_description_competence ndc ON cu.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
 WHERE lower(m.metier_collaborateur) = 'architecte logiciel';
 
@@ -189,8 +189,8 @@ SELECT
     stm.libelle AS statut_metier,
     m.metier_actif
 FROM metier m
-JOIN famille_metier fm ON m.id_famille_metier = fm.id_famille_metier
-JOIN statut_metier stm ON m.id_statut_metier = stm.id_statut_metier
+JOIN famille_metier fm ON m.famille_metier_id = fm.famille_metier_id
+JOIN statut_metier stm ON m.statut_metier_id = stm.statut_metier_id
 WHERE NOT EXISTS (
     SELECT 1 FROM metier_competence mc WHERE mc.code_metier = m.code_metier
 );
