@@ -74,21 +74,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download CSV artifacts
+      - name: Download dist artifacts
         uses: actions/download-artifact@v4
         with:
-          name: csv-files
-          path: data/output/csv
+          name: duckdb-file
+          path: dist
 
       - id: install-schemacrawler
         name: Install SchemaCrawler on the GitHub Actions runner
         uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
-
-      - name: Upload SQLite artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sqlite-file
-          path: dist/ref-metiers-opt-nc.sqlite
 
       - id: schemacrawler
         name: Run SchemaCrawler on DuckDB Database
@@ -98,12 +92,13 @@ jobs:
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
           schemacrawler.sh \
-            --url=jdbc:duckdb:/github/workspace/dist/ref-metiers-opt-nc.duckdb
-            --driver=org.duckdb.DuckDBDriver
-            --info-level=standard
-            --command=schema
-            --table-types=TABLE
-            --output-format=html
+            --config-file=/github/workspace/.github/schemacrawler/config/schemacrawler.config.properties \
+            --url=jdbc:duckdb:/github/workspace/dist/ref-metiers-opt-nc.duckdb \
+            --driver=org.duckdb.DuckDBDriver \
+            --info-level=standard \
+            --command=schema \
+            --table-types=TABLE \
+            --output-format=html \
             --output-file=/github/workspace/dist/ref-metiers-opt-nc-schema.html
 
       - name: Upload schemacrawler artifacts
