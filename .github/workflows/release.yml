@@ -164,7 +164,7 @@ jobs:
       - name: Download SchemaCrawler PDF artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
-          name: schemacrawler-pdf-files
+          name: schemacrawler-pdf-file
           path: dist
 
       - name: Push CSV outputs to main using PR
