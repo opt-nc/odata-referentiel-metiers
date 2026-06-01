@@ -107,6 +107,9 @@ jobs:
         name: Install SchemaCrawler
         uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
 
+      - name: Install Graphviz to generate schemas
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+
       - name: Generating SchemaCrawler schema (pdf)
         shell: bash
         env:
@@ -131,7 +134,7 @@ jobs:
   update_output_repository:
     name: Updating output repository
     runs-on: ubuntu-latest
-    needs: [ release, generate_duckdb, generate_sqlite ]
+    needs: [ release, generate_duckdb, generate_sqlite, generate_schemas ]
     if: github.event_name == 'push'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -197,7 +200,7 @@ jobs:
       - name: Upload Release assets
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
-          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite
+          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf
 
   post-release:
     name: Post-Release Tasks
