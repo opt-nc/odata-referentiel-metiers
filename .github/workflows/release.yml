@@ -68,15 +68,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: generate_duckdb
     steps:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-        with:
-          fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
 
       - name: Download CSV artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: csv-files
-          path: data/output/csv/
+          path: data/output/csv
 
       - name: Load SQLite database
         run: |
@@ -89,6 +88,45 @@ jobs:
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
+
+  generate_schemas:
+    name: Generating DuckDB Schemas
+    runs-on: ubuntu-slim
+    needs: [ generate_duckdb ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Download DuckDB artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: duckdb-file
+          path: dist
+
+      - id: install-schemacrawler
+        name: Install SchemaCrawler
+        uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
+
+      - name: Generating SchemaCrawler schema (pdf)
+        shell: bash
+        env:
+          SDKMAN_DIR: ${{ github.workspace }}/.sdkman
+        run: |
+          source "$SDKMAN_DIR/bin/sdkman-init.sh"
+          schemacrawler.sh \
+            --info-level=standard \
+            --driver=org.duckdb.DuckDBDriver \
+            --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb" \
+            --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+            --command=schema \
+            --output-format=pdf \
+            --output-file=dist/ref-metiers-opt-nc-schema.pdf
+
+      - name: Upload SchemaCrawler pdf artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: schemacrawler-pdf-file
+          path: dist/ref-metiers-opt-nc-schema.pdf
 
   update_output_repository:
     name: Updating output repository
@@ -118,7 +156,13 @@ jobs:
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: csv-files
-          path: data/output/csv/
+          path: data/output/csv
+
+      - name: Download SchemaCrawler PDF artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: schemacrawler-pdf-files
+          path: dist
 
       - name: Push CSV outputs to main using PR
         run: |
@@ -180,7 +224,7 @@ jobs:
   cleanup:
     name: Cleanup Pre-Releases
     runs-on: ubuntu-latest
-    needs: [ release ]
+    needs: [ post-release ]
     if: github.ref == 'refs/heads/main' && needs.release.outputs.new_release_published == 'true'
     steps:
       - name: Delete pre-releases
