@@ -89,8 +89,8 @@ jobs:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
-  generate_schemacrawler_pdf:
-    name: Generating DuckDB Schema (PDF)
+  generate_schemas:
+    name: Generating DuckDB Schemas with SchemaCrawler
     runs-on: ubuntu-slim
     needs: [ generate_duckdb ]
     steps:
@@ -110,115 +110,34 @@ jobs:
       - name: Install Graphviz to generate schemas
         run: sudo apt-get update && sudo apt-get install -y graphviz
 
-      - name: Generating SchemaCrawler schema (pdf)
+      - name: Generating SchemaCrawler schemas (PDF, PNG, HTML)
         shell: bash
         env:
           SDKMAN_DIR: ${{ github.workspace }}/.sdkman
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
-          schemacrawler.sh \
-            --info-level=standard \
-            --driver=org.duckdb.DuckDBDriver \
-            --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb" \
-            --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
-            --command=schema \
-            --output-format=pdf \
-            --output-file=dist/ref-metiers-opt-nc-schema.pdf
+          
+          # On factorise la commande de base pour garder le script lisible
+          BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
+          
+          # Génération des trois formats à la suite
+          $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
+          $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
+          $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
 
-      - name: Upload SchemaCrawler pdf artifact
+      - name: Upload SchemaCrawler assets
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: schemacrawler-pdf-file
-          path: dist/ref-metiers-opt-nc-schema.pdf
-
-  generate_schemacrawler_png:
-    name: Generating DuckDB Schema (png)
-    runs-on: ubuntu-slim
-    needs: [ generate_duckdb ]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-
-      - name: Download DuckDB artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: duckdb-file
-          path: dist
-
-      - id: install-schemacrawler
-        name: Install SchemaCrawler
-        uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
-
-      - name: Install Graphviz to generate schemas
-        run: sudo apt-get update && sudo apt-get install -y graphviz
-
-      - name: Generating SchemaCrawler schema (png)
-        shell: bash
-        env:
-          SDKMAN_DIR: ${{ github.workspace }}/.sdkman
-        run: |
-          source "$SDKMAN_DIR/bin/sdkman-init.sh"
-          schemacrawler.sh \
-            --info-level=standard \
-            --driver=org.duckdb.DuckDBDriver \
-            --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb" \
-            --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
-            --command=schema \
-            --output-format=png \
-            --output-file=dist/ref-metiers-opt-nc-schema.png
-
-      - name: Upload SchemaCrawler png artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: schemacrawler-png-file
-          path: dist/ref-metiers-opt-nc-schema.png
-
-  generate_schemacrawler_html:
-    name: Generating DuckDB Schema (html)
-    runs-on: ubuntu-slim
-    needs: [ generate_duckdb ]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-
-      - name: Download DuckDB artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: duckdb-file
-          path: dist
-
-      - id: install-schemacrawler
-        name: Install SchemaCrawler
-        uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
-
-      - name: Install Graphviz to generate schemas
-        run: sudo apt-get update && sudo apt-get install -y graphviz
-
-      - name: Generating SchemaCrawler schema (html)
-        shell: bash
-        env:
-          SDKMAN_DIR: ${{ github.workspace }}/.sdkman
-        run: |
-          source "$SDKMAN_DIR/bin/sdkman-init.sh"
-          schemacrawler.sh \
-            --info-level=standard \
-            --driver=org.duckdb.DuckDBDriver \
-            --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb" \
-            --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
-            --command=schema \
-            --output-format=html \
-            --output-file=dist/ref-metiers-opt-nc-schema.html
-
-      - name: Upload SchemaCrawler html artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: schemacrawler-html-file
-          path: dist/ref-metiers-opt-nc-schema.html
+          name: schemacrawler-assets
+          path: |
+            dist/ref-metiers-opt-nc-schema.pdf
+            dist/ref-metiers-opt-nc-schema.png
+            dist/ref-metiers-opt-nc-schema.html
 
   update_output_repository:
     name: Updating output repository
     runs-on: ubuntu-latest
-    needs: [ release, generate_duckdb, generate_sqlite, generate_schemacrawler_pdf, generate_schemacrawler_png, generate_schemacrawler_html ]
+    needs: [ release, generate_duckdb, generate_sqlite, generate_schemas ]
     if: github.event_name == 'push' && needs.release.outputs.new_release_published == 'true'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -245,22 +164,10 @@ jobs:
           name: csv-files
           path: data/output/csv
 
-      - name: Download SchemaCrawler PDF artifacts
+      - name: Download SchemaCrawler assets
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
-          name: schemacrawler-pdf-file
-          path: dist
-
-      - name: Download SchemaCrawler PNG artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: schemacrawler-png-file
-          path: dist
-
-      - name: Download SchemaCrawler HTML artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: schemacrawler-html-file
+          name: schemacrawler-assets
           path: dist
 
       - name: Push CSV outputs to main using PR
@@ -323,7 +230,7 @@ jobs:
   cleanup:
     name: Cleanup Pre-Releases
     runs-on: ubuntu-latest
-    needs: [ post-release ]
+    needs: [ release, post-release ]
     if: github.ref == 'refs/heads/main' && needs.release.outputs.new_release_published == 'true'
     steps:
       - name: Delete pre-releases
