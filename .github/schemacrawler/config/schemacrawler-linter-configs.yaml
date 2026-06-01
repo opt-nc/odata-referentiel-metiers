@@ -51,4 +51,3 @@
         AND column_name LIKE '%id'
         AND column_name NOT LIKE 'id_%'
       LIMIT 1
-      
