@@ -429,6 +429,8 @@ COMMENT ON COLUMN vw_lister_competences_metier.code_metier IS 'Code du métier';
 COMMENT ON COLUMN vw_lister_competences_metier.metier_collaborateur IS 'Nom du métier';
 COMMENT ON COLUMN vw_lister_competences_metier.code_competence IS 'Code de la compétence requise';
 COMMENT ON COLUMN vw_lister_competences_metier.nom_competence IS 'Nom de la compétence côté métier';
+COMMENT ON COLUMN vw_lister_competences_metier.groupe_competence IS 'Libellé du groupe de compétences';
+COMMENT ON COLUMN vw_lister_competences_metier.referentiel_competence IS 'Libellé du référentiel de la compétence';
 
 CREATE OR REPLACE VIEW vw_compter_competences_par_metier AS
 SELECT
