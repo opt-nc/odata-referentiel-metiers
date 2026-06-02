@@ -192,7 +192,7 @@ jobs:
           git add data/output/csv/referentiel_competence.csv
           git add data/output/csv/statut_metier.csv
 
-          git commit -m "chore: updated output's files for $TARGET_BRANCH [skip ci]"
+          git commit -m "chore: updated output's files for $TARGET_BRANCH"
           git push origin $BRANCH_NAME
           gh pr create --head $BRANCH_NAME --base $TARGET_BRANCH --title "Updated $TARGET_BRANCH branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
           gh pr merge $BRANCH_NAME --merge --delete-branch
