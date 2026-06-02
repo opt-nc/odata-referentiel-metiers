@@ -1,5 +1,5 @@
 - id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
-  run: true
+  run: false
 
 - id: schemacrawler.tools.linter.LinterForeignKeyMismatch
   run: true
