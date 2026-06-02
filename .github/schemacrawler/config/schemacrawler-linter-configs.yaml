@@ -1,8 +1,8 @@
 - id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
-  run: false
+  run: true
 
 - id: schemacrawler.tools.linter.LinterForeignKeyMismatch
-  run: false
+  run: true
 
 - id: schemacrawler.tools.linter.LinterRedundantIndexes
   run: true
@@ -17,17 +17,17 @@
   run: true
 
 - id: schemacrawler.tools.linter.LinterTableEmpty
-  run: false
+  run: true
 
 - id: schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns
   run: true
-  table-exclusion-pattern: "^gem\\.main\\.about$"
+  table-exclusion-pattern: ".*\\.about$"
   config:
     bad-column-names: ".*\\.[^a-z0-9_].*"
 
 - id: schemacrawler.tools.linter.LinterTableWithQuotedNames
   run: true
-  table-exclusion-pattern: "^gem\\.main\\.about$"
+  table-exclusion-pattern: ".*\\.about$"
 
 - id: schemacrawler.tools.linter.LinterCatalogSql
   run: true
@@ -48,6 +48,5 @@
       SELECT table_name || '.' || column_name
       FROM information_schema.columns
       WHERE table_schema = 'main'
-      AND column_name LIKE '%id'
-      AND column_name NOT LIKE 'id_%'
+      AND column_name ~ '^id_.*'
       LIMIT 1

@@ -48,7 +48,7 @@ jobs:
       - name: Load DuckDB database
         run: |
           mkdir dist
-          mkdir -p data/output/csv
+          mkdir -p data/output
           duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
 
       - name: Upload DuckDB artifact
@@ -80,7 +80,7 @@ jobs:
       - name: Load SQLite database
         run: |
           mkdir dist
-          mkdir -p data/output/csv
+          mkdir -p data/output
           sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
 
       - name: Upload SQLite artifact
@@ -117,10 +117,7 @@ jobs:
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
           
-          # On factorise la commande de base pour garder le script lisible
           BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
-          
-          # Génération des trois formats à la suite
           $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
           $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
           $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
