@@ -1,4 +1,4 @@
-name: CI pour la branche main
+name: CI
 
 on:
   push:
@@ -206,7 +206,7 @@ jobs:
     name: Post-Release Tasks
     runs-on: ubuntu-latest
     needs: [ update_output_repository ]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.release.outputs.new_release_published == 'true'
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
