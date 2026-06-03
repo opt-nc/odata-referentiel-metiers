@@ -146,7 +146,7 @@ jobs:
           path: dist
 
       - name: Setup Python
-        uses: actions/setup-python@61a6322f88396a6271a6ee3b8b3e6c47a1e5c19b
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: '3.11'
 
