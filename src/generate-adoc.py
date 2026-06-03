@@ -47,7 +47,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write('**[.subtitle]#2025#**\n\n')
 
     f.write('[.text-center]\n')
-    f.write(f"_Document généré le {datetime.now().strftime("%d/%m/%Y")}_\n\n")
+    f.write(f"_Document généré le {datetime.now().strftime('%d/%m/%Y')}_\n\n")
     
     f.write("<<<\n\n")
 
