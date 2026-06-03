@@ -1,6 +1,6 @@
 extends: default
 
-page_margin: [25mm, 15mm, 15mm, 15mm]
+page_margin: [25mm, 25mm, 25mm, 25mm]
 
 role_subtitle_font_size: 16
 role_subtitle_font_color: #424242

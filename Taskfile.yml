@@ -12,7 +12,6 @@ tasks:
     desc: Nettoie la base DuckDB puis génère la documentation lint.
     cmds:
       - task: clean
-      - task: duckdb
       - task: doc
     silent: true
 
@@ -33,7 +32,7 @@ tasks:
 
   doc:
     desc: Génère la documentation.
-    deps: [duckdb]
+    deps: [duckdb, install-uv]
     cmds:
       - |
         {{.SC_BASE}} \
@@ -61,6 +60,14 @@ tasks:
           --output-format=pdf \
           --output-file=dist/ref-metiers-opt-nc-schema.pdf
 
-      - python3 src/generate-adoc.py
+      - uv run --with duckdb src/generate-adoc.py
       - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc
+    silent: true
+
+  install-uv:
+    desc: Vérifie si uv est installé, sinon l'installe.
+    status:
+      - uv --version 
+    cmds:
+      - pip install uv
     silent: true

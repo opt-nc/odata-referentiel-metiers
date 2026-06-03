@@ -150,8 +150,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Python dependencies
-        run: pip install duckdb
+      - name: Install uv
+        run: pip install uv
 
       - name: Install Asciidoctor PDF
         run: sudo gem install asciidoctor-pdf
@@ -159,7 +159,7 @@ jobs:
       - name: Generating adoc
         run: |
           mkdir -p data/output
-          python3 src/generate-adoc.py
+          uv run --with duckdb src/generate-adoc.py
 
       - name: Generating PDF
         run: asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc -o data/output/doc/referentiel_metiers.pdf
