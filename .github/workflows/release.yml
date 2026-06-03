@@ -175,7 +175,7 @@ jobs:
   update_output_repository:
     name: Updating output repository
     runs-on: ubuntu-latest
-    needs: [ release, generate_duckdb, generate_sqlite, generate_schemas ]
+    needs: [ release, generate_duckdb, generate_sqlite, generate_schemas, generate_documentation ]
     if: github.event_name == 'push' && needs.release.outputs.new_release_published == 'true'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
