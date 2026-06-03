@@ -32,7 +32,7 @@ tasks:
 
   doc:
     desc: Génère la documentation.
-    deps: [duckdb, install-uv]
+    deps: [duckdb, setup-python]
     cmds:
       - |
         {{.SC_BASE}} \
@@ -60,7 +60,7 @@ tasks:
           --output-format=pdf \
           --output-file=dist/ref-metiers-opt-nc-schema.pdf
 
-      - uv run --with duckdb src/generate-adoc.py
+      - uv run src/generate-adoc.py
       - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc
     silent: true
 
@@ -70,4 +70,14 @@ tasks:
       - uv --version 
     cmds:
       - pip install uv
+    silent: true
+
+  setup-python:
+    desc: Initialise le projet uv et ajoute les dépendances nécessaires.
+    deps: [install-uv]
+    status:
+      - test -f pyproject.toml
+    cmds:
+      - uv init --bare
+      - uv add duckdb
     silent: true
