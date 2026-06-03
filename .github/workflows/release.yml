@@ -1,4 +1,4 @@
-name: CI
+name: CI - Génération des fichiers du Référentiel Métiers
 
 on:
   push:
@@ -148,7 +148,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
-          python-version: '3.11'
+          python-version: '3.x'
 
       - name: Install uv
         run: pip install uv
@@ -156,10 +156,15 @@ jobs:
       - name: Install Asciidoctor PDF
         run: sudo gem install asciidoctor-pdf
 
+      - name: Setup Python dependencies with uv
+        run: |
+          uv init --bare
+          uv add duckdb
+
       - name: Generating adoc
         run: |
           mkdir -p data/output
-          uv run --with duckdb src/generate-adoc.py
+          uv run src/generate-adoc.py
 
       - name: Generating PDF
         run: asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc -o data/output/doc/referentiel_metiers.pdf
