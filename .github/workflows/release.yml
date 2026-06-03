@@ -1,4 +1,4 @@
-name: CI
+name: CI - Génération des fichiers du Référentiel Métiers
 
 on:
   push:
