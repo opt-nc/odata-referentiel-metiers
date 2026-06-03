@@ -1,12 +1,10 @@
 name: CI - Synchronisation et Nettoyage
 
 on:
-  push:
-    workflow_run:
-      workflows: [ "CI - Génération des fichiers du Référentiel Métiers" ]
-      types:
-        - completed
-    branches: [ "main" ]
+  workflow_run:
+    workflows: [ "CI - Génération des fichiers du Référentiel Métiers" ]
+    types: [ completed ]
+    branches: [ main ]
 
 permissions:
   contents: write
