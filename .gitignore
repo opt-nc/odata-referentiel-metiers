@@ -1,3 +1,5 @@
 dist/
+data/output/doc
 
 .idea/
+__pycache__/

@@ -116,7 +116,7 @@ jobs:
           SDKMAN_DIR: ${{ github.workspace }}/.sdkman
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
-          
+
           BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
           $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
           $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
@@ -130,6 +130,47 @@ jobs:
             dist/ref-metiers-opt-nc-schema.pdf
             dist/ref-metiers-opt-nc-schema.png
             dist/ref-metiers-opt-nc-schema.html
+
+  generate_documentation:
+    name: Generating documentation with adoc and pdf
+    runs-on: ubuntu-latest
+    needs: [ generate_duckdb ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Download DuckDB artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: duckdb-file
+          path: dist
+
+      - name: Setup Python
+        uses: actions/setup-python@61a6322f88396a6271a6ee3b8b3e6c47a1e5c19b
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install duckdb
+
+      - name: Install Asciidoctor PDF
+        run: gem install asciidoctor-pdf
+
+      - name: Generating adoc
+        run: |
+          mkdir -p data/output
+          python3 src/generate-adoc.py
+
+      - name: Generating PDF
+        run: asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc -o data/output/doc/referentiel_metiers.pdf
+
+      - name: Upload documentation assets
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: documents-assets
+          path: |
+            data/output/doc/referentiel_metiers.pdf
+            data/output/doc/referentiel_metiers.adoc
 
   update_output_repository:
     name: Updating output repository
@@ -167,6 +208,12 @@ jobs:
           name: schemacrawler-assets
           path: dist
 
+      - name: Download documentation assets
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: documents-assets
+          path: data/output/doc
+
       - name: Push CSV outputs to main using PR
         run: |
           TARGET_BRANCH="${{ github.ref_name }}"
@@ -200,7 +247,7 @@ jobs:
       - name: Upload Release assets
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
-          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html
+          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc
 
   post-release:
     name: Post-Release Tasks
