@@ -1,0 +1,66 @@
+version: '3'
+
+vars:
+  SC_BASE: >-
+    schemacrawler
+    --info-level=standard
+    --driver=org.duckdb.DuckDBDriver
+    --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb"
+
+tasks:
+  default:
+    desc: Nettoie la base DuckDB puis génère la documentation lint.
+    cmds:
+      - task: clean
+      - task: duckdb
+      - task: doc
+    silent: true
+
+  clean:
+    desc: Nettoie les tables, vues et index de la base DuckDB.
+    cmds:
+      - rm -rf dist
+    silent: true
+
+  duckdb:
+    desc: Crée le dossier dist et initialise la base DuckDB depuis le SQL
+    cmds:
+      - mkdir -p dist
+      - mkdir -p data/output
+      - duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
+      - sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
+    silent: true
+
+  doc:
+    desc: Génère la documentation.
+    deps: [duckdb]
+    cmds:
+      - |
+        {{.SC_BASE}} \
+          --command=lint \
+          --linter-configs=.github/schemacrawler/config/schemacrawler-linter-configs.yaml \
+          --output-format=text \
+          --output-file=dist/lint_report.txt
+      - |
+        {{.SC_BASE}} \
+          --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+          --command=schema \
+          --table-types=TABLE \
+          --output-format=html \
+          --output-file=dist/ref-metiers-opt-nc-schema.html
+      - |
+        {{.SC_BASE}} \
+          --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+          --command=schema \
+          --output-format=png \
+          --output-file=dist/ref-metiers-opt-nc-schema.png
+      - |
+        {{.SC_BASE}} \
+          --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+          --command=schema \
+          --output-format=pdf \
+          --output-file=dist/ref-metiers-opt-nc-schema.pdf
+
+      - python3 src/generate-adoc.py
+      - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc
+    silent: true
