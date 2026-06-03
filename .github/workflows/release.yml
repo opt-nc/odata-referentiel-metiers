@@ -154,7 +154,7 @@ jobs:
         run: pip install duckdb
 
       - name: Install Asciidoctor PDF
-        run: gem install asciidoctor-pdf
+        run: sudo gem install asciidoctor-pdf
 
       - name: Generating adoc
         run: |
