@@ -88,8 +88,9 @@ jobs:
 
       - name: Setup SchemaCrawler executable
         run: |
-          SC_BIN="${{ github.workspace }}/.sdkman/candidates/schemacrawler/current/bin"
-          ln -s "$SC_BIN/schemacrawler.sh" "$SC_BIN/schemacrawler"
+          SC_SCRIPT=$(find /home/runner -name "schemacrawler.sh" -type f 2>/dev/null | head -n 1)
+          SC_BIN=$(dirname "$SC_SCRIPT")
+          ln -s "$SC_SCRIPT" "$SC_BIN/schemacrawler"
           echo "$SC_BIN" >> $GITHUB_PATH
 
       - id: install-schemacrawler
