@@ -86,6 +86,12 @@ jobs:
           name: duckdb-file
           path: dist
 
+      - name: Setup SchemaCrawler executable
+        run: |
+          SC_BIN="${{ github.workspace }}/.sdkman/candidates/schemacrawler/current/bin"
+          ln -s "$SC_BIN/schemacrawler.sh" "$SC_BIN/schemacrawler"
+          echo "$SC_BIN" >> $GITHUB_PATH
+
       - id: install-schemacrawler
         name: Install SchemaCrawler
         uses: schemacrawler/SchemaCrawler-Local-Action@ddd39d2e1d15cf000e0b7aaa30c6f00fe6b7f15f
@@ -98,7 +104,6 @@ jobs:
         env:
           SDKMAN_DIR: ${{ github.workspace }}/.sdkman
         run: |
-          source "$SDKMAN_DIR/bin/sdkman-init.sh"
           task schema
 
       - name: Upload SchemaCrawler assets

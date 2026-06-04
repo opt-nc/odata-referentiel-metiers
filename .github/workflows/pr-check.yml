@@ -33,6 +33,16 @@ jobs:
       - name: Install Asciidoctor PDF via APT
         run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
 
+      - name: Setup SchemaCrawler executable
+        run: |
+          SC_BIN="${{ github.workspace }}/.sdkman/candidates/schemacrawler/current/bin"
+          
+          # 1. On crée un raccourci nommé "schemacrawler" qui pointe vers "schemacrawler.sh"
+          ln -s "$SC_BIN/schemacrawler.sh" "$SC_BIN/schemacrawler"
+          
+          # 2. On rend ce dossier accessible pour l'outil Task
+          echo "$SC_BIN" >> $GITHUB_PATH
+
       - name: Build DuckDB and SQLite databases
         run: |
           task duckdb
