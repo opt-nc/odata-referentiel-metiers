@@ -1,4 +1,4 @@
-# odata-referentiel-metiers
+# `odata-referentiel-metiers`
 
 ## 📖 Context
 This repository contains the generation pipeline for the OPT-NC job reference framework.
@@ -62,7 +62,7 @@ sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
 task doc
 ```
 
-OR OTHERWISE, you can generate them with a single command:
+OR OTHERWISE, you can generate the Documentation files with a single command:
 ```bash
 task
 ```
