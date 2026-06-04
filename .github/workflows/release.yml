@@ -88,7 +88,7 @@ jobs:
 
       - id: install-schemacrawler
         name: Install SchemaCrawler
-        uses: schemacrawler/SchemaCrawler-Action@c96a1fb8e771e20e86428d04e77029c0a0a471ef
+        uses: schemacrawler/SchemaCrawler-Local-Action@ddd39d2e1d15cf000e0b7aaa30c6f00fe6b7f15f
 
       - name: Install Graphviz to generate schemas
         run: sudo apt-get update && sudo apt-get install -y graphviz
