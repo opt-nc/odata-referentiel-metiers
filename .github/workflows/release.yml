@@ -39,6 +39,9 @@ jobs:
       - name: Checkout repositories
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
 
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
       - name: Setup DuckDB action
         uses: opt-nc/setup-duckdb-action@v1.2.6
 
@@ -73,6 +76,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
 
       - name: Download DuckDB artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
@@ -118,13 +124,16 @@ jobs:
           name: duckdb-file
           path: dist
 
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: '3.14.5'
 
-      - name: Install Task
-        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+      - name: Install Asciidoctor PDF via APT
+        run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
 
       - name: Generating PDF
         run: task doc

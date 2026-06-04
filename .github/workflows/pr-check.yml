@@ -15,6 +15,11 @@ jobs:
       - name: Install Task
         uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
 
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14.5'
+
       - name: Setup DuckDB action
         uses: opt-nc/setup-duckdb-action@c64cd61a8a0af98f7d5d8b45e9dc332d250cd217
 
@@ -27,11 +32,6 @@ jobs:
 
       - name: Install Asciidoctor PDF via APT
         run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
-
-      - name: Setup Python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
-        with:
-          python-version: '3.14.5'
 
       - name: Build DuckDB and SQLite databases
         run: |
