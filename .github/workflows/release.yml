@@ -189,35 +189,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download DuckDB artifact
+      - name: Download all artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
-          name: duckdb-file
-          path: dist
+          path: artifacts
 
-      - name: Download SQLite artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: sqlite-file
-          path: dist
-
-      - name: Download CSV artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: csv-files
-          path: data/output/csv
-
-      - name: Download SchemaCrawler assets
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: schemacrawler-assets
-          path: dist
-
-      - name: Download documentation assets
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: documents-assets
-          path: data/output/doc
+      - name: Dispatch downloaded files
+        run: |
+          mkdir -p dist data/output/csv data/output/doc
+          
+          mv artifacts/duckdb-file/* dist/
+          mv artifacts/sqlite-file/* dist/
+          mv artifacts/schemacrawler-assets/* dist/
+          mv artifacts/csv-files/* data/output/csv/
+          mv artifacts/documents-assets/* data/output/doc/
+          
+          rm -rf artifacts
 
       - name: Push CSV outputs to main using PR
         run: |
