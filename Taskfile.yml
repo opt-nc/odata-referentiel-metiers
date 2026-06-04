@@ -41,7 +41,6 @@ tasks:
   schema:
     desc: Génère les schémas de la base de données avec SchemaCrawler.
     cmds:
-      - task: setup-python
       - |
         {{.SC_BASE}} \
           --command=lint \
