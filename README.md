@@ -25,7 +25,7 @@ By reusing a database and a Python script to produce the documentation, the refe
 - `Taskfile.yml`: Execute automated tasks with only one command line
 
 ## ⚙️ Prerequisites
-- Python 3.14+
+- Python 3.14.5+
 - `duckdb` to load the main database
 - `uv` to execute tasks (`pip install uv`)
 - `sqlite3` command-line interface
