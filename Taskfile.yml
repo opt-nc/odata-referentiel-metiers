@@ -73,16 +73,17 @@ tasks:
     silent: true
 
   setup-python-env:
-    desc: Initialise le projet uv et ajoute les dépendances nécessaires.
+    desc: Initialise le projet uv et installe la version Python fixée sur .python-version.
     deps: [install-uv]
     status:
       - test -f pyproject.toml
     cmds:
+      - uv venv
       - uv init --bare
     silent: true
 
   setup-python-deps:
-    desc: Initialise le projet uv et ajoute les dépendances nécessaires.
+    desc: Ajoute les dépendances Python nécessaires.
     deps: [setup-python-env]
     cmds:
       - uv add -r requirements.txt

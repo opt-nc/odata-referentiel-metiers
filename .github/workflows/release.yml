@@ -158,6 +158,7 @@ jobs:
 
       - name: Setup Python dependencies with uv
         run: |
+          uv venv
           uv init --bare
           uv add -r requirements.txt
 

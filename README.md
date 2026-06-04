@@ -26,12 +26,12 @@ By reusing a database and a Python script to produce the documentation, the refe
 
 ## ⚙️ Prerequisites
 - Python 3.14.5+
-- `duckdb` to load the main database
-- `uv` to execute tasks (`pip install uv`)
+- `duckdb` (1.5.3) to load the main database
+- `uv` (0.11.15) to execute tasks (`pip install uv`)
 - `sqlite3` command-line interface
-- `schemacrawler` to generate database schema documentation
-- `asciidoctor-pdf` to convert AsciiDoc into PDF
-- `task` (not strictly necessary, but useful to avoid typing long commands)
+- `schemacrawler` (17.11.1) to generate database schema documentation
+- `asciidoctor-pdf` (2.3.15) to convert AsciiDoc into PDF
+- `task` (3.50.0) (not strictly necessary, but useful to avoid typing long commands)
 
 ## 🚀 How to Generate the Documentation files
 1. Install the `uv` dependency:
@@ -43,6 +43,7 @@ pip install uv
 2. Initialize the project and add the DuckDB dependency:
 
 ```bash
+uv venv
 uv init --bare
 uv add -r requirements.txt
 ```
