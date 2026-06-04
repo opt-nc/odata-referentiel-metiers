@@ -34,37 +34,24 @@ By reusing a database and a Python script to produce the documentation, the refe
 - `task` (3.50.0) (not strictly necessary, but useful to avoid typing long commands)
 
 ## 🚀 How to Generate the Documentation files
-1. Install the `uv` dependency:
+The easiest and recommended way to install dependencies and generate all the files is to use [Task](https://taskfile.dev/). You can do everything with a single command:
 
 ```bash
-pip install uv
+task
 ```
 
-2. Initialize the project and add the DuckDB dependency:
+OR, if you prefer to run the steps individually :
+
+1. Build the DuckDB and SQLite databases:
 
 ```bash
-uv venv
-uv pip install -r requirements.txt
+task duckdb
 ```
 
-3. Build the DuckDB and SQLite databases:
-
-```bash
-mkdir -p dist
-mkdir -p data/output
-duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
-sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
-```
-
-4. Generate the complete documentation (using Taskfile is recommended):
+2. Generate the complete documentation (using Taskfile is recommended):
 
 ```bash
 task doc
-```
-
-OR OTHERWISE, you can generate the Documentation files with a single command:
-```bash
-task
 ```
 
 ## 📦 What the Generation Produces
@@ -79,8 +66,8 @@ task
 
 ## 🛠️ And you can also modify the Reference Framework !
 - Update the CSV sources in `data/input/` or the SQL in `src/duck.sql`
-- Run `uv task duckdb` or `task duckdb` to rebuild the database
-- Run `uv task doc` or `task doc` to regenerate the documents
+- Run `task duckdb` to rebuild the database
+- Run `task doc` to regenerate the documents
 
 ## Notes
 - The `src/generate-adoc.py` script reads the DuckDB database and builds a structured document featuring job families, active professions, and skills classified by group.

@@ -12,6 +12,7 @@ tasks:
     desc: Nettoie la base DuckDB puis génère la documentation lint.
     cmds:
       - task: clean
+      - task: duckdb
       - task: doc
     silent: true
 
@@ -32,7 +33,6 @@ tasks:
 
   doc:
     desc: Génère la documentation.
-    deps: [duckdb]
     cmds:
       - task: setup-python
       - |
