@@ -1,105 +1,4 @@
 code_competence,nom_competence,categorie_detention_id,date_mise_a_jour
-COMP574,"Valider une solution, une information",poorly_held,2025-09-03 13:38:45
-COMP7,"Conception et développement dans les environnements / langages / BDD suivants** : o Angular, Springboot, Ionic, Bootstrap, Jhipster, ELK, o Linux / Windows o JAVA, typescript/javascript, HTML, XML, CSS, Powershell o PostgreSQL, Oracle",poorly_held,2025-09-03 13:38:01
-COMP195,"Rédiger un cahier des charges, un programme d'opération, choisir un concepteur",poorly_held,2025-09-03 13:38:09
-COMP415,Ressources humaines,poorly_held,2025-10-23 07:34:15
-COMP131,Connaissance de la culture marketing,poorly_held,2026-02-04 01:30:42
-COMP311,"Connaissance des matériels et des constructeurs, de l'état de l'art des technologies et des équipements dans son domaine",poorly_held,2025-09-03 13:38:17
-COMP592,Faire preuve de leadership,well_held,2025-09-03 13:38:48
-COMP310,Connaissance des protocoles et architectures de réseaux.,poorly_held,2025-09-03 13:38:17
-COMP359,Santé/Social,poorly_held,2025-09-03 13:38:21
-COMP429,"Maitriser les systèmes d'exploitation Windows, Unix, Linux et les outils bureautiques",moderately_held,2025-09-03 13:38:28
-COMP578,Esprit d'initiative,well_held,2025-11-25 03:55:14
-COMP213,Techniques du controle interne et maitrise des risques,poorly_held,2025-09-03 13:38:10
-COMP571,Travailler en partenariat,well_held,2025-09-03 13:38:45
-COMP536,Mobiliser,poorly_held,2025-09-03 13:38:41
-COMP375,Connaissances du domaine concerné,poorly_held,2025-09-03 13:38:23
-COMP215,Analyse et évaluation des risques,poorly_held,2025-09-03 13:38:10
-COMP518,Gérer les relations medias,well_held,2025-09-03 13:38:38
-COMP572,Travailler en réseau,well_held,2025-09-03 13:38:45
-COMP145,"Matériel télécom, postal et services OPT",poorly_held,2025-09-03 13:38:06
-COMP516,"Gérer des flux, des stocks",well_held,2025-09-03 13:38:38
-COMP420,Connaissance de la cybersécurité et RGPD,poorly_held,2025-09-03 13:38:27
-COMP606,"Courage managérial - Capacité à affronter des situations difficiles, à prendre des décisions impopulaires si nécessaire, tout en restant aligné avec les valeurs et les objectifs de l'entreprise._x000D_",moderately_held,2025-09-03 13:38:50
-COMP172,Connaissance des logiciels et systèmes d'information liés aux activités confiées,moderately_held,2026-02-26 22:38:40
-COMP144,Connaissance des SI,poorly_held,2025-09-03 13:38:05
-COMP498,Dialoguer avec les représentants du personnel,poorly_held,2025-09-03 13:38:36
-COMP210,Outils de communication,well_held,2025-10-24 04:50:37
-COMP500,"Diriger une structure, un service",poorly_held,2025-09-03 13:38:36
-COMP32,Flore.,poorly_held,2025-09-03 13:38:01
-COMP573,"Utiliser un système, un matériel",well_held,2025-09-03 13:38:45
-COMP292,"Hydraulique, système de sécurité incendie et automatisme",poorly_held,2025-09-03 13:38:15
-COMP485,Constituer et entretenir un réseau,well_held,2025-09-03 13:38:34
-COMP103,Règles et normes en matière de transition énergétique,poorly_held,2025-09-03 13:38:04
-COMP577,Esprit de synthèse,well_held,2025-09-03 13:38:46
-COMP157,Connaissance des offres et services postaux,moderately_held,2025-09-03 13:38:06
-COMP130,"Connaissance des différentes techniques d'entretien dans le cadre d'études qualitatives : focus group, entretien en face à face, observation...",poorly_held,2025-09-03 13:38:05
-COMP526,Juger,well_held,2025-09-03 13:38:39
-COMP382,"Documents d'orientation générale locaux ou territoriaux (plan de développement urbain (PDU), schéma de cohérence territoriale (SCOT), etc.)",poorly_held,2025-09-03 13:38:24
-COMP121,Management/Pilotage,moderately_held,2025-09-03 13:38:04
-COMP280,"Techniques du bâtiment de second d'oeuvre : maçonnerie, plâtrerie, électricité, menuiserie, plomberie, soudure, peinture ...",poorly_held,2025-09-03 13:38:15
-COMP176,Techniques de management des ventes,moderately_held,2026-02-26 22:52:57
-COMP458,Analyser un risque,well_held,2025-09-03 13:38:31
-COMP435,Connaissance des processus de l'entreprise applicables à la gestion des incidents.,poorly_held,2026-02-26 00:28:02
-COMP256,Systèmes d'Information Géographique,poorly_held,2025-09-03 13:38:13
-COMP553,"Rechercher des données, des informations",moderately_held,2025-09-03 13:38:43
-COMP271,Comptabilité analytique,moderately_held,2026-02-26 22:38:40
-COMP107,Technique de gestion de projet et de benchmarking,poorly_held,2025-09-03 13:38:04
-COMP525,Instruire un dossier,moderately_held,2025-09-03 13:38:39
-COMP276,Procédures d'habilitation des matériels.,poorly_held,2025-09-03 13:38:14
-COMP374,"Notions de modélisation d'architecture SI et des référentiels COBIT, PMI, ITIL",poorly_held,2025-09-03 13:38:23
-COMP63,"Connaissance des architectures WOA (API REST, micro-services...), de la containerisation des applications (Docker / Kubernetes) et de DevOps",poorly_held,2025-09-03 13:38:02
-COMP569,Travailler en équipe,well_held,2026-01-12 04:17:11
-COMP1,Processus de gestion administrative d'une commande publique.,poorly_held,2025-09-03 13:38:00
-COMP611,Connaissance de l'état de l'art et d'expertise des technologies et des équipements dans son domaine,poorly_held,2026-02-04 22:18:38
-COMP517,Gérer les relations interpersonnelles,poorly_held,2025-09-03 13:38:38
-COMP428,Connaissances de l'énergie (basse tension et courant continu),moderately_held,2026-02-25 23:48:57
-COMP357,Droit du travail,well_held,2025-10-27 06:12:43
-COMP214,Modélisation des processus,poorly_held,2026-04-07 23:22:49
-COMP174,Maitrise de la comptabilité des agences,moderately_held,2025-09-03 13:38:07
-COMP79,Méthodes et techniques de contrôle,poorly_held,2025-09-03 13:38:03
-COMP217,Culture de la maitrise des risques,poorly_held,2025-09-03 13:38:10
-COMP564,Superviser une personne,poorly_held,2025-09-03 13:38:44
-COMP96,Techniques d'accueil de la clientèle,well_held,2026-02-26 22:40:36
-COMP463,"Anticiper un risque, une évolution",well_held,2025-09-03 13:38:32
-COMP284,Techniques de signalisation.,poorly_held,2025-09-03 13:38:15
-COMP14,"Architectures, protocoles et infrastructures des réseaux publics et d'entreprise",poorly_held,2025-09-03 13:38:01
-COMP385,Connaissance des bonnes pratiques de la relation avec les métiers (BRMBoK),poorly_held,2025-09-03 13:38:24
-COMP608,Connaissance d'outils mathématiques et statistiques pertinents du domaine.,poorly_held,2026-02-04 22:19:54
-COMP261,"Modes opératoires et procédures en vigueur au sein de l'établissement,",poorly_held,2025-09-03 13:38:13
-COMP552,"Réaliser une étude, une tache, un travail",poorly_held,2025-09-03 13:38:42
-COMP494,Démontrer,poorly_held,2025-09-03 13:38:35
-COMP87,Connaissance des logiciels PAO et vidéos,poorly_held,2025-09-03 13:38:03
-COMP509,Evaluer,well_held,2025-09-03 13:38:37
-COMP476,"Concevoir un outil, un dispositif",moderately_held,2025-09-03 13:38:33
-COMP455,Analyser un comportement,poorly_held,2025-09-03 13:38:31
-COMP601,"Facilitation - Aptitude à mobiliser les ressources, créer un environnement favorable, et accompagner les équipes dans l'atteinte des objectifs de manière collaborative.",moderately_held,2025-09-03 13:38:49
-COMP62,Solution d'automatisation RedHat Ansible,poorly_held,2026-02-26 04:46:53
-COMP31,Connaissance de l'organisation et des procédures de l'OPT-NC applicables à son domaine d'activité,poorly_held,2026-02-05 02:51:24
-COMP414,Connaissance des techniques et supports de communication et médias,poorly_held,2025-09-03 13:38:27
-COMP64,Connaissance des marketplace d'API et des outils d'API management,poorly_held,2025-09-03 13:38:02
-COMP228,Techniques d'animations commerciales et coaching,moderately_held,2026-02-25 04:46:51
-COMP36,Procédures administratives de la collectivité.,poorly_held,2025-09-03 13:38:01
-COMP16,Equipements réseau et sécurité Cisco et Palo Alto,poorly_held,2025-09-03 13:38:01
-COMP513,Fiabiliser,moderately_held,2025-09-03 13:38:38
-COMP520,Gérer un conflit,moderately_held,2025-09-03 13:38:38
-COMP395,Architecture des réseaux d'entreprise,poorly_held,2025-09-03 13:38:25
-COMP542,Piloter un prestataire,poorly_held,2025-09-03 13:38:41
-COMP560,Résoudre un problème,moderately_held,2025-09-03 13:38:44
-COMP447,Connaitre les outils de production BIZAGI et Entreprise Architect,poorly_held,2025-09-03 13:38:30
-COMP528,Manager,moderately_held,2025-09-03 13:38:39
-COMP579,Etre autonome,well_held,2025-09-03 13:38:46
-COMP105,Maitrise de techniques liées à l'efficacité énergétique ;,poorly_held,2025-09-03 13:38:04
-COMP117,Techniques de gestion de conflits,moderately_held,2025-09-03 13:38:04
-COMP332,Certificat d'aptitude à la conduite en sécurité (Caces),poorly_held,2025-09-03 13:38:19
-COMP490,Coordonner,moderately_held,2025-10-29 03:13:24
-COMP491,Décider,poorly_held,2025-09-03 13:38:35
-COMP156,Réglementation douanière,moderately_held,2026-01-30 04:13:36
-COMP384,Maîtrise du management des projets (PMBoK...) et des méthodes agiles (Scrum),poorly_held,2025-09-03 13:38:24
-COMP615,Méthodes de rédaction des documents techniques,poorly_held,2026-02-04 22:15:25
-COMP503,"Elaborer un plan d'action, un programme",moderately_held,2025-09-03 13:38:36
-COMP272,"Principes élémentaires de la mécanique et des systèmes électriques, hydrauliques et pneumatiques.",poorly_held,2025-09-03 13:38:14
-COMP97,"Réglementation postale, notamment en matière de distribution",moderately_held,2025-09-03 13:38:03
 COMP83,"Techniques de vente (processus de vente : prospection,accueil client, découverte du besoin, présentation produits,négociation, suivi du client...)",well_held,2026-02-25 04:46:51
 COMP602,"Prise de décision - Capacité à analyser les situations, à prendre des décisions appropriées et à en assumer la responsabilité pour garantir l'atteinte des objectifs",moderately_held,2025-09-03 13:38:49
 COMP582,Sens critique,moderately_held,2025-09-03 13:38:47
@@ -408,3 +307,104 @@ COMP43,Générale des architectures et fonctions des équipements.,poorly_held,2
 COMP554,Rédiger,well_held,2025-09-03 13:38:43
 COMP89,Aptitude à gérer le stress et les situatons d'urgence,poorly_held,2025-09-03 13:38:03
 COMP600,"Communication - Capacité à transmettre clairement des informations, à écouter activement, et à établir un échange efficace pour atteindre des objectifs communs",moderately_held,2025-09-03 13:38:49
+COMP574,"Valider une solution, une information",poorly_held,2025-09-03 13:38:45
+COMP7,"Conception et développement dans les environnements / langages / BDD suivants** : o Angular, Springboot, Ionic, Bootstrap, Jhipster, ELK, o Linux / Windows o JAVA, typescript/javascript, HTML, XML, CSS, Powershell o PostgreSQL, Oracle",poorly_held,2025-09-03 13:38:01
+COMP195,"Rédiger un cahier des charges, un programme d'opération, choisir un concepteur",poorly_held,2025-09-03 13:38:09
+COMP415,Ressources humaines,poorly_held,2025-10-23 07:34:15
+COMP131,Connaissance de la culture marketing,poorly_held,2026-02-04 01:30:42
+COMP311,"Connaissance des matériels et des constructeurs, de l'état de l'art des technologies et des équipements dans son domaine",poorly_held,2025-09-03 13:38:17
+COMP592,Faire preuve de leadership,well_held,2025-09-03 13:38:48
+COMP310,Connaissance des protocoles et architectures de réseaux.,poorly_held,2025-09-03 13:38:17
+COMP359,Santé/Social,poorly_held,2025-09-03 13:38:21
+COMP429,"Maitriser les systèmes d'exploitation Windows, Unix, Linux et les outils bureautiques",moderately_held,2025-09-03 13:38:28
+COMP578,Esprit d'initiative,well_held,2025-11-25 03:55:14
+COMP213,Techniques du controle interne et maitrise des risques,poorly_held,2025-09-03 13:38:10
+COMP571,Travailler en partenariat,well_held,2025-09-03 13:38:45
+COMP536,Mobiliser,poorly_held,2025-09-03 13:38:41
+COMP375,Connaissances du domaine concerné,poorly_held,2025-09-03 13:38:23
+COMP215,Analyse et évaluation des risques,poorly_held,2025-09-03 13:38:10
+COMP518,Gérer les relations medias,well_held,2025-09-03 13:38:38
+COMP572,Travailler en réseau,well_held,2025-09-03 13:38:45
+COMP145,"Matériel télécom, postal et services OPT",poorly_held,2025-09-03 13:38:06
+COMP516,"Gérer des flux, des stocks",well_held,2025-09-03 13:38:38
+COMP420,Connaissance de la cybersécurité et RGPD,poorly_held,2025-09-03 13:38:27
+COMP606,"Courage managérial - Capacité à affronter des situations difficiles, à prendre des décisions impopulaires si nécessaire, tout en restant aligné avec les valeurs et les objectifs de l'entreprise._x000D_",moderately_held,2025-09-03 13:38:50
+COMP172,Connaissance des logiciels et systèmes d'information liés aux activités confiées,moderately_held,2026-02-26 22:38:40
+COMP144,Connaissance des SI,poorly_held,2025-09-03 13:38:05
+COMP498,Dialoguer avec les représentants du personnel,poorly_held,2025-09-03 13:38:36
+COMP210,Outils de communication,well_held,2025-10-24 04:50:37
+COMP500,"Diriger une structure, un service",poorly_held,2025-09-03 13:38:36
+COMP32,Flore.,poorly_held,2025-09-03 13:38:01
+COMP573,"Utiliser un système, un matériel",well_held,2025-09-03 13:38:45
+COMP292,"Hydraulique, système de sécurité incendie et automatisme",poorly_held,2025-09-03 13:38:15
+COMP485,Constituer et entretenir un réseau,well_held,2025-09-03 13:38:34
+COMP103,Règles et normes en matière de transition énergétique,poorly_held,2025-09-03 13:38:04
+COMP577,Esprit de synthèse,well_held,2025-09-03 13:38:46
+COMP157,Connaissance des offres et services postaux,moderately_held,2025-09-03 13:38:06
+COMP130,"Connaissance des différentes techniques d'entretien dans le cadre d'études qualitatives : focus group, entretien en face à face, observation...",poorly_held,2025-09-03 13:38:05
+COMP526,Juger,well_held,2025-09-03 13:38:39
+COMP382,"Documents d'orientation générale locaux ou territoriaux (plan de développement urbain (PDU), schéma de cohérence territoriale (SCOT), etc.)",poorly_held,2025-09-03 13:38:24
+COMP121,Management/Pilotage,moderately_held,2025-09-03 13:38:04
+COMP280,"Techniques du bâtiment de second d'oeuvre : maçonnerie, plâtrerie, électricité, menuiserie, plomberie, soudure, peinture ...",poorly_held,2025-09-03 13:38:15
+COMP176,Techniques de management des ventes,moderately_held,2026-02-26 22:52:57
+COMP458,Analyser un risque,well_held,2025-09-03 13:38:31
+COMP435,Connaissance des processus de l'entreprise applicables à la gestion des incidents.,poorly_held,2026-02-26 00:28:02
+COMP256,Systèmes d'Information Géographique,poorly_held,2025-09-03 13:38:13
+COMP553,"Rechercher des données, des informations",moderately_held,2025-09-03 13:38:43
+COMP271,Comptabilité analytique,moderately_held,2026-02-26 22:38:40
+COMP107,Technique de gestion de projet et de benchmarking,poorly_held,2025-09-03 13:38:04
+COMP525,Instruire un dossier,moderately_held,2025-09-03 13:38:39
+COMP276,Procédures d'habilitation des matériels.,poorly_held,2025-09-03 13:38:14
+COMP374,"Notions de modélisation d'architecture SI et des référentiels COBIT, PMI, ITIL",poorly_held,2025-09-03 13:38:23
+COMP63,"Connaissance des architectures WOA (API REST, micro-services...), de la containerisation des applications (Docker / Kubernetes) et de DevOps",poorly_held,2025-09-03 13:38:02
+COMP569,Travailler en équipe,well_held,2026-01-12 04:17:11
+COMP1,Processus de gestion administrative d'une commande publique.,poorly_held,2025-09-03 13:38:00
+COMP611,Connaissance de l'état de l'art et d'expertise des technologies et des équipements dans son domaine,poorly_held,2026-02-04 22:18:38
+COMP517,Gérer les relations interpersonnelles,poorly_held,2025-09-03 13:38:38
+COMP428,Connaissances de l'énergie (basse tension et courant continu),moderately_held,2026-02-25 23:48:57
+COMP357,Droit du travail,well_held,2025-10-27 06:12:43
+COMP214,Modélisation des processus,poorly_held,2026-04-07 23:22:49
+COMP174,Maitrise de la comptabilité des agences,moderately_held,2025-09-03 13:38:07
+COMP79,Méthodes et techniques de contrôle,poorly_held,2025-09-03 13:38:03
+COMP217,Culture de la maitrise des risques,poorly_held,2025-09-03 13:38:10
+COMP564,Superviser une personne,poorly_held,2025-09-03 13:38:44
+COMP96,Techniques d'accueil de la clientèle,well_held,2026-02-26 22:40:36
+COMP463,"Anticiper un risque, une évolution",well_held,2025-09-03 13:38:32
+COMP284,Techniques de signalisation.,poorly_held,2025-09-03 13:38:15
+COMP14,"Architectures, protocoles et infrastructures des réseaux publics et d'entreprise",poorly_held,2025-09-03 13:38:01
+COMP385,Connaissance des bonnes pratiques de la relation avec les métiers (BRMBoK),poorly_held,2025-09-03 13:38:24
+COMP608,Connaissance d'outils mathématiques et statistiques pertinents du domaine.,poorly_held,2026-02-04 22:19:54
+COMP261,"Modes opératoires et procédures en vigueur au sein de l'établissement,",poorly_held,2025-09-03 13:38:13
+COMP552,"Réaliser une étude, une tache, un travail",poorly_held,2025-09-03 13:38:42
+COMP494,Démontrer,poorly_held,2025-09-03 13:38:35
+COMP87,Connaissance des logiciels PAO et vidéos,poorly_held,2025-09-03 13:38:03
+COMP509,Evaluer,well_held,2025-09-03 13:38:37
+COMP476,"Concevoir un outil, un dispositif",moderately_held,2025-09-03 13:38:33
+COMP455,Analyser un comportement,poorly_held,2025-09-03 13:38:31
+COMP601,"Facilitation - Aptitude à mobiliser les ressources, créer un environnement favorable, et accompagner les équipes dans l'atteinte des objectifs de manière collaborative.",moderately_held,2025-09-03 13:38:49
+COMP62,Solution d'automatisation RedHat Ansible,poorly_held,2026-02-26 04:46:53
+COMP31,Connaissance de l'organisation et des procédures de l'OPT-NC applicables à son domaine d'activité,poorly_held,2026-02-05 02:51:24
+COMP414,Connaissance des techniques et supports de communication et médias,poorly_held,2025-09-03 13:38:27
+COMP64,Connaissance des marketplace d'API et des outils d'API management,poorly_held,2025-09-03 13:38:02
+COMP228,Techniques d'animations commerciales et coaching,moderately_held,2026-02-25 04:46:51
+COMP36,Procédures administratives de la collectivité.,poorly_held,2025-09-03 13:38:01
+COMP16,Equipements réseau et sécurité Cisco et Palo Alto,poorly_held,2025-09-03 13:38:01
+COMP513,Fiabiliser,moderately_held,2025-09-03 13:38:38
+COMP520,Gérer un conflit,moderately_held,2025-09-03 13:38:38
+COMP395,Architecture des réseaux d'entreprise,poorly_held,2025-09-03 13:38:25
+COMP542,Piloter un prestataire,poorly_held,2025-09-03 13:38:41
+COMP560,Résoudre un problème,moderately_held,2025-09-03 13:38:44
+COMP447,Connaitre les outils de production BIZAGI et Entreprise Architect,poorly_held,2025-09-03 13:38:30
+COMP528,Manager,moderately_held,2025-09-03 13:38:39
+COMP579,Etre autonome,well_held,2025-09-03 13:38:46
+COMP105,Maitrise de techniques liées à l'efficacité énergétique ;,poorly_held,2025-09-03 13:38:04
+COMP117,Techniques de gestion de conflits,moderately_held,2025-09-03 13:38:04
+COMP332,Certificat d'aptitude à la conduite en sécurité (Caces),poorly_held,2025-09-03 13:38:19
+COMP490,Coordonner,moderately_held,2025-10-29 03:13:24
+COMP491,Décider,poorly_held,2025-09-03 13:38:35
+COMP156,Réglementation douanière,moderately_held,2026-01-30 04:13:36
+COMP384,Maîtrise du management des projets (PMBoK...) et des méthodes agiles (Scrum),poorly_held,2025-09-03 13:38:24
+COMP615,Méthodes de rédaction des documents techniques,poorly_held,2026-02-04 22:15:25
+COMP503,"Elaborer un plan d'action, un programme",moderately_held,2025-09-03 13:38:36
+COMP272,"Principes élémentaires de la mécanique et des systèmes électriques, hydrauliques et pneumatiques.",poorly_held,2025-09-03 13:38:14
+COMP97,"Réglementation postale, notamment en matière de distribution",moderately_held,2025-09-03 13:38:03
