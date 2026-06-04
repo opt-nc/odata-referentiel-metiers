@@ -32,8 +32,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  generate_duckdb:
-    name: Generating DuckDB File
+  generate_databases:
+    name: Generating DuckDB and SQLite databases
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repositories
@@ -43,10 +43,10 @@ jobs:
         uses: opt-nc/setup-duckdb-action@v1.2.6
 
       - name: Load DuckDB database
-        run: |
-          mkdir dist
-          mkdir -p data/output
-          duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
+        run: task duckdb
+
+      - name: Load SQLite database
+        run: task sqlite
 
       - name: Upload DuckDB artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -54,42 +54,22 @@ jobs:
           name: duckdb-file
           path: dist/ref-metiers-opt-nc.duckdb
 
-      - name: Upload CSV artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: csv-files
-          path: data/output/csv/
-
-  generate_sqlite:
-    name: Generating SQLite File
-    runs-on: ubuntu-latest
-    needs: generate_duckdb
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-
-      - name: Download CSV artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: csv-files
-          path: data/output/csv
-
-      - name: Load SQLite database
-        run: |
-          mkdir dist
-          mkdir -p data/output
-          sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
-
       - name: Upload SQLite artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
+      - name: Upload CSV artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: csv-files
+          path: data/output/csv/
+
   generate_schemas:
     name: Generating DuckDB Schemas with SchemaCrawler
     runs-on: ubuntu-slim
-    needs: [ generate_duckdb ]
+    needs: [ generate_databases ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -102,7 +82,7 @@ jobs:
 
       - id: install-schemacrawler
         name: Install SchemaCrawler
-        uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
+        uses: schemacrawler/SchemaCrawler-Action@c96a1fb8e771e20e86428d04e77029c0a0a471ef
 
       - name: Install Graphviz to generate schemas
         run: sudo apt-get update && sudo apt-get install -y graphviz
@@ -113,10 +93,7 @@ jobs:
           SDKMAN_DIR: ${{ github.workspace }}/.sdkman
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
-          BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
-          $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
-          $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
-          $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
+          task schema
 
       - name: Upload SchemaCrawler assets
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -130,7 +107,7 @@ jobs:
   generate_documentation:
     name: Generating documentation with adoc and pdf
     runs-on: ubuntu-latest
-    needs: [ generate_duckdb ]
+    needs: [ generate_databases ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -146,24 +123,11 @@ jobs:
         with:
           python-version: '3.14.5'
 
-      - name: Install uv
-        run: pip install uv
-
-      - name: Install Asciidoctor PDF via APT
-        run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
-
-      - name: Setup Python dependencies with uv
-        run: |
-          uv venv
-          uv pip install -r requirements.txt
-
-      - name: Generating adoc
-        run: |
-          mkdir -p data/output
-          uv run src/generate-adoc.py
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
 
       - name: Generating PDF
-        run: asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc -o data/output/doc/referentiel_metiers.pdf
+        run: task doc
 
       - name: Upload documentation assets
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -176,7 +140,7 @@ jobs:
   update_output_repository:
     name: Updating output repository
     runs-on: ubuntu-latest
-    needs: [ release, generate_duckdb, generate_sqlite, generate_schemas, generate_documentation ]
+    needs: [ release, generate_databases, generate_schemas, generate_documentation ]
     if: needs.release.outputs.new_release_published == 'true'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
