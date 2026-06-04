@@ -32,7 +32,7 @@ tasks:
 
   doc:
     desc: Génère la documentation.
-    deps: [duckdb, setup-python]
+    deps: [duckdb, setup-python-deps]
     cmds:
       - |
         {{.SC_BASE}} \
@@ -72,12 +72,18 @@ tasks:
       - pip install uv
     silent: true
 
-  setup-python:
+  setup-python-env:
     desc: Initialise le projet uv et ajoute les dépendances nécessaires.
     deps: [install-uv]
     status:
       - test -f pyproject.toml
     cmds:
       - uv init --bare
-      - uv add duckdb
+    silent: true
+
+  setup-python-deps:
+    desc: Initialise le projet uv et ajoute les dépendances nécessaires.
+    deps: [setup-python-env]
+    cmds:
+      - uv add -r requirements.txt
     silent: true

@@ -159,7 +159,7 @@ jobs:
       - name: Setup Python dependencies with uv
         run: |
           uv init --bare
-          uv add duckdb
+          uv add -r requirements.txt
 
       - name: Generating adoc
         run: |

@@ -44,7 +44,7 @@ pip install uv
 
 ```bash
 uv init --bare
-uv add duckdb
+uv add -r requirements.txt
 ```
 
 3. Build the DuckDB and SQLite databases:
