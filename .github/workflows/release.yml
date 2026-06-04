@@ -159,8 +159,7 @@ jobs:
       - name: Setup Python dependencies with uv
         run: |
           uv venv
-          uv init --bare
-          uv add -r requirements.txt
+          uv pip install -r requirements.txt
 
       - name: Generating adoc
         run: |

@@ -32,8 +32,9 @@ tasks:
 
   doc:
     desc: Génère la documentation.
-    deps: [duckdb, setup-python-deps]
+    deps: [duckdb]
     cmds:
+      - task: setup-python
       - |
         {{.SC_BASE}} \
           --command=lint \
@@ -72,19 +73,12 @@ tasks:
       - pip install uv
     silent: true
 
-  setup-python-env:
-    desc: Initialise le projet uv et installe la version Python fixée sur .python-version.
+
+
+  setup-python:
+    desc: Install la version Python fixée sur .python-version et ajoute les dépendances Python nécessaires.
     deps: [install-uv]
-    status:
-      - test -f pyproject.toml
     cmds:
       - uv venv
-      - uv init --bare
-    silent: true
-
-  setup-python-deps:
-    desc: Ajoute les dépendances Python nécessaires.
-    deps: [setup-python-env]
-    cmds:
-      - uv add -r requirements.txt
+      - uv pip install -r requirements.txt
     silent: true
