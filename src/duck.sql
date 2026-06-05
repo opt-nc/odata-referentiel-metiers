@@ -522,11 +522,22 @@ AND (m.code_metier, gc.libelle) NOT IN (
 )
 ORDER BY m.code_metier;
 
+COMMENT ON VIEW vw_groupes_manquants_par_metier IS 'Liste les catégories de compétences (Savoir, Savoir-faire, etc.) manquantes pour chaque métier, en excluant légitimement la catégorie Manager.';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.code_metier IS 'Code unique du métier analysé';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.metier_collaborateur IS 'Nom usuel du métier analysé';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.groupe_manquant IS 'Le groupe de compétences qui fait défaut à ce métier (ex: Savoir-être)';
+
 CREATE OR REPLACE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
 SELECT m.code_metier, m.metier_collaborateur, mc.code_competence, mc.nom_competence
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 WHERE mc.niveau_requis = 0;
+
+COMMENT ON VIEW vw_metiers_qui_possede_niveau_competence_0 IS 'Vue de contrôle de la qualité des données listant les associations métier-compétence dont le niveau requis est anormalement à 0.';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.code_metier IS 'Code du métier impacté par l''anomalie de saisie';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.metier_collaborateur IS 'Nom du métier impacté';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.code_competence IS 'Code de la compétence associée';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.nom_competence IS 'Nom de la compétence dont le niveau n''a pas été correctement évalué (0)';
 
 -- REPORTING
 FROM vw_metiers_orphelins;
