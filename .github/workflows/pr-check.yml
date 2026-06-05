@@ -5,74 +5,38 @@ on:
     branches: [ "main", "develop" ]
 
 jobs:
-  generate_duckdb:
-    name: Generating DuckDB File
+  verify:
+    name: Verify Generation Pipeline
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repositories
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
 
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14.5'
+
       - name: Setup DuckDB action
-        uses: opt-nc/setup-duckdb-action@v1.2.6
-
-      - name: Load DuckDB database
-        run: |
-          mkdir dist
-          mkdir -p data/output
-          duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
-
-      - name: Upload DuckDB artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: duckdb-file
-          path: dist/ref-metiers-opt-nc.duckdb
-
-      - name: Upload CSV artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: csv-files
-          path: data/output/csv/
-
-  generate_sqlite:
-    name: Generating SQLite File
-    runs-on: ubuntu-latest
-    needs: generate_duckdb
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-
-      - name: Download CSV artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: csv-files
-          path: data/output/csv
-
-      - name: Load SQLite database
-        run: |
-          mkdir dist
-          mkdir -p data/output
-          sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
-
-  generate_schemas:
-    name: Generating DuckDB Schemas with SchemaCrawler
-    runs-on: ubuntu-slim
-    needs: [ generate_duckdb ]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-
-      - name: Download DuckDB artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: duckdb-file
-          path: dist
+        uses: opt-nc/setup-duckdb-action@c64cd61a8a0af98f7d5d8b45e9dc332d250cd217
 
       - id: install-schemacrawler
         name: Install SchemaCrawler
-        uses: schemacrawler/SchemaCrawler-Local-Action@v17.11.2
+        uses: schemacrawler/SchemaCrawler-Local-Action@ddd39d2e1d15cf000e0b7aaa30c6f00fe6b7f15f
 
       - name: Install Graphviz to generate schemas
         run: sudo apt-get update && sudo apt-get install -y graphviz
+
+      - name: Install Asciidoctor PDF via APT
+        run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
+
+      - name: Build DuckDB and SQLite databases
+        run: |
+          task duckdb
+          task sqlite
 
       - name: Generating SchemaCrawler schemas
         shell: bash
@@ -80,45 +44,14 @@ jobs:
           SDKMAN_DIR: ${{ github.workspace }}/.sdkman
         run: |
           source "$SDKMAN_DIR/bin/sdkman-init.sh"
+          
           BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
           $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
           $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
           $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
 
-  generate_documentation:
-    name: Generating documentation with adoc and pdf
-    runs-on: ubuntu-latest
-    needs: [ generate_duckdb ]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-
-      - name: Download DuckDB artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: duckdb-file
-          path: dist
-
-      - name: Setup Python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
-        with:
-          python-version: '3.14.5'
-
-      - name: Install uv
-        run: pip install uv
-
-      - name: Install Asciidoctor PDF via APT
-        run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
-
-      - name: Setup Python dependencies with uv
+      - name: Generate documentation
         run: |
-          uv venv
-          uv pip install -r requirements.txt
-
-      - name: Generating adoc
-        run: |
-          mkdir -p data/output
-          uv run src/generate-adoc.py
-
-      - name: Generating PDF
-        run: asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc -o data/output/doc/referentiel_metiers.pdf
+          task doc
+      
+          

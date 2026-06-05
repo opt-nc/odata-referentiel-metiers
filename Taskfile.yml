@@ -9,10 +9,12 @@ vars:
 
 tasks:
   default:
-    desc: Nettoie la base DuckDB puis génère la documentation lint.
+    desc: Recrée les bases de données DuckDB et SQLite, puis génère la documentation complète du projet.
     cmds:
       - task: clean
       - task: duckdb
+      - task: sqlite
+      - task: schema
       - task: doc
     silent: true
 
@@ -28,13 +30,17 @@ tasks:
       - mkdir -p dist
       - mkdir -p data/output
       - duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
+    silent: true
+
+  sqlite:
+    desc: Initialise la base SQLite depuis les csv générés par DuckDB.
+    cmds:
       - sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
     silent: true
 
-  doc:
-    desc: Génère la documentation.
+  schema:
+    desc: Génère les schémas de la base de données avec SchemaCrawler.
     cmds:
-      - task: setup-python
       - |
         {{.SC_BASE}} \
           --command=lint \
@@ -60,6 +66,12 @@ tasks:
           --command=schema \
           --output-format=pdf \
           --output-file=dist/ref-metiers-opt-nc-schema.pdf
+    silent: true
+
+  doc:
+    desc: Génère la documentation PDF avec Asciidoctor.
+    cmds:
+      - task: setup-python
 
       - uv run src/generate-adoc.py
       - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc
@@ -72,8 +84,6 @@ tasks:
     cmds:
       - pip install uv
     silent: true
-
-
 
   setup-python:
     desc: Install la version Python fixée sur .python-version et ajoute les dépendances Python nécessaires.
