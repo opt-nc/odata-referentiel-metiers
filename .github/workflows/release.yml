@@ -1,0 +1,215 @@
+name: CI - Génération des fichiers et Release
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.release.outputs.new_release_published }}
+      new_release_version: ${{ steps.release.outputs.new_release_version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Semantic Release
+        id: release
+        uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90
+        with:
+          extra_plugins: |
+            @semantic-release/exec
+            @semantic-release/git
+            @semantic-release/release-notes-generator
+            conventional-changelog-conventionalcommits
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  generate_databases:
+    name: Generating DuckDB and SQLite databases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repositories
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
+      - name: Setup DuckDB action
+        uses: opt-nc/setup-duckdb-action@v1.2.6
+
+      - name: Load DuckDB database
+        run: task duckdb
+
+      - name: Load SQLite database
+        run: task sqlite
+
+      - name: Upload DuckDB artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: duckdb-file
+          path: dist/ref-metiers-opt-nc.duckdb
+
+      - name: Upload SQLite artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: sqlite-file
+          path: dist/ref-metiers-opt-nc.sqlite
+
+      - name: Upload CSV artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: csv-files
+          path: data/output/csv/
+
+  generate_schemas:
+    name: Generating DuckDB Schemas with SchemaCrawler
+    runs-on: ubuntu-slim
+    needs: [ generate_databases ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
+      - name: Download DuckDB artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: duckdb-file
+          path: dist
+
+      - id: install-schemacrawler
+        name: Install SchemaCrawler
+        uses: schemacrawler/SchemaCrawler-Local-Action@ddd39d2e1d15cf000e0b7aaa30c6f00fe6b7f15f
+
+      - name: Install Graphviz to generate schemas
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+
+      - name: Generating SchemaCrawler schemas
+        shell: bash
+        env:
+          SDKMAN_DIR: ${{ github.workspace }}/.sdkman
+        run: |
+          source "$SDKMAN_DIR/bin/sdkman-init.sh"
+          
+          BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
+          $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
+          $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
+          $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
+
+      - name: Upload SchemaCrawler assets
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: schemacrawler-assets
+          path: |
+            dist/ref-metiers-opt-nc-schema.pdf
+            dist/ref-metiers-opt-nc-schema.png
+            dist/ref-metiers-opt-nc-schema.html
+
+  generate_documentation:
+    name: Generating documentation with adoc and pdf
+    runs-on: ubuntu-latest
+    needs: [ generate_databases ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+
+      - name: Download DuckDB artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: duckdb-file
+          path: dist
+
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14.5'
+
+      - name: Install Asciidoctor PDF via APT
+        run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
+
+      - name: Generating PDF
+        run: task doc
+
+      - name: Upload documentation assets
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: documents-assets
+          path: |
+            data/output/doc/referentiel_metiers.pdf
+            data/output/doc/referentiel_metiers.adoc
+
+  update_output_repository:
+    name: Updating output repository
+    runs-on: ubuntu-latest
+    needs: [ release, generate_databases, generate_schemas, generate_documentation ]
+    if: needs.release.outputs.new_release_published == 'true'
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        with:
+          fetch-depth: 0
+
+      - name: Download all artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          path: artifacts
+
+      - name: Dispatch downloaded files
+        run: |
+          mkdir -p dist data/output/csv data/output/doc
+          
+          mv artifacts/duckdb-file/* dist/
+          mv artifacts/sqlite-file/* dist/
+          mv artifacts/schemacrawler-assets/* dist/
+          mv artifacts/csv-files/* data/output/csv/
+          mv artifacts/documents-assets/* data/output/doc/
+          
+          rm -rf artifacts
+
+      - name: Push CSV outputs to main using PR
+        run: |
+          TARGET_BRANCH="${{ github.ref_name }}"
+          BRANCH_NAME="data-update-${TARGET_BRANCH}-${{ github.run_number }}"
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git fetch origin
+          git checkout -b $BRANCH_NAME
+
+          git add data/output/csv/about.csv
+          git add data/output/csv/categorie_detention.csv
+          git add data/output/csv/competence.csv
+          git add data/output/csv/competence_utilisateur.csv
+          git add data/output/csv/famille_metier.csv
+          git add data/output/csv/gem_competence.csv
+          git add data/output/csv/gem_metier.csv
+          git add data/output/csv/gem_metier_competence.csv
+          git add data/output/csv/groupe_competence.csv
+          git add data/output/csv/metier.csv
+          git add data/output/csv/metier_competence.csv
+          git add data/output/csv/niveau_description_competence.csv
+          git add data/output/csv/referentiel_competence.csv
+          git add data/output/csv/statut_metier.csv
+
+          git commit -m "Updated output's files for $TARGET_BRANCH"
+          git push origin $BRANCH_NAME
+          gh pr create --head $BRANCH_NAME --base $TARGET_BRANCH --title "Updated $TARGET_BRANCH branch's output's files" --body "Cette Pull Request a été générée automatiquement par la CI. Elle contient les fichiers CSV mis à jour."
+          gh pr merge $BRANCH_NAME --merge --delete-branch
+
+      - name: Upload Release assets
+        run: |
+          TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
+          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc

@@ -1,0 +1,47 @@
+name: CI - Synchronisation et Nettoyage
+
+on:
+  workflow_run:
+    workflows: [ "CI - Génération des fichiers et Release" ]
+    types: [ completed ]
+    branches: [ main ]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  post-release:
+    name: Post-Release Tasks
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        with:
+          fetch-depth: 0
+
+      - name: Merge main back to dev to avoid conflicts
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git fetch
+          git checkout develop
+          git branch --set-upstream-to=origin/develop develop
+          git pull
+          git merge --no-ff main -m "Auto-merge main back to dev"
+          git push
+
+  cleanup:
+    name: Cleanup Pre-Releases
+    runs-on: ubuntu-latest
+    needs: [ post-release ]
+    steps:
+      - name: Delete pre-releases
+        uses: dev-drprasad/delete-older-releases@dfbe6be2a006e9475dfcbe5b8d201f1824c2a9fe
+        with:
+          delete_tag_pattern: develop
+          keep_latest: 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
