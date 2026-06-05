@@ -139,7 +139,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                 ORDER BY gc.libelle
             """, [code_metier]).fetchall()
 
-            # Savoir, Savoire faire, Savoir être
+            # Savoir, Savoir faire, Savoir être
             for (libelle_groupe,) in groupes:
                 f.write(f"==== icon:book[set=fas, role=\"brown\"]  {libelle_groupe.capitalize()}\n\n")
 
@@ -153,7 +153,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
 
                 competences = conn.execute("""
-                    SELECT mc.nom_competence, mc.niveau_requis
+                    SELECT DISTINCT mc.nom_competence, mc.niveau_requis
                     FROM metier_competence mc
                     JOIN competence c ON mc.code_competence = c.code_competence
                     JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
