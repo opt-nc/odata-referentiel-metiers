@@ -86,13 +86,6 @@ jobs:
           name: duckdb-file
           path: dist
 
-      - name: Setup SchemaCrawler executable
-        run: |
-          SC_SCRIPT=$(find /home/runner -name "schemacrawler.sh" -type f 2>/dev/null | head -n 1)
-          SC_BIN=$(dirname "$SC_SCRIPT")
-          ln -s "$SC_SCRIPT" "$SC_BIN/schemacrawler"
-          echo "$SC_BIN" >> $GITHUB_PATH
-
       - id: install-schemacrawler
         name: Install SchemaCrawler
         uses: schemacrawler/SchemaCrawler-Local-Action@ddd39d2e1d15cf000e0b7aaa30c6f00fe6b7f15f
@@ -105,7 +98,12 @@ jobs:
         env:
           SDKMAN_DIR: ${{ github.workspace }}/.sdkman
         run: |
-          task schema
+          source "$SDKMAN_DIR/bin/sdkman-init.sh"
+          
+          BASE_CMD="schemacrawler.sh --info-level=standard --driver=org.duckdb.DuckDBDriver --url=jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb --config-file=.github/schemacrawler/config/schemacrawler.config.properties --command=schema"
+          $BASE_CMD --output-format=pdf --output-file=dist/ref-metiers-opt-nc-schema.pdf
+          $BASE_CMD --output-format=png --output-file=dist/ref-metiers-opt-nc-schema.png
+          $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
 
       - name: Upload SchemaCrawler assets
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
