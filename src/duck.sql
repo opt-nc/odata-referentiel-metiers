@@ -359,8 +359,8 @@ CREATE TABLE metier_competence (
     code_metier VARCHAR NOT NULL,
     code_competence VARCHAR NOT NULL,
     nom_competence VARCHAR NOT NULL,
-    poids DOUBLE,
-    niveau_requis DOUBLE,
+    poids DOUBLE NOT NULL,
+    niveau_requis DOUBLE NOT NULL,
     est_actif BOOLEAN NOT NULL,
     date_creation TIMESTAMP NOT NULL,
     date_mise_a_jour TIMESTAMP NOT NULL,
@@ -379,8 +379,8 @@ SELECT
     code_metier AS code_metier,
     code_competence AS code_competence,
     nom_competence AS nom_competence,
-    poids,
-    niveau_requis,
+    CASE WHEN poids IS NULL THEN 0 ELSE poids END AS poids,
+    CASE WHEN niveau_requis IS NULL THEN 0 ELSE niveau_requis END AS niveau_requis,
     relation_metier_competence_active AS est_actif,
     date_creation,
     date_mise_a_jour
@@ -506,6 +506,27 @@ COMMENT ON COLUMN vw_metiers_orphelins.metier_collaborateur IS 'Nom du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.famille_metier IS 'Famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.statut_metier IS 'Statut de publication du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier est actif';
+
+CREATE OR REPLACE VIEW vw_groupes_manquants_par_metier AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    gc.libelle AS groupe_manquant
+FROM metier m, groupe_competence gc
+WHERE gc.libelle <> 'Manager'
+AND (m.code_metier, gc.libelle) NOT IN (
+    SELECT mc.code_metier, gc_sub.libelle
+    FROM metier_competence mc
+    JOIN competence c ON mc.code_competence = c.code_competence
+    JOIN groupe_competence gc_sub ON c.groupe_competence_id = gc_sub.groupe_competence_id
+)
+ORDER BY m.code_metier;
+
+CREATE OR REPLACE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
+SELECT m.code_metier, m.metier_collaborateur, mc.code_competence, mc.nom_competence
+FROM metier m
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+WHERE mc.niveau_requis = 0;
 
 -- REPORTING
 FROM vw_metiers_orphelins;
