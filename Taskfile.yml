@@ -89,6 +89,6 @@ tasks:
     desc: Install la version Python fixée sur .python-version et ajoute les dépendances Python nécessaires.
     deps: [install-uv]
     cmds:
-      - uv venv
+      - uv venv --clear
       - uv pip install -r requirements.txt
     silent: true
