@@ -1,0 +1,94 @@
+version: '3'
+
+vars:
+  SC_BASE: >-
+    schemacrawler
+    --info-level=standard
+    --driver=org.duckdb.DuckDBDriver
+    --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb"
+
+tasks:
+  default:
+    desc: Recrée les bases de données DuckDB et SQLite, puis génère la documentation complète du projet.
+    cmds:
+      - task: clean
+      - task: duckdb
+      - task: sqlite
+      - task: schema
+      - task: doc
+    silent: true
+
+  clean:
+    desc: Nettoie les tables, vues et index de la base DuckDB.
+    cmds:
+      - rm -rf dist
+    silent: true
+
+  duckdb:
+    desc: Crée le dossier dist et initialise la base DuckDB depuis le SQL
+    cmds:
+      - mkdir -p dist
+      - mkdir -p data/output
+      - duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
+    silent: true
+
+  sqlite:
+    desc: Initialise la base SQLite depuis les csv générés par DuckDB.
+    cmds:
+      - sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
+    silent: true
+
+  schema:
+    desc: Génère les schémas de la base de données avec SchemaCrawler.
+    cmds:
+      - |
+        {{.SC_BASE}} \
+          --command=lint \
+          --linter-configs=.github/schemacrawler/config/schemacrawler-linter-configs.yaml \
+          --output-format=text \
+          --output-file=dist/lint_report.txt
+      - |
+        {{.SC_BASE}} \
+          --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+          --command=schema \
+          --table-types=TABLE \
+          --output-format=html \
+          --output-file=dist/ref-metiers-opt-nc-schema.html
+      - |
+        {{.SC_BASE}} \
+          --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+          --command=schema \
+          --output-format=png \
+          --output-file=dist/ref-metiers-opt-nc-schema.png
+      - |
+        {{.SC_BASE}} \
+          --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
+          --command=schema \
+          --output-format=pdf \
+          --output-file=dist/ref-metiers-opt-nc-schema.pdf
+    silent: true
+
+  doc:
+    desc: Génère la documentation PDF avec Asciidoctor.
+    cmds:
+      - task: setup-python
+
+      - uv run src/generate-adoc.py
+      - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc
+    silent: true
+
+  install-uv:
+    desc: Vérifie si uv est installé, sinon l'installe.
+    status:
+      - uv --version 
+    cmds:
+      - pip install uv
+    silent: true
+
+  setup-python:
+    desc: Install la version Python fixée sur .python-version et ajoute les dépendances Python nécessaires.
+    deps: [install-uv]
+    cmds:
+      - uv venv --clear
+      - uv pip install -r requirements.txt
+    silent: true

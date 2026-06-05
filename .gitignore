@@ -1,0 +1,9 @@
+dist/
+data/output/doc
+
+.idea/
+__pycache__/
+.venv/
+
+pyproject.toml
+uv.lock
