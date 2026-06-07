@@ -98,8 +98,8 @@ CREATE TABLE metier_competence (
     code_metier TEXT NOT NULL,
     code_competence TEXT NOT NULL,
     nom_competence TEXT NOT NULL,
-    poids REAL,
-    niveau_requis REAL,
+    poids REAL NOT NULL,
+    niveau_requis REAL NOT NULL,
     est_actif INTEGER NOT NULL,
     date_creation TEXT NOT NULL,
     date_mise_a_jour TEXT NOT NULL,
@@ -194,3 +194,24 @@ JOIN statut_metier stm ON m.statut_metier_id = stm.statut_metier_id
 WHERE NOT EXISTS (
     SELECT 1 FROM metier_competence mc WHERE mc.code_metier = m.code_metier
 );
+
+CREATE VIEW vw_groupes_manquants_par_metier AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    gc.libelle AS groupe_manquant
+FROM metier m, groupe_competence gc
+WHERE gc.libelle <> 'Manager'
+  AND (m.code_metier, gc.libelle) NOT IN (
+    SELECT mc.code_metier, gc_sub.libelle
+    FROM metier_competence mc
+    JOIN competence c ON mc.code_competence = c.code_competence
+    JOIN groupe_competence gc_sub ON c.groupe_competence_id = gc_sub.groupe_competence_id
+)
+ORDER BY m.code_metier;
+
+CREATE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
+SELECT m.code_metier, m.metier_collaborateur, mc.code_competence, mc.nom_competence
+FROM metier m
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+WHERE mc.niveau_requis = 0;
