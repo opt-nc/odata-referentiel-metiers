@@ -34,6 +34,32 @@ footer_recto_right_content: '{page-number}'
 footer_verso_left_content: ''
 footer_verso_right_content: '{page-number}'
 
+role:
+  vente-relation-client:
+    font-color: '#7A004B'
+  marketing-et-communication:
+    font-color: '#F699D2'
+  services-bancaires:
+    font-color: '#009CAB'
+  activites-postales:
+    font-color: '#FBC109'
+  telecommunications:
+    font-color: '#FF0005'
+  administration:
+    font-color: '#007A3F'
+  ressources-humaines:
+    font-color: '#B87BD8'
+  finances-budget:
+    font-color: '#F16B20'
+  patrimoine-bati:
+    font-color: '#88B04B'
+  logistique:
+    font-color: '#7FC9CB'
+  systemes-d-information:
+    font-color: '#0F4C81'
+  pilotage:
+    font-color: '#FFBE98'
+
 role_red_font_color: #E53935
 role_orange_font_color: #FB8C00
 role_yellow_font_color: #FFC107
