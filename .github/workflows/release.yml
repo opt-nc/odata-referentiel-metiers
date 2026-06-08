@@ -58,12 +58,14 @@ jobs:
           path: dist/ref-metiers-opt-nc.duckdb
 
       - name: Upload SQLite artifact
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
       - name: Upload CSV artifacts
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: csv-files
@@ -106,6 +108,7 @@ jobs:
           $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
 
       - name: Upload SchemaCrawler assets
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: schemacrawler-assets
@@ -143,6 +146,7 @@ jobs:
         run: task doc
 
       - name: Upload documentation assets
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: documents-assets
