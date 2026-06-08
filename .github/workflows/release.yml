@@ -218,3 +218,4 @@ jobs:
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
           gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc
+          
