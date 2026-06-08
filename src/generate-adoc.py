@@ -179,11 +179,11 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                         f.write("TIP: _Le savoir-manager regroupe les aptitudes liées à l'encadrement, au pilotage d'activité, au leadership et à l'accompagnement des équipes._\n\n")
 
                 competences = conn.execute("""
-                    SELECT mc.nom_competence, mc.niveau_requis
+                    SELECT DISTINCT mc.nom_competence, mc.niveau_requis
                     FROM metier_competence mc
                     JOIN competence c ON mc.code_competence = c.code_competence
                     JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
-                    JOIN niveau_description_competence ndc ON mc.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
+                    JOIN niveau_description_competence ndc ON mc.code_competence = ndc.code_competence
                     WHERE mc.code_metier = ?
                     AND gc.libelle = ?
                     ORDER BY mc.nom_competence ASC
