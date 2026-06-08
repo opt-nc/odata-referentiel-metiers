@@ -147,9 +147,6 @@ role:
     background_color: '#FFBE98'
 
   # Titres
-  titre:
-    font_size: 16
-    font_style: bold
   titre-sommaire:
     font_size: 24
     font_style: bold
