@@ -35,6 +35,7 @@ jobs:
   generate_databases:
     name: Generating DuckDB and SQLite databases
     runs-on: ubuntu-latest
+    needs: [ release ]
     steps:
       - name: Checkout repositories
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -74,7 +75,7 @@ jobs:
   generate_schemas:
     name: Generating DuckDB Schemas with SchemaCrawler
     runs-on: ubuntu-slim
-    needs: [ generate_databases ]
+    needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -120,7 +121,7 @@ jobs:
   generate_documentation:
     name: Generating documentation with adoc and pdf
     runs-on: ubuntu-latest
-    needs: [ generate_databases ]
+    needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -217,4 +218,3 @@ jobs:
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
           gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc
-          
