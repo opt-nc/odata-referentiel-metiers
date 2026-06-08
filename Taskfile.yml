@@ -74,7 +74,7 @@ tasks:
       - task: setup-python
 
       - uv run src/generate-adoc.py
-      - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml data/output/doc/referentiel_metiers.adoc
+      - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml -d book data/output/doc/referentiel_metiers.adoc
     silent: true
 
   install-uv:

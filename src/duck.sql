@@ -33,7 +33,6 @@ DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS categorie_detention;
 
-DROP table IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS about;
 
 DROP INDEX IF EXISTS idx_metier_famille;
@@ -44,7 +43,6 @@ DROP INDEX IF EXISTS idx_competence_utilisateur_categorie;
 DROP INDEX IF EXISTS idx_niveau_description_comp_utilisateur;
 DROP INDEX IF EXISTS idx_metier_competence_competence;
 DROP INDEX IF EXISTS idx_metier_competence_metier;
-DROP INDEX IF EXISTS idx_famille_metier_couleur_id;
 
 CREATE TEMP TABLE gem_metier AS
 SELECT
@@ -108,24 +106,34 @@ SELECT
 FROM read_csv_auto('data/input/gem_metiers_competences.csv')
 WHERE code_competence IS NOT NULL;
 
+CREATE TABLE famille_metier_couleur AS
+SELECT
+    "Famille métier" AS famille_metier,
+    "Couleur" AS couleur_hex
+FROM read_csv_auto('data/static/mapping/couleurs_familles.csv');
+
+
 CREATE TABLE famille_metier (
     famille_metier_id VARCHAR PRIMARY KEY NOT NULL,
     libelle VARCHAR NOT NULL,
     description VARCHAR,
+    couleur_hex VARCHAR
 );
 
 INSERT INTO famille_metier
 SELECT DISTINCT
-    formatter(famille_metier) AS famille_metier_id,
-    famille_metier AS libelle,
+    formatter(gm.famille_metier) AS famille_metier_id,
+    gm.famille_metier AS libelle,
     NULL AS description,
-FROM gem_metier
-WHERE formatter(famille_metier) IS NOT NULL;
+    (SELECT fmc.couleur_hex FROM famille_metier_couleur fmc WHERE formatter(fmc.famille_metier) = formatter(gm.famille_metier)) AS couleur_hex
+FROM gem_metier gm
+WHERE formatter(gm.famille_metier) IS NOT NULL;
 
 COMMENT ON TABLE famille_metier IS 'Référentiel des familles de métiers de l''entreprise';
 COMMENT ON COLUMN famille_metier.famille_metier_id IS 'Identifiant unique de la famille (généré par formatter)';
 COMMENT ON COLUMN famille_metier.libelle IS 'Libellé complet de la famille de métiers';
 COMMENT ON COLUMN famille_metier.description IS 'Description optionnelle de la famille';
+COMMENT ON COLUMN famille_metier.couleur_hex IS 'Couleur hexadécimale associée à la famille de métiers pour affichage (ex: #FF5733)';
 
 CREATE TABLE statut_metier (
     statut_metier_id VARCHAR PRIMARY KEY,
@@ -398,24 +406,6 @@ COMMENT ON COLUMN metier_competence.niveau_requis IS 'Niveau de maîtrise minima
 COMMENT ON COLUMN metier_competence.est_actif IS 'Statut d''activation de cette exigence pour le métier';
 COMMENT ON COLUMN metier_competence.date_creation IS 'Date d''association initiale';
 COMMENT ON COLUMN metier_competence.date_mise_a_jour IS 'Dernière modification de l''exigence';
-
-CREATE TABLE famille_metier_couleur (
-    famille_metier_id VARCHAR PRIMARY KEY,
-    couleur_hex VARCHAR NOT NULL,
-    CONSTRAINT fk_famille_metier_couleur FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id)
-);
-
-INSERT INTO famille_metier_couleur
-SELECT
-    formatter("Famille métier") AS famille_metier_id,
-    "Couleur" AS couleur_hex
-FROM read_csv_auto('data/static/mapping/couleurs_familles.csv');
-
-CREATE INDEX idx_famille_metier_couleurs_id ON famille_metier_couleur(famille_metier_id);
-
-COMMENT ON TABLE famille_metier_couleur IS 'Table de mapping associant une couleur hexadécimale à chaque famille de métiers.';
-COMMENT ON COLUMN famille_metier_couleur.famille_metier_id IS 'Clé étrangère vers la famille de métiers';
-COMMENT ON COLUMN famille_metier_couleur.couleur_hex IS 'Code couleur hexadécimal issu de la charte graphique';
 
 CREATE TABLE about (
     key TEXT PRIMARY KEY,
