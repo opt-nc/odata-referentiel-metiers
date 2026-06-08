@@ -127,7 +127,6 @@ CREATE TABLE about (
 .import --csv --skip 1 data/output/csv/competence_utilisateur.csv competence_utilisateur
 .import --csv --skip 1 data/output/csv/niveau_description_competence.csv niveau_description_competence
 .import --csv --skip 1 data/output/csv/metier_competence.csv metier_competence
-.import --csv --skip 1 data/output/csv/famille_metier_couleur.csv famille_metier_couleur
 .import --csv --skip 1 data/output/csv/about.csv about
 
 
