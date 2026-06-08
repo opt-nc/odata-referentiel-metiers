@@ -141,7 +141,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         role_couleur = famille_id.replace("_", "-") if famille_id else "blue"
 
         f.write(f"[#fam_{famille_id}]\n")
-        f.write(f"== [.titre.{role_couleur}]#{index}. {libelle_famille.upper()}#\n\n")
+        f.write(f"== [.{role_couleur}]#{index}. {libelle_famille.upper()}#\n\n")
 
         metiers = conn.execute("""
            SELECT code_metier, metier_collaborateur

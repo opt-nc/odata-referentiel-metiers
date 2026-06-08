@@ -106,7 +106,7 @@ SELECT
 FROM read_csv_auto('data/input/gem_metiers_competences.csv')
 WHERE code_competence IS NOT NULL;
 
-CREATE TABLE famille_metier_couleur AS
+CREATE TEMP TABLE famille_metier_couleur AS
 SELECT
     "Famille métier" AS famille_metier,
     "Couleur" AS couleur_hex
