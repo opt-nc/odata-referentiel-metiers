@@ -105,11 +105,19 @@ CREATE TABLE metier_competence (
     date_mise_a_jour TEXT NOT NULL,
     PRIMARY KEY (code_metier, code_competence, nom_competence),
     FOREIGN KEY (code_metier) REFERENCES metier(code_metier),
-FOREIGN KEY (code_competence) REFERENCES competence(code_competence)
+    FOREIGN KEY (code_competence) REFERENCES competence(code_competence)
 );
 
 CREATE INDEX idx_metier_competence_competence ON metier_competence(code_competence);
 CREATE INDEX idx_metier_competence_metier ON metier_competence(code_metier);
+
+CREATE TABLE famille_metier_couleur (
+    famille_metier_id TEXT PRIMARY KEY NOT NULL,
+    couleur TEXT NOT NULL,
+    FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id)
+);
+
+CREATE INDEX idx_famille_metier_couleur_famille ON famille_metier_couleur(famille_metier_id);
 
 CREATE TABLE about (
     key TEXT PRIMARY KEY,
@@ -126,6 +134,7 @@ CREATE TABLE about (
 .import --csv --skip 1 data/output/csv/competence_utilisateur.csv competence_utilisateur
 .import --csv --skip 1 data/output/csv/niveau_description_competence.csv niveau_description_competence
 .import --csv --skip 1 data/output/csv/metier_competence.csv metier_competence
+.import --csv --skip 1 data/output/csv/famille_metier_couleur.csv famille_metier_couleur
 .import --csv --skip 1 data/output/csv/about.csv about
 
 

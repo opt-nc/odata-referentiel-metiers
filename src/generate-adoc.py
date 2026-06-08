@@ -109,14 +109,17 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     # ------------------------------------------------------------------------------------------------------
 
     familles = conn.execute("""
-        SELECT DISTINCT fm.famille_metier_id, fm.libelle
+        SELECT DISTINCT fm.famille_metier_id, fm.libelle, fmc.couleur_hex
         FROM famille_metier fm
         JOIN metier m on fm.famille_metier_id = m.famille_metier_id
+        LEFT JOIN famille_metier_couleur fmc ON fm.famille_metier_id = fmc.famille_metier_id
         ORDER BY m.code_metier
     """).fetchall()
 
-    for famille_id, libelle_famille in familles:
-        f.write(f"== {libelle_famille}\n\n")
+    for famille_id, libelle_famille, couleur_hex in familles:
+        role_couleur = famille_id.replace("_", "-") if famille_id else "blue"
+
+        f.write(f"== [.{role_couleur}]#{libelle_famille.capitalize()}#\n\n")
 
         metiers = conn.execute("""
            SELECT code_metier, metier_collaborateur
@@ -141,7 +144,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
             # Savoir, Savoire faire, Savoir être
             for (libelle_groupe,) in groupes:
-                f.write(f"==== icon:book[set=fas, role=\"brown\"]  {libelle_groupe.capitalize()}\n\n")
+                f.write(f"==== icon:book[set=fas, role=\"{ role_couleur }\"]  {libelle_groupe.capitalize()}\n\n")
 
                 match libelle_groupe.lower():
                     case "savoir":

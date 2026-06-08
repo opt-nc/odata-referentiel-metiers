@@ -35,6 +35,7 @@ jobs:
   generate_databases:
     name: Generating DuckDB and SQLite databases
     runs-on: ubuntu-latest
+    needs: [ release ]
     steps:
       - name: Checkout repositories
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -58,12 +59,14 @@ jobs:
           path: dist/ref-metiers-opt-nc.duckdb
 
       - name: Upload SQLite artifact
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
       - name: Upload CSV artifacts
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: csv-files
@@ -72,7 +75,7 @@ jobs:
   generate_schemas:
     name: Generating DuckDB Schemas with SchemaCrawler
     runs-on: ubuntu-slim
-    needs: [ generate_databases ]
+    needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -106,6 +109,7 @@ jobs:
           $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
 
       - name: Upload SchemaCrawler assets
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: schemacrawler-assets
@@ -117,7 +121,7 @@ jobs:
   generate_documentation:
     name: Generating documentation with adoc and pdf
     runs-on: ubuntu-latest
-    needs: [ generate_databases ]
+    needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -143,6 +147,7 @@ jobs:
         run: task doc
 
       - name: Upload documentation assets
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: documents-assets
