@@ -19,7 +19,8 @@ DROP TABLE IF EXISTS famille_metier;
 CREATE TABLE famille_metier (
     famille_metier_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
-    description TEXT
+    description TEXT,
+    couleur_hex TEXT
 );
 
 CREATE TABLE statut_metier (
@@ -110,14 +111,6 @@ CREATE TABLE metier_competence (
 
 CREATE INDEX idx_metier_competence_competence ON metier_competence(code_competence);
 CREATE INDEX idx_metier_competence_metier ON metier_competence(code_metier);
-
-CREATE TABLE famille_metier_couleur (
-    famille_metier_id TEXT PRIMARY KEY NOT NULL,
-    couleur TEXT NOT NULL,
-    FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id)
-);
-
-CREATE INDEX idx_famille_metier_couleur_famille ON famille_metier_couleur(famille_metier_id);
 
 CREATE TABLE about (
     key TEXT PRIMARY KEY,
