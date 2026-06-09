@@ -1,13 +1,13 @@
-famille_metier_id,libelle,description,couleur_hex
-pilotage,Pilotage,,"#FFBE98"
-ressources_humaines,Ressources humaines,,"#B87BD8"
-telecommunications,TELECOMMUNICATIONS,,"#FF0005"
-logistique,LOGISTIQUE,,"#7FC9CB"
-vente_relation_client,Vente & relation client,,"#7A004B"
-services_bancaires,SERVICES BANCAIRES,,"#009CAB"
-marketing_et_communication,MARKETING ET COMMUNICATION,,"#F699D2"
-activites_postales,ACTIVITES POSTALES,,"#FBC109"
-administration,ADMINISTRATION,,"#007A3F"
-finances_budget,Finances & budget,,"#F16B20"
-patrimoine_bati,Patrimoine bâti,,"#88B04B"
-systemes_d_information,Systèmes d'information,,"#0F4C81"
+famille_metier_id,libelle,description
+pilotage,Pilotage,
+ressources_humaines,Ressources humaines,
+logistique,LOGISTIQUE,
+systemes_d_information,Systèmes d'information,
+vente_relation_client,Vente & relation client,
+marketing_et_communication,MARKETING ET COMMUNICATION,
+services_bancaires,SERVICES BANCAIRES,
+activites_postales,ACTIVITES POSTALES,
+finances_budget,Finances & budget,
+patrimoine_bati,Patrimoine bâti,
+telecommunications,TELECOMMUNICATIONS,
+administration,ADMINISTRATION,
