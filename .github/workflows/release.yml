@@ -140,8 +140,13 @@ jobs:
         with:
           python-version: '3.14.5'
 
-      - name: Install documentation tools via APT
-        run: sudo apt-get update && sudo apt-get install -y pandoc ruby-asciidoctor-pdf
+      - name: Install Pandoc
+        uses: pandoc/actions/setup@86321b6dd4675f5014c611e05088e10d4939e09e
+        with:
+          version: 3.9.0.2
+
+      - name: Install Asciidoctor PDF via APT
+        run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
 
       - name: Generating documentation
         run: task doc
