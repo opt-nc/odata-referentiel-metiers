@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS niveau_description_competence;
 DROP TABLE IF EXISTS competence_utilisateur;
 DROP TABLE IF EXISTS competence_attribut;
 DROP TABLE IF EXISTS metier;
+DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
 DROP TABLE IF EXISTS competence;
 
@@ -40,7 +41,6 @@ DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS categorie_detention;
 
-DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS about;
 
 DROP INDEX IF EXISTS idx_metier_famille;
@@ -569,5 +569,9 @@ COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.nom_competence IS '
 -- REPORTING
 FROM vw_metiers_orphelins;
 FROM vw_competences_orphelines;
+
+DROP TABLE IF EXISTS gem_metier;
+DROP TABLE IF EXISTS gem_competence;
+DROP TABLE IF EXISTS gem_metier_competence;
 
 EXPORT DATABASE 'data/output/csv';

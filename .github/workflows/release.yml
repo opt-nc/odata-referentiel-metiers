@@ -205,9 +205,6 @@ jobs:
           git add data/output/csv/competence.csv
           git add data/output/csv/competence_utilisateur.csv
           git add data/output/csv/famille_metier.csv
-          git add data/output/csv/gem_competence.csv
-          git add data/output/csv/gem_metier.csv
-          git add data/output/csv/gem_metier_competence.csv
           git add data/output/csv/groupe_competence.csv
           git add data/output/csv/metier.csv
           git add data/output/csv/metier_competence.csv
