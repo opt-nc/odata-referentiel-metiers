@@ -114,10 +114,11 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     # ------------------------------------------------------------------------------------------------------
 
     familles = conn.execute("""
-        SELECT DISTINCT fm.famille_metier_id, fm.libelle, fm.couleur_hex
+        SELECT DISTINCT fm.famille_metier_id, fm.libelle, fmc.couleur_hex
         FROM famille_metier fm
+        JOIN famille_metier_couleur fmc ON fm.famille_metier_id = fmc.famille_metier_id
         JOIN metier m on fm.famille_metier_id = m.famille_metier_id
-        GROUP BY fm.famille_metier_id, fm.libelle, fm.couleur_hex
+        GROUP BY fm.famille_metier_id, fm.libelle, fmc.couleur_hex
         ORDER BY MAX(m.code_metier)
     """).fetchall()
     max_digits = len(str(len(familles)))
