@@ -119,7 +119,7 @@ jobs:
             dist/ref-metiers-opt-nc-schema.html
 
   generate_documentation:
-    name: Generating documentation with adoc, pdf and epub
+    name: Generating documentation with adoc and pdf
     runs-on: ubuntu-latest
     needs: [ release, generate_databases ]
     steps:
@@ -140,15 +140,10 @@ jobs:
         with:
           python-version: '3.14.5'
 
-      - name: Install Pandoc
-        uses: pandoc/actions/setup@86321b6dd4675f5014c611e05088e10d4939e09e
-        with:
-          version: 3.9.0.2
-
       - name: Install Asciidoctor PDF via APT
         run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
 
-      - name: Generating documentation
+      - name: Generating PDF
         run: task doc
 
       - name: Upload documentation assets
@@ -158,7 +153,6 @@ jobs:
           name: documents-assets
           path: |
             data/output/doc/referentiel_metiers.pdf
-            data/output/doc/referentiel_metiers.epub
             data/output/doc/referentiel_metiers.adoc
 
   update_output_repository:
@@ -223,14 +217,4 @@ jobs:
       - name: Upload Release assets
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
-
-          gh release upload "$TAG_VERSION" \
-            dist/ref-metiers-opt-nc.duckdb \
-            dist/ref-metiers-opt-nc.sqlite \
-            dist/ref-metiers-opt-nc-schema.pdf \
-            dist/ref-metiers-opt-nc-schema.png \
-            dist/ref-metiers-opt-nc-schema.html \
-            data/output/doc/referentiel_metiers.pdf \
-            data/output/doc/referentiel_metiers.epub \
-            data/output/doc/referentiel_metiers.adoc
-          
+          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc
