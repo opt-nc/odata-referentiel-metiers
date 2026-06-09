@@ -214,6 +214,7 @@ jobs:
           git add data/output/csv/niveau_description_competence.csv
           git add data/output/csv/referentiel_competence.csv
           git add data/output/csv/statut_metier.csv
+          git add data/output/csv/famille_metier_couleur.csv
 
           git commit -m "Updated output's files for $TARGET_BRANCH"
           git push origin $BRANCH_NAME

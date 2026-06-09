@@ -1,5 +1,7 @@
 dist/
 data/output/doc
+data/output/csv/load.sql
+data/output/csv/schema.sql
 
 .idea/
 __pycache__/
