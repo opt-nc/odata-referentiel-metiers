@@ -1,4 +1,6 @@
 famille_metier_id,libelle,description
+telecommunications,TELECOMMUNICATIONS,
+administration,ADMINISTRATION,
 pilotage,Pilotage,
 ressources_humaines,Ressources humaines,
 logistique,LOGISTIQUE,
@@ -9,5 +11,3 @@ services_bancaires,SERVICES BANCAIRES,
 activites_postales,ACTIVITES POSTALES,
 finances_budget,Finances & budget,
 patrimoine_bati,Patrimoine bâti,
-telecommunications,TELECOMMUNICATIONS,
-administration,ADMINISTRATION,
