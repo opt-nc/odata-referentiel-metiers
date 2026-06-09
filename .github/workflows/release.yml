@@ -18,7 +18,7 @@ jobs:
       new_release_version: ${{ steps.release.outputs.new_release_version }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
 
       - name: Semantic Release
         id: release
@@ -35,15 +35,16 @@ jobs:
   generate_databases:
     name: Generating DuckDB and SQLite databases
     runs-on: ubuntu-latest
+    needs: [ release ]
     steps:
       - name: Checkout repositories
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
 
       - name: Install Task
         uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
 
       - name: Setup DuckDB action
-        uses: opt-nc/setup-duckdb-action@v1.2.6
+        uses: opt-nc/setup-duckdb-action@v1.2.9
 
       - name: Load DuckDB database
         run: task duckdb
@@ -58,12 +59,14 @@ jobs:
           path: dist/ref-metiers-opt-nc.duckdb
 
       - name: Upload SQLite artifact
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: sqlite-file
           path: dist/ref-metiers-opt-nc.sqlite
 
       - name: Upload CSV artifacts
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: csv-files
@@ -72,10 +75,10 @@ jobs:
   generate_schemas:
     name: Generating DuckDB Schemas with SchemaCrawler
     runs-on: ubuntu-slim
-    needs: [ generate_databases ]
+    needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
 
       - name: Install Task
         uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
@@ -106,6 +109,7 @@ jobs:
           $BASE_CMD --output-format=html --output-file=dist/ref-metiers-opt-nc-schema.html
 
       - name: Upload SchemaCrawler assets
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: schemacrawler-assets
@@ -117,10 +121,10 @@ jobs:
   generate_documentation:
     name: Generating documentation with adoc and pdf
     runs-on: ubuntu-latest
-    needs: [ generate_databases ]
+    needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
 
       - name: Download DuckDB artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
@@ -143,6 +147,7 @@ jobs:
         run: task doc
 
       - name: Upload documentation assets
+        if: needs.release.outputs.new_release_published == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: documents-assets
@@ -158,7 +163,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
           fetch-depth: 0
 
@@ -213,3 +218,4 @@ jobs:
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
           gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc
+          

@@ -3,6 +3,7 @@ DROP VIEW IF EXISTS vw_competences_architecte_logiciel;
 DROP VIEW IF EXISTS vw_competences_orphelines;
 DROP VIEW IF EXISTS vw_compter_competences_par_metier;
 DROP VIEW IF EXISTS vw_lister_competences_metier;
+DROP VIEW IF EXISTS vw_metiers_qui_possede_niveau_competence_0;
 
 DROP TABLE IF EXISTS about;
 DROP TABLE IF EXISTS metier_competence;
@@ -14,13 +15,33 @@ DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS metier;
 DROP TABLE IF EXISTS statut_metier;
+DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
+
+DROP INDEX IF EXISTS idx_metier_famille;
+DROP INDEX IF EXISTS idx_metier_statut;
+DROP INDEX IF EXISTS idx_competence_groupe_id;
+DROP INDEX IF EXISTS idx_competence_referentiel_id;
+DROP INDEX IF EXISTS idx_competence_utilisateur_competence;
+DROP INDEX IF EXISTS idx_competence_utilisateur_categorie;
+DROP INDEX IF EXISTS idx_niveau_description_comp_utilisateur;
+DROP INDEX IF EXISTS idx_metier_competence_competence;
+DROP INDEX IF EXISTS idx_metier_competence_metier;
+DROP INDEX IF EXISTS idx_famille_metier_couleur_famille;
 
 CREATE TABLE famille_metier (
     famille_metier_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
     description TEXT
 );
+
+CREATE TABLE famille_metier_couleur (
+    famille_metier_id TEXT PRIMARY KEY NOT NULL,
+    couleur_hex TEXT NOT NULL,
+    FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id)
+);
+
+CREATE INDEX idx_famille_metier_couleur_famille ON famille_metier_couleur(famille_metier_id);
 
 CREATE TABLE statut_metier (
     statut_metier_id TEXT PRIMARY KEY NOT NULL,
@@ -98,14 +119,14 @@ CREATE TABLE metier_competence (
     code_metier TEXT NOT NULL,
     code_competence TEXT NOT NULL,
     nom_competence TEXT NOT NULL,
-    poids REAL,
-    niveau_requis REAL,
+    poids REAL NOT NULL,
+    niveau_requis REAL NOT NULL,
     est_actif INTEGER NOT NULL,
     date_creation TEXT NOT NULL,
     date_mise_a_jour TEXT NOT NULL,
     PRIMARY KEY (code_metier, code_competence, nom_competence),
     FOREIGN KEY (code_metier) REFERENCES metier(code_metier),
-FOREIGN KEY (code_competence) REFERENCES competence(code_competence)
+    FOREIGN KEY (code_competence) REFERENCES competence(code_competence)
 );
 
 CREATE INDEX idx_metier_competence_competence ON metier_competence(code_competence);
@@ -117,6 +138,7 @@ CREATE TABLE about (
 );
 
 .import --csv --skip 1 data/output/csv/famille_metier.csv famille_metier
+.import --csv --skip 1 data/output/csv/famille_metier_couleur.csv famille_metier_couleur
 .import --csv --skip 1 data/output/csv/statut_metier.csv statut_metier
 .import --csv --skip 1 data/output/csv/referentiel_competence.csv referentiel_competence
 .import --csv --skip 1 data/output/csv/groupe_competence.csv groupe_competence
@@ -194,3 +216,24 @@ JOIN statut_metier stm ON m.statut_metier_id = stm.statut_metier_id
 WHERE NOT EXISTS (
     SELECT 1 FROM metier_competence mc WHERE mc.code_metier = m.code_metier
 );
+
+CREATE VIEW vw_groupes_manquants_par_metier AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    gc.libelle AS groupe_manquant
+FROM metier m, groupe_competence gc
+WHERE gc.libelle <> 'Manager'
+  AND (m.code_metier, gc.libelle) NOT IN (
+    SELECT mc.code_metier, gc_sub.libelle
+    FROM metier_competence mc
+    JOIN competence c ON mc.code_competence = c.code_competence
+    JOIN groupe_competence gc_sub ON c.groupe_competence_id = gc_sub.groupe_competence_id
+)
+ORDER BY m.code_metier;
+
+CREATE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
+SELECT m.code_metier, m.metier_collaborateur, mc.code_competence, mc.nom_competence
+FROM metier m
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+WHERE mc.niveau_requis = 0;

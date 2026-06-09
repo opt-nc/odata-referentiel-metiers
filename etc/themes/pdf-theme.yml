@@ -1,80 +1,183 @@
 extends: default
 
-page_margin: [25mm, 25mm, 25mm, 25mm]
+page:
+  margin: [25mm, 25mm, 25mm, 25mm]
+  numbering:
+    start_at: 2
 
-role_subtitle_font_size: 16
-role_subtitle_font_color: #424242
+running_content:
+  start_at: 2
 
-role_maintitle_font_size: 36
-role_maintitle_font_color: #000000
+header:
+  height: 50
+  padding: [0, 0, 0, 0]
+  line_height: 1.1
+  border_width: 0.5
+  border_color: '#BDBDBD'
+  background_color: '#FFFFFF'
+  font_style: bold
+  recto:
+    left:
+      content: '{document-title}'
+    center:
+      content: 'image:../../data/static/assets/logo/OPT_NC.png[width=90]'
+    right:
+      content: 'OPT - NC - 2025'
+  verso:
+    left:
+      content: '{document-title}'
+    center:
+      content: 'image:../../data/static/assets/logo/OPT_NC.png[width=90]'
+    right:
+      content: 'OPT - NC - 2025'
 
-running_content_start_at: 2
-page_numbering_start_at: 2
-header_height: 50
-header_padding: [0, 0, 0, 0]
-header_line_height: 1.1
-header_border_width: 0.5
-header_border_color: '#BDBDBD'
-header_font_style: bold
-header_recto_left_content: '{document-title}'
-header_recto_center_content: 'image:../../data/static/assets/logo/OPT_NC.png[width=90]'
-header_recto_right_content: 'OPT - NC - 2025'
-header_verso_left_content: '{document-title}'
-header_verso_center_content: 'image:../../data/static/assets/logo/OPT_NC.png[width=90]'
-header_verso_right_content: 'OPT - NC - 2025'
-header_background_color: '#FFFFFF'
-
-footer_height: 40
-footer_padding: [0, 0, 0, 0]
-footer_border_width: 0.5
-footer_border_color: '#BDBDBD'
-footer_font_style: bold
-footer_recto_left_content: ''
-footer_recto_right_content: '{page-number}'
-footer_verso_left_content: ''
-footer_verso_right_content: '{page-number}'
-
-role_red_font_color: #E53935
-role_orange_font_color: #FB8C00
-role_yellow_font_color: #FFC107
-role_green_font_color: #43A047
-role_blue_font_color: #1565C0
-role_lightblue_font_color: #29B6F6
-role_brown_font_color: #5D4037
-role_gray_font_color: #BDBDBD
-
-abstract:
-  font-size: 10
-  font-style: italic
-  line-height: 1.3
+footer:
+  height: 40
+  padding: [0, 0, 0, 0]
+  border_width: 0.5
+  border_color: '#BDBDBD'
+  font_style: bold
+  recto:
+    left:
+      content: ''
+    center:
+      content: '{chapter-title}'
+    right:
+      content: '{page-number}'
+  verso:
+    left:
+      content: ''
+    center:
+      content: '{chapter-title}'
+    right:
+      content: '{page-number}'
 
 base:
-  font-size: 9
+  font_size: 9
 
 heading:
-  h1-font-size: 22
-  h2-font-size: 18
-  h3-font-size: 15
-  h4-font-size: 12
+  h1_font_size: 22
+  h2_font_size: 18
+  h3_font_size: 15
+  h4_font_size: 12
+
+  chapter:
+    break_before: auto
+  section:
+    break_before: auto
+
+abstract:
+  font_size: 10
+  font_style: italic
+  line_height: 1.3
 
 quote:
-  font-size: 9
-  font-style: italic
-  attribution-font-size: 8
-  attribution-font-style: normal
-  border-color: #1E88E5
+  font_size: 9
+  font_style: italic
+  attribution_font_size: 8
+  attribution_font_style: normal
+  border_color: '#1E88E5'
 
 admonition:
-  font-size: 8
+  font_size: 8
   icon:
     tip:
       size: 14
-      stroke-color: #FBC02D
+      stroke_color: '#FBC02D'
 
 table:
-  font-size: 9
-  head-background-color: #F5F5F5 
-  head-font-color: #263238
+  font_size: 9
+  head:
+    background_color: '#F5F5F5'
+    font_color: '#263238'
+  caption:
+    font_size: 8
 
-caption:
-  font-size: 8
+role:
+  # Couleurs texte par famille métier
+  vente-relation-client:
+    font_color: '#7A004B'
+  marketing-et-communication:
+    font_color: '#F699D2'
+  services-bancaires:
+    font_color: '#009CAB'
+  activites-postales:
+    font_color: '#FBC109'
+  telecommunications:
+    font_color: '#FF0005'
+  administration:
+    font_color: '#007A3F'
+  ressources-humaines:
+    font_color: '#B87BD8'
+  finances-budget:
+    font_color: '#F16B20'
+  patrimoine-bati:
+    font_color: '#88B04B'
+  logistique:
+    font_color: '#7FC9CB'
+  systemes-d-information:
+    font_color: '#0F4C81'
+  pilotage:
+    font_color: '#FFBE98'
+
+  # Fonds couleur par famille métier
+  vente-relation-client-bg:
+    background_color: '#7A004B'
+  marketing-et-communication-bg:
+    background_color: '#F699D2'
+  services-bancaires-bg:
+    background_color: '#009CAB'
+  activites-postales-bg:
+    background_color: '#FBC109'
+  telecommunications-bg:
+    background_color: '#FF0005'
+  administration-bg:
+    background_color: '#007A3F'
+  ressources-humaines-bg:
+    background_color: '#B87BD8'
+  finances-budget-bg:
+    background_color: '#F16B20'
+  patrimoine-bati-bg:
+    background_color: '#88B04B'
+  logistique-bg:
+    background_color: '#7FC9CB'
+  systemes-d-information-bg:
+    background_color: '#0F4C81'
+  pilotage-bg:
+    background_color: '#FFBE98'
+
+  # Titres
+  titre-sommaire:
+    font_size: 24
+    font_style: bold
+  titre-famille:
+    font_size: 20
+    font_style: bold
+  bloc-numero:
+    font_size: 28
+    font_style: bold
+    font_color: '#FFFFFF'
+
+  # Couleurs génériques
+  subtitle:
+    font_size: 16
+    font_color: '#424242'
+  maintitle:
+    font_size: 36
+    font_color: '#000000'
+  red:
+    font_color: '#E53935'
+  orange:
+    font_color: '#FB8C00'
+  yellow:
+    font_color: '#FFC107'
+  green:
+    font_color: '#43A047'
+  blue:
+    font_color: '#1565C0'
+  lightblue:
+    font_color: '#29B6F6'
+  brown:
+    font_color: '#5D4037'
+  gray:
+    font_color: '#BDBDBD'

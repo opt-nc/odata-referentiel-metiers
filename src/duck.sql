@@ -20,6 +20,13 @@ CREATE MACRO formatter(str) AS (
     )
 );
 
+DROP VIEW IF EXISTS vw_metiers_orphelins;
+DROP VIEW IF EXISTS vw_competences_architecte_logiciel;
+DROP VIEW IF EXISTS vw_competences_orphelines;
+DROP VIEW IF EXISTS vw_compter_competences_par_metier;
+DROP VIEW IF EXISTS vw_lister_competences_metier;
+DROP VIEW IF EXISTS vw_metiers_qui_possede_niveau_competence_0;
+
 DROP TABLE IF EXISTS metier_competence;
 DROP TABLE IF EXISTS niveau_description_competence;
 DROP TABLE IF EXISTS competence_utilisateur;
@@ -33,9 +40,11 @@ DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS categorie_detention;
 
+DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS about;
 
 DROP INDEX IF EXISTS idx_metier_famille;
+DROP INDEX IF EXISTS idx_famille_metier_couleur_famille;
 DROP INDEX IF EXISTS idx_metier_statut;
 DROP INDEX IF EXISTS idx_competence_groupe_id;
 DROP INDEX IF EXISTS idx_competence_referentiel_id;
@@ -109,21 +118,39 @@ WHERE code_competence IS NOT NULL;
 CREATE TABLE famille_metier (
     famille_metier_id VARCHAR PRIMARY KEY NOT NULL,
     libelle VARCHAR NOT NULL,
-    description VARCHAR,
+    description VARCHAR
 );
 
 INSERT INTO famille_metier
 SELECT DISTINCT
-    formatter(famille_metier) AS famille_metier_id,
-    famille_metier AS libelle,
-    NULL AS description,
-FROM gem_metier
-WHERE formatter(famille_metier) IS NOT NULL;
+    formatter(gm.famille_metier) AS famille_metier_id,
+    gm.famille_metier AS libelle,
+    NULL AS description
+FROM gem_metier gm
+WHERE formatter(gm.famille_metier) IS NOT NULL;
 
 COMMENT ON TABLE famille_metier IS 'Référentiel des familles de métiers de l''entreprise';
 COMMENT ON COLUMN famille_metier.famille_metier_id IS 'Identifiant unique de la famille (généré par formatter)';
 COMMENT ON COLUMN famille_metier.libelle IS 'Libellé complet de la famille de métiers';
 COMMENT ON COLUMN famille_metier.description IS 'Description optionnelle de la famille';
+
+CREATE TABLE famille_metier_couleur (
+    famille_metier_id VARCHAR PRIMARY KEY NOT NULL,
+    couleur_hex VARCHAR NOT NULL,
+    FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id)
+);
+
+INSERT INTO famille_metier_couleur
+SELECT
+    formatter("Famille métier") AS famille_metier_id,
+    "Couleur" AS couleur_hex
+FROM read_csv_auto('data/static/mapping/couleurs_familles.csv');
+
+CREATE INDEX idx_famille_metier_couleur_famille ON famille_metier_couleur(famille_metier_id);
+
+COMMENT ON TABLE famille_metier_couleur IS 'Table de correspondance entre famille de métier et couleur pour affichage';
+COMMENT ON COLUMN famille_metier_couleur.famille_metier_id IS 'Identifiant de la famille de métier (généré par formatter)';
+COMMENT ON COLUMN famille_metier_couleur.couleur_hex IS 'Couleur hexadécimale associée à la famille de métiers (ex: #FF5733)';
 
 CREATE TABLE statut_metier (
     statut_metier_id VARCHAR PRIMARY KEY,
@@ -359,8 +386,8 @@ CREATE TABLE metier_competence (
     code_metier VARCHAR NOT NULL,
     code_competence VARCHAR NOT NULL,
     nom_competence VARCHAR NOT NULL,
-    poids DOUBLE,
-    niveau_requis DOUBLE,
+    poids DOUBLE NOT NULL,
+    niveau_requis DOUBLE NOT NULL,
     est_actif BOOLEAN NOT NULL,
     date_creation TIMESTAMP NOT NULL,
     date_mise_a_jour TIMESTAMP NOT NULL,
@@ -379,8 +406,8 @@ SELECT
     code_metier AS code_metier,
     code_competence AS code_competence,
     nom_competence AS nom_competence,
-    poids,
-    niveau_requis,
+    CASE WHEN poids IS NULL THEN 0 ELSE poids END AS poids,
+    CASE WHEN niveau_requis IS NULL THEN 0 ELSE niveau_requis END AS niveau_requis,
     relation_metier_competence_active AS est_actif,
     date_creation,
     date_mise_a_jour
@@ -506,6 +533,38 @@ COMMENT ON COLUMN vw_metiers_orphelins.metier_collaborateur IS 'Nom du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.famille_metier IS 'Famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.statut_metier IS 'Statut de publication du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier est actif';
+
+CREATE OR REPLACE VIEW vw_groupes_manquants_par_metier AS
+SELECT
+    m.code_metier,
+    m.metier_collaborateur,
+    gc.libelle AS groupe_manquant
+FROM metier m, groupe_competence gc
+WHERE gc.libelle <> 'Manager'
+AND (m.code_metier, gc.libelle) NOT IN (
+    SELECT mc.code_metier, gc_sub.libelle
+    FROM metier_competence mc
+    JOIN competence c ON mc.code_competence = c.code_competence
+    JOIN groupe_competence gc_sub ON c.groupe_competence_id = gc_sub.groupe_competence_id
+)
+ORDER BY m.code_metier;
+
+COMMENT ON VIEW vw_groupes_manquants_par_metier IS 'Liste les catégories de compétences (Savoir, Savoir-faire, etc.) manquantes pour chaque métier, en excluant légitimement la catégorie Manager.';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.code_metier IS 'Code unique du métier analysé';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.metier_collaborateur IS 'Nom usuel du métier analysé';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.groupe_manquant IS 'Le groupe de compétences qui fait défaut à ce métier (ex: Savoir-être)';
+
+CREATE OR REPLACE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
+SELECT m.code_metier, m.metier_collaborateur, mc.code_competence, mc.nom_competence
+FROM metier m
+JOIN metier_competence mc ON m.code_metier = mc.code_metier
+WHERE mc.niveau_requis = 0;
+
+COMMENT ON VIEW vw_metiers_qui_possede_niveau_competence_0 IS 'Vue de contrôle de la qualité des données listant les associations métier-compétence dont le niveau requis est anormalement à 0.';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.code_metier IS 'Code du métier impacté par l''anomalie de saisie';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.metier_collaborateur IS 'Nom du métier impacté';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.code_competence IS 'Code de la compétence associée';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.nom_competence IS 'Nom de la compétence dont le niveau n''a pas été correctement évalué (0)';
 
 -- REPORTING
 FROM vw_metiers_orphelins;

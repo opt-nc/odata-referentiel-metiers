@@ -14,14 +14,17 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR_ABS, "referentiel_metiers.adoc")
 
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write("= Répertoire des emplois\n")
-    f.write("OPT - NC\n")
+    f.write("OPT - Nouvelle-Calédonie\n")
+    f.write(":subject: Référentiel des Métiers de l'OPT - Nouvelle-Calédonie\n")
+    f.write(":keywords: référentiel, métiers, OPT, Nouvelle-Calédonie, compétences, description de poste, famille métier, groupe de compétences\n")
+
     f.write(":icons: font\n")
     f.write(":icon-set: fas\n")
     f.write(f":imagesdir: {IMAGES_DIR_REL}\n")
     f.write(":notitle:\n\n")
 
     # --- PAGE DE GARDE ---
-    
+
     f.write('[cols="1,1,1,1", width="80%", frame="none", grid="none", align="center"]\n')
 
     f.write('|===\n')
@@ -52,7 +55,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write("<<<\n\n")
 
     # ------------------------------------------------------------------------------------------------------
-    
+
     f.write("[abstract]\n")
     f.write("== icon:clipboard-list[set=fas, role='blue']  Résumé\n\n")
     f.write("Ce document présente le référentiel des métiers de l'OPT-NC. Il rassemble les familles professionnelles, les fiches emplois et les compétences attendues pour chaque métier.\n")
@@ -85,8 +88,8 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
     # ------------------------------------------------------------------------------------------------------
 
-    f.write("=== icon:graduation-cap[set=fas, role=\"blue\"]  Niveaux de compétences\n\n")
-    f.write("==== icon:list-ul[set=fas, role=\"gray\"]  Description des niveaux de compétences\n\n")
+    f.write("== icon:graduation-cap[set=fas, role=\"blue\"]  Niveaux de compétences\n\n")
+    f.write("=== icon:list-ul[set=fas, role=\"gray\"]  Description des niveaux de compétences\n\n")
     f.write("Dans chaque fiche emploi du répertoire, un niveau est indiqué pour les compétences attendues. Il permet de mieux comprendre le degré de maîtrise nécessaire pour exercer le poste dans de bonnes conditions.\n")
     f.write("L'échelle comporte quatre niveaux. Elle va des premières notions jusqu'à une maîtrise reconnue. Elle sert de repère commun pour savoir ce qui est attendu, situer son propre niveau et repérer les points à renforcer.\n")
     f.write("Ces niveaux peuvent aussi aider à se préparer dans le cadre d'une mobilité, d'un changement de poste ou d'un projet professionnel.\n\n")
@@ -103,20 +106,43 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             [f"icon:circle[set=fas,role=\"blue\"]"] * niveau
             + [f"icon:circle[set=far,role=\"gray\"]"] * (4 - niveau)
         )
-        f.write(f"==== Niveau {niveau} - {label}  {niveau_str}\n\n")
+        f.write(f"=== Niveau {niveau} - {label}  {niveau_str}\n\n")
         f.write(f"{description}\n\n")
+
+    f.write("<<<\n\n")
 
     # ------------------------------------------------------------------------------------------------------
 
     familles = conn.execute("""
-        SELECT DISTINCT fm.famille_metier_id, fm.libelle
+        SELECT DISTINCT fm.famille_metier_id, fm.libelle, fmc.couleur_hex
         FROM famille_metier fm
+        JOIN famille_metier_couleur fmc ON fm.famille_metier_id = fmc.famille_metier_id
         JOIN metier m on fm.famille_metier_id = m.famille_metier_id
-        ORDER BY m.code_metier
+        GROUP BY fm.famille_metier_id, fm.libelle, fmc.couleur_hex
+        ORDER BY MAX(m.code_metier)
     """).fetchall()
+    max_digits = len(str(len(familles)))
+    f.write("[role=\"titre-sommaire\"]\n")
+    f.write("== Sommaire des familles métier\n\n")
+    
+    f.write('[cols="1.5,15", frame="none", grid="none", valign="middle"]\n')
+    f.write('|===\n')
 
-    for famille_id, libelle_famille in familles:
-        f.write(f"== {libelle_famille}\n\n")
+    for index, (famille_id, libelle_famille, couleur_hex) in enumerate(familles, start=1):
+        role_couleur = famille_id.replace("_", "-") if famille_id else "blue"
+
+        f.write(f'|<<fam_{famille_id}, [.bloc-numero.{role_couleur}-bg]#{"{nbsp}"*((max_digits - len(str(index)) + 1))}{index}{"{nbsp}"*((max_digits - len(str(index)) + 1))}#>>\n')
+        f.write(f'<<fam_{famille_id}, **[.titre-famille.{role_couleur}]#{"{nbsp}"}{libelle_famille.upper()}#**>>\n\n')
+    f.write('|===\n\n')
+    f.write("<<<\n\n")
+
+    # ------------------------------------------------------------------------------------------------------
+
+    for index, (famille_id, libelle_famille, couleur_hex) in enumerate(familles, start=1):
+        role_couleur = famille_id.replace("_", "-") if famille_id else "blue"
+
+        f.write(f"[#fam_{famille_id}]\n")
+        f.write(f"== [.{role_couleur}]#{index}. {libelle_famille.upper()}#\n\n")
 
         metiers = conn.execute("""
            SELECT code_metier, metier_collaborateur
@@ -127,7 +153,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         """, [famille_id]).fetchall()
 
         for code_metier, nom_metier in metiers:
-            f.write(f"=== icon:id-card[set=fas, role=\"red\"]  `{code_metier}` - {nom_metier}\n\n")
+            f.write(f"=== icon:id-card[set=fas, role=\"red\"]  `{code_metier}` - {nom_metier.upper()}\n\n")
 
             # Compétences groupées par groupe
             groupes = conn.execute("""
@@ -139,9 +165,9 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                 ORDER BY gc.libelle
             """, [code_metier]).fetchall()
 
-            # Savoir, Savoire faire, Savoir être
+            # Savoir, Savoir faire, Savoir être
             for (libelle_groupe,) in groupes:
-                f.write(f"==== icon:book[set=fas, role=\"brown\"]  {libelle_groupe.capitalize()}\n\n")
+                f.write(f"==== icon:book[set=fas, role=\"{ role_couleur }\"]  {libelle_groupe.capitalize()}\n\n")
 
                 match libelle_groupe.lower():
                     case "savoir":
@@ -150,14 +176,15 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                         f.write("TIP: _Le savoir-faire correspond à la capacité de mettre ses connaissances en pratique pour réaliser une activité ou accomplir une tâche._\n\n")
                     case "savoir être":
                         f.write("TIP: _Le savoir-être rassemble les attitudes, comportements et qualités relationnelles qui facilitent l'adaptation au travail et les échanges avec les autres._\n\n")
-
+                    case "manager":
+                        f.write("TIP: _Le savoir-manager regroupe les aptitudes liées à l'encadrement, au pilotage d'activité, au leadership et à l'accompagnement des équipes._\n\n")
 
                 competences = conn.execute("""
-                    SELECT mc.nom_competence, mc.niveau_requis
+                    SELECT DISTINCT mc.nom_competence, mc.niveau_requis
                     FROM metier_competence mc
                     JOIN competence c ON mc.code_competence = c.code_competence
                     JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
-                    JOIN niveau_description_competence ndc ON mc.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
+                    JOIN niveau_description_competence ndc ON mc.code_competence = ndc.code_competence
                     WHERE mc.code_metier = ?
                     AND gc.libelle = ?
                     ORDER BY mc.nom_competence ASC
@@ -173,7 +200,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                     if niveau:
                         niveau_int = int(niveau)
                         niveau_str = " ".join(
-                           [f"icon:circle[set=fas,role=\"blue\"]"] * niveau_int
+                           [f"icon:circle[set=fas,role=\"{role_couleur}\"]"] * niveau_int
                             + ["icon:circle[set=far,role=\"gray\"]"] * (max_niveau - niveau_int)
                         )
                     else:
@@ -181,5 +208,8 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
                     f.write(f"|{nom_comp} |{niveau_str}\n")
 
                 f.write("|===\n\n")
+            
+        if index != len(familles):
+            f.write("<<<\n\n")
 
 conn.close()
