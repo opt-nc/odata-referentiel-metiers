@@ -22,6 +22,11 @@ tasks:
     desc: Nettoie les tables, vues et index de la base DuckDB.
     cmds:
       - rm -rf dist
+      - rm -rf data/output
+      - cmd: printf "\033[32mNettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Nettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.' -ForegroundColor Green"
+        platforms: [windows]
     silent: true
 
   duckdb:
@@ -30,12 +35,20 @@ tasks:
       - mkdir -p dist
       - mkdir -p data/output
       - duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
+      - cmd: printf "\033[32mBase de données DuckDB initialisée avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Base de données DuckDB initialisée avec succès.' -ForegroundColor Green"
+        platforms: [windows]
     silent: true
 
   sqlite:
     desc: Initialise la base SQLite depuis les csv générés par DuckDB.
     cmds:
       - sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
+      - cmd: printf "\033[32mBase de données SQLite initialisée avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Base de données SQLite initialisée avec succès.' -ForegroundColor Green"
+        platforms: [windows]
     silent: true
 
   schema:
@@ -47,6 +60,10 @@ tasks:
           --linter-configs=.github/schemacrawler/config/schemacrawler-linter-configs.yaml \
           --output-format=text \
           --output-file=dist/lint_report.txt
+      - cmd: printf "\033[32mRapport de linting généré avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Rapport de linting généré avec succès.' -ForegroundColor Green"
+        platforms: [windows]
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
@@ -54,18 +71,30 @@ tasks:
           --table-types=TABLE \
           --output-format=html \
           --output-file=dist/ref-metiers-opt-nc-schema.html
+      - cmd: printf "\033[32mSchéma HTML de la base de données généré avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Schéma HTML de la base de données généré avec succès.' -ForegroundColor Green"
+        platforms: [windows]
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
           --command=schema \
           --output-format=png \
           --output-file=dist/ref-metiers-opt-nc-schema.png
+      - cmd: printf "\033[32mSchéma PNG de la base de données généré avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Schéma PNG de la base de données généré avec succès.' -ForegroundColor Green"
+        platforms: [windows]
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
           --command=schema \
           --output-format=pdf \
           --output-file=dist/ref-metiers-opt-nc-schema.pdf
+      - cmd: printf "\033[32mSchéma PDF de la base de données généré avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Schéma PDF de la base de données généré avec succès.' -ForegroundColor Green"
+        platforms: [windows]
     silent: true
 
   doc:
@@ -83,6 +112,10 @@ tasks:
           -a pdf-theme=etc/themes/pdf-theme.yml \
           -d book \
           data/output/doc/referentiel_metiers.adoc
+      - cmd: printf "\033[32mDocumentation PDF générée avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Documentation PDF générée avec succès.' -ForegroundColor Green"
+        platforms: [windows]
       - |
         pandoc \
           --from=asciidoc \
@@ -95,6 +128,10 @@ tasks:
           -M identifier="urn:uuid:7c6fa56c-6df5-4bb4-a0a1-8cb4a6f7f8b0" \
           --output=data/output/doc/referentiel_metiers.epub \
           data/output/doc/referentiel_metiers.adoc
+      - cmd: printf "\033[32mDocumentation EPUB générée avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Documentation EPUB générée avec succès.' -ForegroundColor Green"
+        platforms: [windows]
     silent: true
 
   install-uv:
