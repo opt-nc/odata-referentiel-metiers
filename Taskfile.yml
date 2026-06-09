@@ -23,6 +23,7 @@ tasks:
     cmds:
       - rm -rf dist
       - rm -rf data/output
+      - rm -rf .venv
       - cmd: printf "\033[32mNettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Nettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.' -ForegroundColor Green"
@@ -64,7 +65,7 @@ tasks:
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Rapport de linting généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
-        
+
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
