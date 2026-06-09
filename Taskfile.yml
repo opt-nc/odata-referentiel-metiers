@@ -60,10 +60,11 @@ tasks:
           --linter-configs=.github/schemacrawler/config/schemacrawler-linter-configs.yaml \
           --output-format=text \
           --output-file=dist/lint_report.txt
-      - cmd: printf "\033[32mRapport de linting généré avec succès.\033[0m\n"
+      - cmd: printf "\033[32mRapport du lint généré avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Rapport de linting généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
+        
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
@@ -75,6 +76,7 @@ tasks:
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Schéma HTML de la base de données généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
+
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
@@ -85,6 +87,7 @@ tasks:
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Schéma PNG de la base de données généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
+
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
@@ -103,6 +106,11 @@ tasks:
       - task: setup-python
 
       - uv run src/generate-adoc.py
+      - cmd: printf "\033[32mFichier AsciiDoc généré avec succès.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'Fichier AsciiDoc généré avec succès.' -ForegroundColor Green"
+        platforms: [windows]
+
       - |
         asciidoctor-pdf \
           -B . \
@@ -116,6 +124,7 @@ tasks:
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Documentation PDF générée avec succès.' -ForegroundColor Green"
         platforms: [windows]
+
       - |
         pandoc \
           --from=asciidoc \
