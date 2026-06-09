@@ -6,8 +6,6 @@ conn = duckdb.connect("dist/ref-metiers-opt-nc.duckdb")
 
 OUTPUT_DIR = "data/output/doc/"
 OUTPUT_DIR_ABS = os.path.abspath(OUTPUT_DIR)
-IMAGES_DIR = os.path.abspath("data/static/assets")
-IMAGES_DIR_REL = os.path.relpath(IMAGES_DIR, OUTPUT_DIR_ABS).replace(os.sep, "/")
 
 os.makedirs(OUTPUT_DIR_ABS, exist_ok=True)
 OUTPUT_FILE = os.path.join(OUTPUT_DIR_ABS, "referentiel_metiers.adoc")
@@ -15,12 +13,19 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR_ABS, "referentiel_metiers.adoc")
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write("= Répertoire des emplois\n")
     f.write("OPT - Nouvelle-Calédonie\n")
+    f.write(":author: OPT - Nouvelle-Calédonie\n")
+    f.write(":publisher: OPT - Nouvelle-Calédonie\n")
+    f.write(":producer: odata-referentiel-metiers\n")
+    f.write(":creator: odata-referentiel-metiers\n")
+    f.write(":lang: fr\n")
+    f.write(":revdate: " + datetime.now().strftime("%Y-%m-%d") + "\n")
+    f.write(":identifier: urn:uuid:7c6fa56c-6df5-4bb4-a0a1-8cb4a6f7f8b0\n")
     f.write(":subject: Référentiel des Métiers de l'OPT - Nouvelle-Calédonie\n")
+    f.write(":description: Référentiel des métiers de l'OPT-NC généré automatiquement à partir de données structurées.\n")
     f.write(":keywords: référentiel, métiers, OPT, Nouvelle-Calédonie, compétences, description de poste, famille métier, groupe de compétences\n")
 
     f.write(":icons: font\n")
     f.write(":icon-set: fas\n")
-    f.write(f":imagesdir: {IMAGES_DIR_REL}\n")
     f.write(":notitle:\n\n")
 
     # --- PAGE DE GARDE ---
@@ -35,11 +40,10 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write('| image:colors/blue.png[width=100%] | image:doc-assets/cover/accueil.png[width=100%] | | \n')
     f.write('|===\n\n')
 
-    f.write("{empty} +\n{empty} +\n\n")
-    
+    f.write('[.cover-title]\n')
     f.write('[cols="1,1", frame="none", grid="none", valign="bottom"]\n')
     f.write('|===\n')
-    f.write('a| \n')
+    f.write('a|\n')
     f.write('**[.subtitle]#REPERTOIRE DES#** +\n')
     f.write('**[.maintitle]#EMPLOIS#**\n')
     
@@ -50,7 +54,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write('**[.subtitle]#2025#**\n\n')
 
     f.write('[.text-center]\n')
-    f.write(f"_Document généré le {datetime.now().strftime('%d/%m/%Y')}_\n\n")
+    f.write(f"_Document généré le {datetime.now().strftime('%d/%m/%Y')}, à {datetime.now().strftime('%H:%M')}_\n\n")
     
     f.write("<<<\n\n")
 
@@ -78,13 +82,15 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
     f.write("---\n\n")
     f.write("=== icon:comments[set=fas, role=\"lightblue\"]  Le mot de la Direction des Ressources Humaines\n\n")
-    f.write("> \"Huit ans. C’est le temps qui s'est écoulé depuis la toute première édition de notre répertoire en 2017. Aujourd'hui, je suis particulièrement heureuse de partager avec vous sa nouvelle version.\n")
-    f.write("> En huit ans, l'Office a changé, notre environnement aussi, et nos métiers se sont inévitablement transformés. Cette mise à jour était donc essentielle pour refléter la réalité de notre quotidien.\n")
-    f.write("> Aujourd'hui, ce sont **84 fiches emplois**, réparties en **12 grandes familles professionnelles**, qui ont été redessinées. Pour chacune d'entre elles, vous trouverez une description claire des missions, des responsabilités et des compétences attendues. Au fur et à mesure, nous viendrons même y ajouter de nouvelles informations.\n")
-    f.write("> Mais ce répertoire va bien au-delà d'un simple \"catalogue\" d'emplois. Il représente notre véritable boussole commune pour valoriser nos talents internes actuels, tout en nous préparant aux compétences dont nous aurons besoin demain.\n")
-    f.write("> C'est d'ailleurs exactement pour cela que nous déployons en parallèle la plateforme **GEM**. Cet espace numérique est votre nouvel outil pour faire le point sur vos compétences, mettre en lumière vos atouts, et pourquoi pas, repérer de nouvelles opportunités d'évolution au sein de l'OPT-NC.\n")
-    f.write("> Je tiens à remercier chaleureusement toutes les équipes qui ont donné vie à ce projet. Ce répertoire et la plateforme GEM sont entre vos mains : ce sont d'excellents leviers pour construire votre propre parcours, renforcer vos équipes, et participer à l'avenir de l'OPT-NC.\"\n")
-    f.write("> -- Eloïse NICOLAS, Directrice des Ressources Humaines\n\n")
+    f.write("[quote, Eloïse NICOLAS, Directrice des Ressources Humaines]\n")
+    f.write("____\n")
+    f.write("\"Huit ans. C’est le temps qui s'est écoulé depuis la toute première édition de notre répertoire en 2017. Aujourd'hui, je suis particulièrement heureuse de partager avec vous sa nouvelle version.\n\n")
+    f.write("En huit ans, l'Office a changé, notre environnement aussi, et nos métiers se sont inévitablement transformés. Cette mise à jour était donc essentielle pour refléter la réalité de notre quotidien.\n\n")
+    f.write("Aujourd'hui, ce sont **84 fiches emplois**, réparties en **12 grandes familles professionnelles**, qui ont été redessinées. Pour chacune d'entre elles, vous trouverez une description claire des missions, des responsabilités et des compétences attendues. Au fur et à mesure, nous viendrons même y ajouter de nouvelles informations.\n\n")
+    f.write("Mais ce répertoire va bien au-delà d'un simple \"catalogue\" d'emplois. Il représente notre véritable boussole commune pour valoriser nos talents internes actuels, tout en nous préparant aux compétences dont nous aurons besoin demain.\n\n")
+    f.write("C'est d'ailleurs exactement pour cela que nous déployons en parallèle la plateforme **GEM**. Cet espace numérique est votre nouvel outil pour faire le point sur vos compétences, mettre en lumière vos atouts, et pourquoi pas, repérer de nouvelles opportunités d'évolution au sein de l'OPT-NC.\n\n")
+    f.write("Je tiens à remercier chaleureusement toutes les équipes qui ont donné vie à ce projet. Ce répertoire et la plateforme GEM sont entre vos mains : ce sont d'excellents leviers pour construire votre propre parcours, renforcer vos équipes, et participer à l'avenir de l'OPT-NC.\"\n")
+    f.write("____\n\n")
 
     # ------------------------------------------------------------------------------------------------------
 
