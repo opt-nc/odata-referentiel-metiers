@@ -69,12 +69,32 @@ tasks:
     silent: true
 
   doc:
-    desc: Génère la documentation PDF avec Asciidoctor.
+    desc: Génère la documentation PDF avec Asciidoctor et l'EPUB avec Pandoc.
     cmds:
       - task: setup-python
 
       - uv run src/generate-adoc.py
-      - asciidoctor-pdf -a icons=font -a icon-set=fas -a pdf-theme=etc/themes/pdf-theme.yml -d book data/output/doc/referentiel_metiers.adoc
+      - |
+        asciidoctor-pdf \
+          -B . \
+          -a icons=font \
+          -a icon-set=fas \
+          -a imagesdir=data/static/assets \
+          -a pdf-theme=etc/themes/pdf-theme.yml \
+          -d book \
+          data/output/doc/referentiel_metiers.adoc
+      - |
+        pandoc \
+          --from=asciidoc \
+          --to=epub3 \
+          --resource-path=.:data/static/assets \
+          --css=etc/themes/epub-style.css \
+          --epub-cover-image=data/static/assets/doc-assets/cover/file-cover.png \
+          --epub-title-page=false \
+          --epub-embed-font=data/static/assets/fonts/fontawesome/fa-solid-900.ttf \
+          -M identifier="urn:uuid:7c6fa56c-6df5-4bb4-a0a1-8cb4a6f7f8b0" \
+          --output=data/output/doc/referentiel_metiers.epub \
+          data/output/doc/referentiel_metiers.adoc
     silent: true
 
   install-uv:
