@@ -3,6 +3,7 @@ DROP VIEW IF EXISTS vw_competences_architecte_logiciel;
 DROP VIEW IF EXISTS vw_competences_orphelines;
 DROP VIEW IF EXISTS vw_compter_competences_par_metier;
 DROP VIEW IF EXISTS vw_lister_competences_metier;
+DROP VIEW IF EXISTS vw_metiers_qui_possede_niveau_competence_0;
 
 DROP TABLE IF EXISTS about;
 DROP TABLE IF EXISTS metier_competence;
@@ -14,14 +15,33 @@ DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS metier;
 DROP TABLE IF EXISTS statut_metier;
+DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
+
+DROP INDEX IF EXISTS idx_metier_famille;
+DROP INDEX IF EXISTS idx_metier_statut;
+DROP INDEX IF EXISTS idx_competence_groupe_id;
+DROP INDEX IF EXISTS idx_competence_referentiel_id;
+DROP INDEX IF EXISTS idx_competence_utilisateur_competence;
+DROP INDEX IF EXISTS idx_competence_utilisateur_categorie;
+DROP INDEX IF EXISTS idx_niveau_description_comp_utilisateur;
+DROP INDEX IF EXISTS idx_metier_competence_competence;
+DROP INDEX IF EXISTS idx_metier_competence_metier;
+DROP INDEX IF EXISTS idx_famille_metier_couleur_famille;
 
 CREATE TABLE famille_metier (
     famille_metier_id TEXT PRIMARY KEY NOT NULL,
     libelle TEXT NOT NULL,
-    description TEXT,
-    couleur_hex TEXT
+    description TEXT
 );
+
+CREATE TABLE famille_metier_couleur (
+    famille_metier_id TEXT PRIMARY KEY NOT NULL,
+    couleur_hex TEXT NOT NULL,
+    FOREIGN KEY (famille_metier_id) REFERENCES famille_metier(famille_metier_id)
+);
+
+CREATE INDEX idx_famille_metier_couleur_famille ON famille_metier_couleur(famille_metier_id);
 
 CREATE TABLE statut_metier (
     statut_metier_id TEXT PRIMARY KEY NOT NULL,
@@ -118,6 +138,7 @@ CREATE TABLE about (
 );
 
 .import --csv --skip 1 data/output/csv/famille_metier.csv famille_metier
+.import --csv --skip 1 data/output/csv/famille_metier_couleur.csv famille_metier_couleur
 .import --csv --skip 1 data/output/csv/statut_metier.csv statut_metier
 .import --csv --skip 1 data/output/csv/referentiel_competence.csv referentiel_competence
 .import --csv --skip 1 data/output/csv/groupe_competence.csv groupe_competence
