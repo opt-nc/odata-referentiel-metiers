@@ -223,6 +223,8 @@ jobs:
       - name: Upload Release assets
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
+          ls -lh dist data/output/doc
+
           gh release upload "$TAG_VERSION" \
             dist/ref-metiers-opt-nc.duckdb \
             dist/ref-metiers-opt-nc.sqlite \
