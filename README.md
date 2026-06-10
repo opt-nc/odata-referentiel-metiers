@@ -1,8 +1,6 @@
 # `odata-referentiel-metiers`
 
-[![CI - Vérification des Pull Requests](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/pr-check.yml/badge.svg?branch=main)](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/pr-check.yml)
 [![CI - Génération des fichiers et Release](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/release.yml)
-[![CI - Synchronisation et Nettoyage](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/post-release.yml/badge.svg?branch=main)](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/post-release.yml)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![GitHub release](https://img.shields.io/github/v/release/opt-nc/odata-referentiel-metiers?label=release)](https://github.com/opt-nc/odata-referentiel-metiers/releases)
 [![Python](https://img.shields.io/badge/python-3.14.5%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)

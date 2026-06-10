@@ -1,13 +1,13 @@
-Famille métier,Couleur
-Vente & relation client,#7A004B
-MARKETING ET COMMUNICATION,#F699D2
-SERVICES BANCAIRES,#009CAB
-ACTIVITES POSTALES,#FBC109
-TELECOMMUNICATIONS,#FF0005
-ADMINISTRATION,#007A3F
-Ressources humaines,#B87BD8
-Finances & budget,#F16B20
-Patrimoine bâti,#88B04B
-LOGISTIQUE,#7FC9CB
-Systèmes d'information,#0F4C81
-Pilotage,#FFBE98
+famille_metier_id,couleur_hex
+activites_postales,"#FBC109"
+administration,"#007A3F"
+finances_budget,"#F16B20"
+logistique,"#7FC9CB"
+marketing_et_communication,"#F699D2"
+patrimoine_bati,"#88B04B"
+pilotage,"#FFBE98"
+ressources_humaines,"#B87BD8"
+services_bancaires,"#009CAB"
+systemes_d_information,"#0F4C81"
+telecommunications,"#FF0005"
+vente_relation_client,"#7A004B"
