@@ -71,6 +71,13 @@ jobs:
         with:
           name: csv-files
           path: data/output/csv/
+      
+      - name: Upload SQL artifacts
+        if: needs.release.outputs.new_release_published == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: sql-files
+          path: data/output/sql/
 
   generate_schemas:
     name: Generating DuckDB Schemas with SchemaCrawler
@@ -187,6 +194,7 @@ jobs:
           mv artifacts/schemacrawler-assets/* dist/
           mv artifacts/csv-files/* data/output/csv/
           mv artifacts/documents-assets/* data/output/docs/
+          mv artifacts/sql-files/* data/output/sql/
           
           rm -rf artifacts
 
@@ -212,6 +220,9 @@ jobs:
           git add data/output/csv/referentiel_competence.csv
           git add data/output/csv/statut_metier.csv
           git add data/output/csv/famille_metier_couleur.csv
+
+          git add data/output/sql/load.sql
+          git add data/output/sql/schema.sql
 
           git commit -m "Updated output's files for $TARGET_BRANCH"
           git push origin $BRANCH_NAME

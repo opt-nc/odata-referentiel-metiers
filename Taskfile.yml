@@ -36,6 +36,9 @@ tasks:
       - mkdir -p dist
       - mkdir -p data/output
       - duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
+      - mkdir -p data/output/sql
+      - mv data/output/csv/load.sql data/output/sql/load.sql
+      - mv data/output/csv/schema.sql data/output/sql/schema.sql
       - cmd: printf "\033[32mBase de données DuckDB initialisée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Base de données DuckDB initialisée avec succès.' -ForegroundColor Green"
