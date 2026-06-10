@@ -1,5 +1,5 @@
 groupe_competence_id,libelle,type_groupe
-manager,Manager,
-savoir_faire,savoir faire,
 savoir,Savoir,
 savoir_etre,Savoir être,
+savoir_faire,savoir faire,
+manager,Manager,
