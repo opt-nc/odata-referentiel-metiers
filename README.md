@@ -1,5 +1,17 @@
 # `odata-referentiel-metiers`
 
+[![CI - Vérification des Pull Requests](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/pr-check.yml/badge.svg?branch=main)](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/pr-check.yml)
+[![CI - Génération des fichiers et Release](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/release.yml)
+[![CI - Synchronisation et Nettoyage](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/post-release.yml/badge.svg?branch=main)](https://github.com/opt-nc/odata-referentiel-metiers/actions/workflows/post-release.yml)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![GitHub release](https://img.shields.io/github/v/release/opt-nc/odata-referentiel-metiers?label=release)](https://github.com/opt-nc/odata-referentiel-metiers/releases)
+[![Python](https://img.shields.io/badge/python-3.14.5%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![DuckDB](https://img.shields.io/badge/DuckDB-1.5.3%2B-FFF000?logo=duckdb&logoColor=000000)](https://duckdb.org/)
+[![SchemaCrawler](https://img.shields.io/badge/SchemaCrawler-17.11.1%2B-326CE5)](https://www.schemacrawler.com/)
+[![Pandoc](https://img.shields.io/badge/Pandoc-3.9.0.2%2B-2F6F9F?logo=pandoc&logoColor=white)](https://pandoc.org/)
+[![Asciidoctor PDF](https://img.shields.io/badge/Asciidoctor%20PDF-2.3.15%2B-E40046?logo=asciidoctor&logoColor=white)](https://docs.asciidoctor.org/pdf-converter/latest/)
+[![Task](https://img.shields.io/badge/Task-3.50.0%2B-29BEB0?logo=task&logoColor=white)](https://taskfile.dev/)
+
 ## 📖 Context
 This repository contains the generation pipeline for the OPT-NC job reference framework.
 The project transforms structured business data into a DuckDB database, then generates AsciiDoc and PDF documents.
