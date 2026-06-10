@@ -149,7 +149,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
 
       - name: Generating PDF
-        run: task doc
+        run: task docs
 
       - name: Upload documentation assets
         if: needs.release.outputs.new_release_published == 'true'
@@ -157,9 +157,9 @@ jobs:
         with:
           name: documents-assets
           path: |
-            data/output/doc/referentiel_metiers.pdf
-            data/output/doc/referentiel_metiers.adoc
-            data/output/doc/referentiel_metiers.epub
+            data/output/docs/referentiel_metiers.pdf
+            data/output/docs/referentiel_metiers.adoc
+            data/output/docs/referentiel_metiers.epub
 
   update_output_repository:
     name: Updating output repository
@@ -180,13 +180,13 @@ jobs:
 
       - name: Dispatch downloaded files
         run: |
-          mkdir -p dist data/output/csv data/output/doc
+          mkdir -p dist data/output/csv data/output/docs
           
           mv artifacts/duckdb-file/* dist/
           mv artifacts/sqlite-file/* dist/
           mv artifacts/schemacrawler-assets/* dist/
           mv artifacts/csv-files/* data/output/csv/
-          mv artifacts/documents-assets/* data/output/doc/
+          mv artifacts/documents-assets/* data/output/docs/
           
           rm -rf artifacts
 
@@ -227,6 +227,6 @@ jobs:
           dist/ref-metiers-opt-nc-schema.pdf \
           dist/ref-metiers-opt-nc-schema.png \
           dist/ref-metiers-opt-nc-schema.html \
-          data/output/doc/referentiel_metiers.pdf \
-          data/output/doc/referentiel_metiers.adoc \
-          data/output/doc/referentiel_metiers.epub
+          data/output/docs/referentiel_metiers.pdf \
+          data/output/docs/referentiel_metiers.adoc \
+          data/output/docs/referentiel_metiers.epub

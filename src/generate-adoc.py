@@ -4,7 +4,7 @@ from datetime import datetime
 
 conn = duckdb.connect("dist/ref-metiers-opt-nc.duckdb")
 
-OUTPUT_DIR = "data/output/doc/"
+OUTPUT_DIR = "data/output/docs/"
 OUTPUT_DIR_ABS = os.path.abspath(OUTPUT_DIR)
 
 os.makedirs(OUTPUT_DIR_ABS, exist_ok=True)
@@ -33,11 +33,11 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write('[cols="1,1,1,1", width="80%", frame="none", grid="none", align="center"]\n')
 
     f.write('|===\n')
-    f.write('| | image:doc-assets/cover/technicien.png[width=100%] | image:colors/blue.png[width=100%] | \n')
-    f.write('| image:doc-assets/cover/facteur.png[width=100%] | image:colors/yellow.png[width=100%] | image:doc-assets/cover/distribution_lettre.png[width=100%] | \n')
-    f.write('| | image:doc-assets/cover/teleconseiller.png[width=100%] | image:colors/blue.png[width=100%] | image:doc-assets/cover/assistant.png[width=100%]\n')
-    f.write('| | | image:doc-assets/cover/reseau.png[width=100%] | image:colors/yellow.png[width=100%]\n')
-    f.write('| image:colors/blue.png[width=100%] | image:doc-assets/cover/accueil.png[width=100%] | | \n')
+    f.write('| | image:docs-assets/cover/technicien.png[width=100%] | image:colors/blue.png[width=100%] | \n')
+    f.write('| image:docs-assets/cover/facteur.png[width=100%] | image:colors/yellow.png[width=100%] | image:docs-assets/cover/distribution_lettre.png[width=100%] | \n')
+    f.write('| | image:docs-assets/cover/teleconseiller.png[width=100%] | image:colors/blue.png[width=100%] | image:docs-assets/cover/assistant.png[width=100%]\n')
+    f.write('| | | image:docs-assets/cover/reseau.png[width=100%] | image:colors/yellow.png[width=100%]\n')
+    f.write('| image:colors/blue.png[width=100%] | image:docs-assets/cover/accueil.png[width=100%] | | \n')
     f.write('|===\n\n')
 
     f.write('[.cover-title]\n')
@@ -71,11 +71,11 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write("== icon:info-circle[set=fas, role=\"blue\"]  Introduction\n\n")
     f.write("=== icon:cogs[set=fas, role=\"gray\"]  Pourquoi une démarche de documentation automatisée ?\n\n")
     f.write("Ce référentiel a été généré à partir de données structurées afin de produire une documentation claire, homogène et facilement maintenable.\n")
-    f.write("L'objectif n'est pas simplement de produire un document final, mais de mettre en place une chaîne reproductible. Les données sont chargées dans une base DuckDB, contrôlées, analysées, puis transformées automatiquement en documentation AsciiDoc et en doc-images.\n\n")
+    f.write("L'objectif n'est pas simplement de produire un document final, mais de mettre en place une chaîne reproductible. Les données sont chargées dans une base DuckDB, contrôlées, analysées, puis transformées automatiquement en documentation AsciiDoc et en docs-images.\n\n")
 
     f.write("Concrètement, qu'est-ce qu'on a fait ?\n")
     f.write("Tout d'abord, on charge les bases de données DuckDB et SQLite avec les scripts SQL.\n")
-    f.write("On interroge ensuite la base DuckDB avec un script python pour construire le référentiel des métiers, des familles professionnelles et des compétences associées. Le contenu généré est écrit en AsciiDoc, puis converti en doc-images grâce à Asciidoctor doc-images avec un thème dédié.\n")
+    f.write("On interroge ensuite la base DuckDB avec un script python pour construire le référentiel des métiers, des familles professionnelles et des compétences associées. Le contenu généré est écrit en AsciiDoc, puis converti en docs-images grâce à Asciidoctor docs-images avec un thème dédié.\n")
     f.write("Cette approche permet de garder une source de données structurée, de produire automatiquement une documentation lisible, et de faciliter les mises à jour lorsque les données ou le modèle évoluent.\n")
     f.write("Le code et les données du projet sont disponibles sur le dépôt GitHub : https://github.com/adriens/odata-referentiel-metiers\n\n")
 

@@ -60,6 +60,6 @@ jobs:
 
       - name: Generate documentation
         run: |
-          task doc
+          task docs
       
           

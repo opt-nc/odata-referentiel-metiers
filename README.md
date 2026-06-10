@@ -7,7 +7,7 @@ The project transforms structured business data into a DuckDB database, then gen
 ## 🎯 What the Project Does
 - Loads business data from `src/duck.sql` and `src/sqlite.sql` into a DuckDB and a SQLite database.
 - Automatically builds a directory of professions, job families, and skills.
-- Writes an AsciiDoc file (`data/output/doc/referentiel_metiers.adoc`).
+- Writes an AsciiDoc file (`data/output/docs/referentiel_metiers.adoc`).
 - Produces documentation files and CSV exports.
 
 ## 💡 Why This Project Exists
@@ -20,7 +20,7 @@ By reusing a database and a Python script to produce the documentation, the refe
 - `src/generate-adoc.py`: Python script that reads DuckDB and generates the AsciiDoc file
 - `data/input/`: CSV files and input data
 - `data/output/csv/`: Generated CSV exports
-- `data/output/doc/`: Generated documentation (AsciiDoc and PDF)
+- `data/output/docs/`: Generated documentation (AsciiDoc and PDF)
 - `etc/themes/pdf-theme.yml`: PDF formatting theme for Asciidoctor
 - `Taskfile.yml`: Execute automated tasks with only one command line
 
@@ -52,23 +52,23 @@ task duckdb
 2. Generate the complete documentation (using Taskfile is recommended):
 
 ```bash
-task doc
+task docs
 ```
 
 ## 📦 What the Generation Produces
 - `dist/ref-metiers-opt-nc.duckdb` : Built DuckDB database
 - `dist/ref-metiers-opt-nc.sqlite` : Built SQLite database
-- `data/output/doc/referentiel_metiers.adoc` : AsciiDoc source of the reference framework
+- `data/output/docs/referentiel_metiers.adoc` : AsciiDoc source of the reference framework
 - `dist/ref-metiers-opt-nc-schema.html` : HTML documentation of the schema
 - `dist/ref-metiers-opt-nc-schema.png` : PNG image of the schema
 - `dist/ref-metiers-opt-nc-schema.pdf` : PDF format of the schema
-- `data/output/doc/referentiel_metiers.pdf` : Final PDF document (via Asciidoctor)
+- `data/output/docs/referentiel_metiers.pdf` : Final PDF document (via Asciidoctor)
 - And the exported CSVs from DuckDB located in `data/output/csv/`
 
 ## 🛠️ And you can also modify the Reference Framework !
 - Update the CSV sources in `data/input/` or the SQL in `src/duck.sql`
 - Run `task duckdb` to rebuild the database
-- Run `task doc` to regenerate the documents
+- Run `task docs` to regenerate the documents
 
 ## Notes
 - The `src/generate-adoc.py` script reads the DuckDB database and builds a structured document featuring job families, active professions, and skills classified by group.

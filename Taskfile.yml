@@ -15,7 +15,7 @@ tasks:
       - task: duckdb
       - task: sqlite
       - task: schema
-      - task: doc
+      - task: docs
     silent: true
 
   clean:
@@ -23,6 +23,7 @@ tasks:
     cmds:
       - rm -rf dist
       - rm -rf data/output
+      - rm -rf .venv
       - cmd: printf "\033[32mNettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Nettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.' -ForegroundColor Green"
@@ -64,7 +65,7 @@ tasks:
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Rapport de linting généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
-        
+
       - |
         {{.SC_BASE}} \
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
@@ -100,7 +101,7 @@ tasks:
         platforms: [windows]
     silent: true
 
-  doc:
+  docs:
     desc: Génère la documentation PDF avec Asciidoctor et l'EPUB avec Pandoc.
     cmds:
       - task: setup-python
@@ -119,7 +120,7 @@ tasks:
           -a imagesdir=data/static/assets \
           -a pdf-theme=etc/themes/pdf-theme.yml \
           -d book \
-          data/output/doc/referentiel_metiers.adoc
+          data/output/docs/referentiel_metiers.adoc
       - cmd: printf "\033[32mDocumentation PDF générée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Documentation PDF générée avec succès.' -ForegroundColor Green"
@@ -131,12 +132,12 @@ tasks:
           --to=epub3 \
           --resource-path=.:data/static/assets \
           --css=etc/themes/epub-style.css \
-          --epub-cover-image=data/static/assets/doc-assets/cover/file-cover.png \
+          --epub-cover-image=data/static/assets/docs-assets/cover/file-cover.png \
           --epub-title-page=false \
           --epub-embed-font=data/static/assets/fonts/fontawesome/fa-solid-900.ttf \
           -M identifier="urn:uuid:7c6fa56c-6df5-4bb4-a0a1-8cb4a6f7f8b0" \
-          --output=data/output/doc/referentiel_metiers.epub \
-          data/output/doc/referentiel_metiers.adoc
+          --output=data/output/docs/referentiel_metiers.epub \
+          data/output/docs/referentiel_metiers.adoc
       - cmd: printf "\033[32mDocumentation EPUB générée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'Documentation EPUB générée avec succès.' -ForegroundColor Green"
