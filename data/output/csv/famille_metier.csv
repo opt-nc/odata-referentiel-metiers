@@ -1,10 +1,10 @@
 famille_metier_id,libelle,description
-telecommunications,TELECOMMUNICATIONS,
-administration,ADMINISTRATION,
+systemes_d_information,Systèmes d'information,
 pilotage,Pilotage,
 ressources_humaines,Ressources humaines,
 logistique,LOGISTIQUE,
-systemes_d_information,Systèmes d'information,
+telecommunications,TELECOMMUNICATIONS,
+administration,ADMINISTRATION,
 marketing_et_communication,MARKETING ET COMMUNICATION,
 services_bancaires,SERVICES BANCAIRES,
 activites_postales,ACTIVITES POSTALES,
