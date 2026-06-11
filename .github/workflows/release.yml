@@ -44,7 +44,7 @@ jobs:
         uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
 
       - name: Setup DuckDB action
-        uses: opt-nc/setup-duckdb-action@v1.2.9
+        uses: opt-nc/setup-duckdb-action@c64cd61a8a0af98f7d5d8b45e9dc332d250cd217
 
       - name: Load DuckDB database
         run: task duckdb
@@ -71,6 +71,13 @@ jobs:
         with:
           name: csv-files
           path: data/output/csv/
+      
+      - name: Upload SQL artifacts
+        if: needs.release.outputs.new_release_published == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: sql-files
+          path: data/output/sql/
 
   generate_schemas:
     name: Generating DuckDB Schemas with SchemaCrawler
@@ -140,11 +147,16 @@ jobs:
         with:
           python-version: '3.14.5'
 
+      - name: Install Pandoc
+        uses: pandoc/actions/setup@86321b6dd4675f5014c611e05088e10d4939e09e
+        with:
+          version: 3.9.0.2
+
       - name: Install Asciidoctor PDF via APT
         run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
 
       - name: Generating PDF
-        run: task doc
+        run: task docs
 
       - name: Upload documentation assets
         if: needs.release.outputs.new_release_published == 'true'
@@ -152,8 +164,9 @@ jobs:
         with:
           name: documents-assets
           path: |
-            data/output/doc/referentiel_metiers.pdf
-            data/output/doc/referentiel_metiers.adoc
+            data/output/docs/referentiel_metiers.pdf
+            data/output/docs/referentiel_metiers.adoc
+            data/output/docs/referentiel_metiers.epub
 
   update_output_repository:
     name: Updating output repository
@@ -174,13 +187,14 @@ jobs:
 
       - name: Dispatch downloaded files
         run: |
-          mkdir -p dist data/output/csv data/output/doc
+          mkdir -p dist data/output/csv data/output/docs
           
           mv artifacts/duckdb-file/* dist/
           mv artifacts/sqlite-file/* dist/
           mv artifacts/schemacrawler-assets/* dist/
           mv artifacts/csv-files/* data/output/csv/
-          mv artifacts/documents-assets/* data/output/doc/
+          mv artifacts/documents-assets/* data/output/docs/
+          mv artifacts/sql-files/* data/output/sql/
           
           rm -rf artifacts
 
@@ -199,15 +213,16 @@ jobs:
           git add data/output/csv/competence.csv
           git add data/output/csv/competence_utilisateur.csv
           git add data/output/csv/famille_metier.csv
-          git add data/output/csv/gem_competence.csv
-          git add data/output/csv/gem_metier.csv
-          git add data/output/csv/gem_metier_competence.csv
           git add data/output/csv/groupe_competence.csv
           git add data/output/csv/metier.csv
           git add data/output/csv/metier_competence.csv
           git add data/output/csv/niveau_description_competence.csv
           git add data/output/csv/referentiel_competence.csv
           git add data/output/csv/statut_metier.csv
+          git add data/output/csv/famille_metier_couleur.csv
+
+          git add data/output/sql/load.sql
+          git add data/output/sql/schema.sql
 
           git commit -m "Updated output's files for $TARGET_BRANCH"
           git push origin $BRANCH_NAME
@@ -217,5 +232,13 @@ jobs:
       - name: Upload Release assets
         run: |
           TAG_VERSION="v${{ needs.release.outputs.new_release_version }}"
-          gh release upload $TAG_VERSION dist/ref-metiers-opt-nc.duckdb dist/ref-metiers-opt-nc.sqlite dist/ref-metiers-opt-nc-schema.pdf dist/ref-metiers-opt-nc-schema.png dist/ref-metiers-opt-nc-schema.html data/output/doc/referentiel_metiers.pdf data/output/doc/referentiel_metiers.adoc
+          gh release upload $TAG_VERSION \
+          dist/ref-metiers-opt-nc.duckdb \
+          dist/ref-metiers-opt-nc.sqlite \
+          dist/ref-metiers-opt-nc-schema.pdf \
+          dist/ref-metiers-opt-nc-schema.png \
+          dist/ref-metiers-opt-nc-schema.html \
+          data/output/docs/referentiel_metiers.pdf \
+          data/output/docs/referentiel_metiers.adoc \
+          data/output/docs/referentiel_metiers.epub
           

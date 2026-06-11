@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS niveau_description_competence;
 DROP TABLE IF EXISTS competence_utilisateur;
 DROP TABLE IF EXISTS competence_attribut;
 DROP TABLE IF EXISTS metier;
+DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
 DROP TABLE IF EXISTS competence;
 
@@ -40,7 +41,6 @@ DROP TABLE IF EXISTS referentiel_competence;
 DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS categorie_detention;
 
-DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS about;
 
 DROP INDEX IF EXISTS idx_metier_famille;
@@ -142,8 +142,8 @@ CREATE TABLE famille_metier_couleur (
 
 INSERT INTO famille_metier_couleur
 SELECT
-    formatter("Famille métier") AS famille_metier_id,
-    "Couleur" AS couleur_hex
+    famille_metier_id,
+    couleur_hex
 FROM read_csv_auto('data/static/mapping/couleurs_familles.csv');
 
 CREATE INDEX idx_famille_metier_couleur_famille ON famille_metier_couleur(famille_metier_id);
@@ -570,4 +570,22 @@ COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.nom_competence IS '
 FROM vw_metiers_orphelins;
 FROM vw_competences_orphelines;
 
+DROP TABLE IF EXISTS gem_metier;
+DROP TABLE IF EXISTS gem_competence;
+DROP TABLE IF EXISTS gem_metier_competence;
+
 EXPORT DATABASE 'data/output/csv';
+
+-- Trie les fichiers CSV dans un ordre déterministe pour réduire les conflits de commit.
+COPY (SELECT * FROM about ORDER BY key) TO 'data/output/csv/about.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM categorie_detention ORDER BY categorie_detention_id) TO 'data/output/csv/categorie_detention.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM famille_metier ORDER BY famille_metier_id) TO 'data/output/csv/famille_metier.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM groupe_competence ORDER BY groupe_competence_id) TO 'data/output/csv/groupe_competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM referentiel_competence ORDER BY referentiel_competence_id) TO 'data/output/csv/referentiel_competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM statut_metier ORDER BY statut_metier_id) TO 'data/output/csv/statut_metier.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM competence ORDER BY code_competence) TO 'data/output/csv/competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM competence_utilisateur ORDER BY code_competence) TO 'data/output/csv/competence_utilisateur.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM famille_metier_couleur ORDER BY famille_metier_id) TO 'data/output/csv/famille_metier_couleur.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM metier ORDER BY code_metier) TO 'data/output/csv/metier.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM metier_competence ORDER BY code_metier, code_competence, nom_competence) TO 'data/output/csv/metier_competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM niveau_description_competence ORDER BY code_competence, niveau) TO 'data/output/csv/niveau_description_competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');

@@ -1,5 +1,5 @@
 dist/
-data/output/doc
+data/output/docs
 
 .idea/
 __pycache__/

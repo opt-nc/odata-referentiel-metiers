@@ -16,20 +16,14 @@ header:
   border_color: '#BDBDBD'
   background_color: '#FFFFFF'
   font_style: bold
-  recto:
+  recto: &header_content
     left:
       content: '{document-title}'
     center:
       content: 'image:../../data/static/assets/logo/OPT_NC.png[width=90]'
     right:
       content: 'OPT - NC - 2025'
-  verso:
-    left:
-      content: '{document-title}'
-    center:
-      content: 'image:../../data/static/assets/logo/OPT_NC.png[width=90]'
-    right:
-      content: 'OPT - NC - 2025'
+  verso: *header_content
 
 footer:
   height: 40
@@ -37,20 +31,14 @@ footer:
   border_width: 0.5
   border_color: '#BDBDBD'
   font_style: bold
-  recto:
+  recto: &footer_content
     left:
       content: ''
     center:
       content: '{chapter-title}'
     right:
       content: '{page-number}'
-  verso:
-    left:
-      content: ''
-    center:
-      content: '{chapter-title}'
-    right:
-      content: '{page-number}'
+  verso: *footer_content
 
 base:
   font_size: 9

@@ -1,0 +1,492 @@
+@font-face {
+    font-family: "Font Awesome 6 Free Solid";
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/fa-solid-900.ttf") format("truetype");
+}
+
+:root {
+    color-scheme: light dark;
+    --epub-bg: #FFFFFF;
+    --epub-text: #333333;
+    --epub-heading: #000000;
+    --epub-muted: #424242;
+    --epub-border: #BDBDBD;
+    --epub-table-head-bg: #F5F5F5;
+    --epub-table-head-text: #263238;
+    --epub-table-border: #E0E0E0;
+    --epub-quote-text: #555555;
+    --epub-tip-bg: #FFFDE7;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --epub-bg: #111111;
+        --epub-text: #E6E6E6;
+        --epub-heading: #F2F2F2;
+        --epub-muted: #CFCFCF;
+        --epub-border: #6F6F6F;
+        --epub-table-head-bg: #242424;
+        --epub-table-head-text: #F2F2F2;
+        --epub-table-border: #4A4A4A;
+        --epub-quote-text: #FFFFFF;
+        --epub-tip-bg: #2B2817;
+    }
+}
+
+body {
+    font-family: "Noto Serif", serif;
+    font-size: 1em;
+    line-height: 1.4;
+    color: var(--epub-text);
+    background-color: var(--epub-bg);
+    margin: 1cm;
+}
+
+h1, h2, h3, h4 {
+    font-family: "M+ 1p", sans-serif;
+    color: var(--epub-heading);
+    line-height: 1.25;
+    page-break-after: avoid;
+}
+
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.35em; border-bottom: 1px solid var(--epub-border); padding-bottom: 5px; }
+h3 { font-size: 1.15em; }
+h4 { font-size: 1em; }
+
+p {
+    margin: 0.85em 0 0 0;
+    text-align: justify;
+}
+
+img {
+    max-width: 100%;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    margin: 0;
+}
+
+hr.page-break {
+    break-after: page;
+    page-break-after: always;
+}
+
+.chapter-header {
+    display: none !important;
+}
+
+section#répertoire-des-emplois > h1:first-child {
+    display: none !important;
+}
+
+.chapter-title {
+    color: var(--epub-muted);
+    font-weight: bold;
+}
+
+.chapter > .table:first-of-type,
+section#répertoire-des-emplois > table:first-of-type {
+    margin: 0 auto 0.3em auto;
+}
+
+.chapter > .table:first-of-type table,
+section#répertoire-des-emplois > table:first-of-type {
+    width: 66% !important;
+    max-width: 27rem;
+    margin: 0 auto;
+}
+
+.chapter > .table:first-of-type td,
+section#répertoire-des-emplois > table:first-of-type td,
+section#répertoire-des-emplois > table:first-of-type th {
+    padding: 1px !important;
+    border: 0;
+    background: transparent;
+}
+
+.chapter > .table:first-of-type p.tableblock {
+    margin: 0;
+    line-height: 1;
+}
+
+.chapter > .table:first-of-type img,
+section#répertoire-des-emplois > table:first-of-type img {
+    display: block;
+}
+
+.chapter > .table:first-of-type + p {
+    display: none;
+}
+
+.chapter > .table:nth-of-type(2),
+section#répertoire-des-emplois > table:nth-of-type(2),
+.cover-title {
+    width: 72% !important;
+    max-width: 34rem;
+    margin: 1.4em auto 0.1em auto;
+}
+
+.chapter > .table:nth-of-type(2) table,
+section#répertoire-des-emplois > table:nth-of-type(2) {
+    margin-bottom: 0.2em;
+}
+
+.chapter > .table:nth-of-type(2) td,
+section#répertoire-des-emplois > table:nth-of-type(2) td,
+section#répertoire-des-emplois > table:nth-of-type(2) th {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    border: 0;
+    background: transparent;
+}
+
+.chapter > .table:nth-of-type(2) img,
+section#répertoire-des-emplois > table:nth-of-type(2) img {
+    width: 240px;
+    max-width: 45vw;
+}
+
+.chapter > p.text-center {
+    margin-top: 0.25em;
+}
+
+/* Couleurs par famille métier */
+.vente-relation-client { color: #7A004B !important; }
+.marketing-et-communication { color: #F699D2 !important; }
+.services-bancaires { color: #009CAB !important; }
+.activites-postales { color: #FBC109 !important; }
+.telecommunications { color: #FF0005 !important; }
+.administration { color: #007A3F !important; }
+.ressources-humaines { color: #B87BD8 !important; }
+.finances-budget { color: #F16B20 !important; }
+.patrimoine-bati { color: #88B04B !important; }
+.logistique { color: #7FC9CB !important; }
+.systemes-d-information { color: #0F4C81 !important; }
+.pilotage { color: #FFBE98 !important; }
+
+.vente-relation-client-bg { background-color: #7A004B; }
+.marketing-et-communication-bg { background-color: #F699D2; }
+.services-bancaires-bg { background-color: #009CAB; }
+.activites-postales-bg { background-color: #FBC109; }
+.telecommunications-bg { background-color: #FF0005; }
+.administration-bg { background-color: #007A3F; }
+.ressources-humaines-bg { background-color: #B87BD8; }
+.finances-budget-bg { background-color: #F16B20; }
+.patrimoine-bati-bg { background-color: #88B04B; }
+.logistique-bg { background-color: #7FC9CB; }
+.systemes-d-information-bg { background-color: #0F4C81; }
+.pilotage-bg { background-color: #FFBE98; }
+
+.vente-relation-client-bg, .marketing-et-communication-bg, .services-bancaires-bg,
+.activites-postales-bg, .telecommunications-bg, .administration-bg,
+.ressources-humaines-bg, .finances-budget-bg, .patrimoine-bati-bg,
+.logistique-bg, .systemes-d-information-bg, .pilotage-bg {
+    color: #FFFFFF !important;
+    padding: 2px 5px;
+}
+
+/* Titres et blocs spécifiques */
+.titre-sommaire { font-size: 1.35em; font-weight: bold; }
+.titre-famille { font-size: 1.12em; font-weight: bold; }
+.bloc-numero { color: #FFFFFF !important; font-size: 1.25em; font-weight: bold; display: inline-block; border-radius: 4px; }
+
+a.cross-reference,
+a.cross-reference:link,
+a.cross-reference:visited {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+a.cross-reference strong,
+a.cross-reference span {
+    text-decoration: none !important;
+}
+
+a.cross-reference .bloc-numero {
+    color: #FFFFFF !important;
+}
+
+a.cross-reference .titre-famille.vente-relation-client { color: #7A004B !important; -webkit-text-fill-color: #7A004B !important; }
+a.cross-reference .titre-famille.marketing-et-communication { color: #F699D2 !important; -webkit-text-fill-color: #F699D2 !important; }
+a.cross-reference .titre-famille.services-bancaires { color: #009CAB !important; -webkit-text-fill-color: #009CAB !important; }
+a.cross-reference .titre-famille.activites-postales { color: #FBC109 !important; -webkit-text-fill-color: #FBC109 !important; }
+a.cross-reference .titre-famille.telecommunications { color: #FF0005 !important; -webkit-text-fill-color: #FF0005 !important; }
+a.cross-reference .titre-famille.administration { color: #007A3F !important; -webkit-text-fill-color: #007A3F !important; }
+a.cross-reference .titre-famille.ressources-humaines { color: #B87BD8 !important; -webkit-text-fill-color: #B87BD8 !important; }
+a.cross-reference .titre-famille.finances-budget { color: #F16B20 !important; -webkit-text-fill-color: #F16B20 !important; }
+a.cross-reference .titre-famille.patrimoine-bati { color: #88B04B !important; -webkit-text-fill-color: #88B04B !important; }
+a.cross-reference .titre-famille.logistique { color: #7FC9CB !important; -webkit-text-fill-color: #7FC9CB !important; }
+a.cross-reference .titre-famille.systemes-d-information { color: #0F4C81 !important; -webkit-text-fill-color: #0F4C81 !important; }
+a.cross-reference .titre-famille.pilotage { color: #FFBE98 !important; -webkit-text-fill-color: #FFBE98 !important; }
+
+/* Couleurs génériques */
+.subtitle { font-size: 1.2em; color: var(--epub-muted); }
+.maintitle { font-size: 2em; color: var(--epub-heading); font-weight: bold; }
+.red { color: #E53935; }
+.orange { color: #FB8C00; }
+.yellow { color: #FFC107; }
+.green { color: #43A047; }
+.blue { color: #1565C0; }
+.lightblue { color: #29B6F6; }
+.brown { color: #5D4037; }
+.gray { color: #BDBDBD; }
+
+@media (prefers-color-scheme: dark) {
+    .vente-relation-client { color: #F06BB8 !important; }
+    .marketing-et-communication { color: #FFB8E2 !important; }
+    .services-bancaires { color: #4DD6E2 !important; }
+    .activites-postales { color: #FFD84D !important; }
+    .telecommunications { color: #FF6B6E !important; }
+    .administration { color: #52D68D !important; }
+    .ressources-humaines { color: #D6A1F0 !important; }
+    .finances-budget { color: #FF9A5C !important; }
+    .patrimoine-bati { color: #B2D875 !important; }
+    .logistique { color: #A7E5E6 !important; }
+    .systemes-d-information { color: #76B7E8 !important; }
+    .pilotage { color: #FFD0B8 !important; }
+    a.cross-reference .titre-famille.vente-relation-client { color: #F06BB8 !important; -webkit-text-fill-color: #F06BB8 !important; }
+    a.cross-reference .titre-famille.marketing-et-communication { color: #FFB8E2 !important; -webkit-text-fill-color: #FFB8E2 !important; }
+    a.cross-reference .titre-famille.services-bancaires { color: #4DD6E2 !important; -webkit-text-fill-color: #4DD6E2 !important; }
+    a.cross-reference .titre-famille.activites-postales { color: #FFD84D !important; -webkit-text-fill-color: #FFD84D !important; }
+    a.cross-reference .titre-famille.telecommunications { color: #FF6B6E !important; -webkit-text-fill-color: #FF6B6E !important; }
+    a.cross-reference .titre-famille.administration { color: #52D68D !important; -webkit-text-fill-color: #52D68D !important; }
+    a.cross-reference .titre-famille.ressources-humaines { color: #D6A1F0 !important; -webkit-text-fill-color: #D6A1F0 !important; }
+    a.cross-reference .titre-famille.finances-budget { color: #FF9A5C !important; -webkit-text-fill-color: #FF9A5C !important; }
+    a.cross-reference .titre-famille.patrimoine-bati { color: #B2D875 !important; -webkit-text-fill-color: #B2D875 !important; }
+    a.cross-reference .titre-famille.logistique { color: #A7E5E6 !important; -webkit-text-fill-color: #A7E5E6 !important; }
+    a.cross-reference .titre-famille.systemes-d-information { color: #76B7E8 !important; -webkit-text-fill-color: #76B7E8 !important; }
+    a.cross-reference .titre-famille.pilotage { color: #FFD0B8 !important; -webkit-text-fill-color: #FFD0B8 !important; }
+    .red { color: #FF6B6E; }
+    .blue { color: #76B7E8; }
+    .gray { color: #D0D0D0; }
+}
+
+/* Icônes Font Awesome utilisées par l'AsciiDoc et converties par Pandoc. */
+.icon,
+.fa,
+.fas {
+    display: inline-block;
+    font-family: "Font Awesome 6 Free Solid", monospace;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1;
+    text-rendering: auto;
+}
+
+.icon::before,
+.fa::before,
+.fas::before {
+    display: inline-block;
+    min-width: 1em;
+    text-align: center;
+}
+
+:is(.i-clipboard-list, .fa-clipboard-list)::before { content: "\f46d" !important; }
+:is(.i-info-circle, .fa-info-circle)::before { content: "\f05a" !important; }
+:is(.i-cogs, .fa-cogs)::before { content: "\f085" !important; }
+:is(.i-comments, .fa-comments)::before { content: "\f086" !important; }
+:is(.i-graduation-cap, .fa-graduation-cap)::before { content: "\f19d" !important; }
+:is(.i-list-ul, .fa-list-ul)::before { content: "\f0ca" !important; }
+:is(.i-id-card, .fa-id-card)::before { content: "\f2c2" !important; }
+:is(.i-book, .fa-book)::before { content: "\f02d" !important; }
+:is(.i-lightbulb, .fa-lightbulb)::before { content: "\f0eb" !important; }
+
+.icon.i-circle::before,
+.fa.fa-circle::before {
+    content: "" !important;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 0.72em !important;
+    min-width: 0 !important;
+    max-width: 0.72em !important;
+    height: 0.72em !important;
+    min-height: 0.72em !important;
+    max-height: 0.72em !important;
+    aspect-ratio: 1 / 1;
+    border-radius: 999px;
+    background: currentColor;
+    padding: 0 !important;
+    text-align: initial;
+    vertical-align: -0.05em;
+}
+
+.icon.i-circle.gray::before,
+.fa.fa-circle.gray::before,
+.fa.fa-circle[data-set="far"]::before {
+    background: transparent !important;
+    border: 0.12em solid currentColor;
+}
+.text-center { text-align: center; }
+
+/* Tableaux */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+th {
+    background-color: var(--epub-table-head-bg);
+    color: var(--epub-table-head-text);
+    text-align: left;
+    padding: 8px;
+    border-bottom: 2px solid var(--epub-border);
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid var(--epub-table-border);
+}
+
+table.table-framed-rows.table-grid-rows {
+    font-size: 1.02em;
+}
+
+table.table-framed-rows.table-grid-rows th,
+table.table-framed-rows.table-grid-rows td {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+table.table-framed-rows.table-grid-rows td.halign-center {
+    white-space: nowrap;
+}
+
+table.table-framed-rows.table-grid-rows .icon.i-circle,
+table.table-framed-rows.table-grid-rows .fa.fa-circle {
+    font-size: 1.25em;
+    margin: 0 0.06em;
+}
+
+.table-framed-none,
+.table-grid-none,
+.table-framed-none td,
+.table-grid-none td {
+    border: 0;
+}
+
+td.halign-center,
+td.halign-center > p,
+th.halign-center,
+th.halign-center > p {
+    text-align: center;
+}
+
+td.valign-middle,
+th.valign-middle {
+    vertical-align: middle;
+}
+
+/* Citations et Tips */
+blockquote,
+.blockquote {
+    border-left: 4px solid #1E88E5;
+    padding-left: 10px;
+    margin-left: 0;
+    font-style: italic;
+    color: var(--epub-quote-text);
+}
+
+div.blockquote,
+div[class~="blockquote"] {
+    display: block !important;
+    border-left: 4px solid #1E88E5;
+    padding-left: 10px;
+    margin-left: 0;
+}
+
+div.blockquote blockquote,
+div[class~="blockquote"] blockquote {
+    border-left: 0;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+blockquote > p,
+blockquote footer,
+blockquote cite,
+.blockquote p,
+.blockquote footer,
+.blockquote cite {
+    color: var(--epub-quote-text) !important;
+}
+
+blockquote > p,
+.blockquote p {
+    font-size: 0.98em;
+    line-height: 1.55;
+}
+
+blockquote footer,
+.blockquote footer {
+    font-size: 0.82em;
+}
+
+.tip {
+    border-left: 0;
+    background-color: transparent;
+    display: grid;
+    grid-template-columns: 2.2em 1fr;
+    column-gap: 0.85em;
+    align-items: center;
+    padding: 10px;
+    margin: 15px 0;
+}
+
+.tip .title {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    margin: 0 !important;
+    width: 1.2em;
+    text-align: center;
+}
+
+.tip .title p {
+    display: none;
+}
+
+.tip .title::before,
+aside.tip::before {
+    content: "\f0eb";
+    display: inline-block;
+    font-family: "Font Awesome 6 Free Solid", monospace;
+    font-size: 1.25em;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1;
+    color: #FBC02D !important;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    margin: 0 !important;
+    width: 1.2em;
+    text-align: center;
+}
+
+.tip > p {
+    grid-column: 2;
+    border-left: 2px solid #FBC02D;
+    padding-left: 0.9em;
+}
+
+.tip .content {
+    grid-column: 2;
+    border-left: 2px solid #FBC02D;
+    padding-left: 0.9em;
+    padding-bottom: 0 !important;
+    background-image: none !important;
+}
+
+.tip .content,
+.tip p {
+    margin-top: 0;
+}
