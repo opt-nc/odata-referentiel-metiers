@@ -23,7 +23,7 @@ NIVEAUX_COMPETENCE = [
 ]
 
 
-def icon(name: str, role: str, icon_set: str = "fas") -> str:
+def fontawesome_icon(name: str, role: str, icon_set: str = "fas") -> str:
     """Construit une icône AsciiDoc Font Awesome."""
     return f'icon:{name}[set={icon_set},role="{role}"]'
 
@@ -34,8 +34,8 @@ def niveau_score(niveau: int | None, role_couleur: str = "blue", max_niveau: int
         return "-"
 
     niveau_int = int(niveau)
-    cercles_pleins = [icon("circle", role_couleur)] * niveau_int
-    cercles_vides = [icon("circle", "gray", "far")] * (max_niveau - niveau_int)
+    cercles_pleins = [fontawesome_icon("circle", role_couleur)] * niveau_int
+    cercles_vides = [fontawesome_icon("circle", "gray", "far")] * (max_niveau - niveau_int)
     return " ".join(cercles_pleins + cercles_vides)
 
 

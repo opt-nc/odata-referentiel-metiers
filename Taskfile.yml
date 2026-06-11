@@ -159,7 +159,7 @@ tasks:
       - git -C "{{.SITE_DIR}}" init
       - git -C "{{.SITE_DIR}}" submodule add --depth 1 https://github.com/McShelby/hugo-theme-relearn.git themes/hugo-theme-relearn
 
-      - printf "theme = 'hugo-theme-relearn'\n\nbaseURL = '/'\nlocale = 'fr-fr'\ntitle = 'Référentiel Métiers OPT-NC'\n\n[markup.goldmark.renderer]\nunsafe = true\n" > "{{.SITE_DIR}}/hugo.toml"
+      - printf "theme = 'hugo-theme-relearn'\n\nbaseURL = '/'\nlocale = 'fr-fr'\ntitle = 'Référentiel Métiers OPT-NC'\n\n[params]\nthemeVariant = ['relearn-bright', 'relearn-dark']\n\n[markup.goldmark.renderer]\nunsafe = true\n" > "{{.SITE_DIR}}/hugo.toml"
 
       - uv run src/generate-md.py --site-dir "{{.SITE_DIR}}"
 
