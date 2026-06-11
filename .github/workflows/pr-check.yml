@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [ "main", "develop" ]
 
+permissions:
+  contents: write
+
 jobs:
   verify:
     name: Verify Generation Pipeline
@@ -19,6 +22,11 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: '3.14.5'
+
+      - name: Install Pandoc
+        uses: pandoc/actions/setup@86321b6dd4675f5014c611e05088e10d4939e09e
+        with:
+          version: 3.9.0.2
 
       - name: Setup DuckDB action
         uses: opt-nc/setup-duckdb-action@c64cd61a8a0af98f7d5d8b45e9dc332d250cd217
@@ -52,6 +60,6 @@ jobs:
 
       - name: Generate documentation
         run: |
-          task doc
+          task docs
       
           
