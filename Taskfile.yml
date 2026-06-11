@@ -1,6 +1,7 @@
 version: '3'
 
 vars:
+  SITE_DIR: site
   SC_BASE: >-
     schemacrawler
     --info-level=standard
@@ -16,17 +17,19 @@ tasks:
       - task: sqlite
       - task: schema
       - task: docs
+      - task: site
     silent: true
 
   clean:
-    desc: Nettoie les tables, vues et index de la base DuckDB.
+    desc: Nettoie les sorties générées et le site Hugo.
     cmds:
       - rm -rf dist
       - rm -rf data/output
+      - rm -rf "{{.SITE_DIR}}"
       - rm -rf .venv
-      - cmd: printf "\033[32mNettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.\033[0m\n"
+      - cmd: printf "\033[32mtask [clean] Nettoyage des fichiers générés et du site Hugo terminé.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Nettoyage des fichiers de la base de données DuckDB et des fichiers de sortie terminé.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [clean] Nettoyage des fichiers générés et du site Hugo terminé.' -ForegroundColor Green"
         platforms: [windows]
     silent: true
 
@@ -39,9 +42,9 @@ tasks:
       - mkdir -p data/output/sql
       - mv data/output/csv/load.sql data/output/sql/load.sql
       - mv data/output/csv/schema.sql data/output/sql/schema.sql
-      - cmd: printf "\033[32mBase de données DuckDB initialisée avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [duckdb] Base de données DuckDB initialisée avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Base de données DuckDB initialisée avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [duckdb] Base de données DuckDB initialisée avec succès.' -ForegroundColor Green"
         platforms: [windows]
     silent: true
 
@@ -49,9 +52,9 @@ tasks:
     desc: Initialise la base SQLite depuis les csv générés par DuckDB.
     cmds:
       - sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
-      - cmd: printf "\033[32mBase de données SQLite initialisée avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [sqlite] Base de données SQLite initialisée avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Base de données SQLite initialisée avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [sqlite] Base de données SQLite initialisée avec succès.' -ForegroundColor Green"
         platforms: [windows]
     silent: true
 
@@ -64,9 +67,9 @@ tasks:
           --linter-configs=.github/schemacrawler/config/schemacrawler-linter-configs.yaml \
           --output-format=text \
           --output-file=dist/lint_report.txt
-      - cmd: printf "\033[32mRapport du lint généré avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [schema] Rapport du lint généré avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Rapport de linting généré avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Rapport de linting généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
 
       - |
@@ -76,9 +79,9 @@ tasks:
           --table-types=TABLE \
           --output-format=html \
           --output-file=dist/ref-metiers-opt-nc-schema.html
-      - cmd: printf "\033[32mSchéma HTML de la base de données généré avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [schema] Schéma HTML de la base de données généré avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Schéma HTML de la base de données généré avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma HTML de la base de données généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
 
       - |
@@ -87,9 +90,9 @@ tasks:
           --command=schema \
           --output-format=png \
           --output-file=dist/ref-metiers-opt-nc-schema.png
-      - cmd: printf "\033[32mSchéma PNG de la base de données généré avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [schema] Schéma PNG de la base de données généré avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Schéma PNG de la base de données généré avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma PNG de la base de données généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
 
       - |
@@ -98,9 +101,9 @@ tasks:
           --command=schema \
           --output-format=pdf \
           --output-file=dist/ref-metiers-opt-nc-schema.pdf
-      - cmd: printf "\033[32mSchéma PDF de la base de données généré avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [schema] Schéma PDF de la base de données généré avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Schéma PDF de la base de données généré avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma PDF de la base de données généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
     silent: true
 
@@ -110,9 +113,9 @@ tasks:
       - task: setup-python
 
       - uv run src/generate-adoc.py
-      - cmd: printf "\033[32mFichier AsciiDoc généré avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [docs] Fichier AsciiDoc généré avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Fichier AsciiDoc généré avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Fichier AsciiDoc généré avec succès.' -ForegroundColor Green"
         platforms: [windows]
 
       - |
@@ -124,9 +127,9 @@ tasks:
           -a pdf-theme=etc/themes/pdf-theme.yml \
           -d book \
           data/output/docs/referentiel_metiers.adoc
-      - cmd: printf "\033[32mDocumentation PDF générée avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [docs] Documentation PDF générée avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Documentation PDF générée avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Documentation PDF générée avec succès.' -ForegroundColor Green"
         platforms: [windows]
 
       - |
@@ -141,9 +144,30 @@ tasks:
           -M identifier="urn:uuid:7c6fa56c-6df5-4bb4-a0a1-8cb4a6f7f8b0" \
           --output=data/output/docs/referentiel_metiers.epub \
           data/output/docs/referentiel_metiers.adoc
-      - cmd: printf "\033[32mDocumentation EPUB générée avec succès.\033[0m\n"
+      - cmd: printf "\033[32mtask [docs] Documentation EPUB générée avec succès.\033[0m\n"
         platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'Documentation EPUB générée avec succès.' -ForegroundColor Green"
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Documentation EPUB générée avec succès.' -ForegroundColor Green"
+        platforms: [windows]
+    silent: true
+
+  site:
+    desc: Crée puis génère le site Hugo avec le thème Relearn.
+    cmds:
+      - rm -rf "{{.SITE_DIR}}"
+      - hugo new site "{{.SITE_DIR}}"
+
+      - git -C "{{.SITE_DIR}}" init
+      - git -C "{{.SITE_DIR}}" submodule add --depth 1 https://github.com/McShelby/hugo-theme-relearn.git themes/hugo-theme-relearn
+
+      - printf "theme = 'hugo-theme-relearn'\n\nbaseURL = '/'\nlocale = 'fr-fr'\ntitle = 'Référentiel Métiers OPT-NC'\n\n[markup.goldmark.renderer]\nunsafe = true\n" > "{{.SITE_DIR}}/hugo.toml"
+
+      - uv run src/generate-md.py --site-dir "{{.SITE_DIR}}"
+
+      - hugo -s "{{.SITE_DIR}}"
+
+      - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.\033[0m\n"
+        platforms: [linux]
+      - cmd: powershell -NoProfile -Command "Write-Host 'task [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.' -ForegroundColor Green"
         platforms: [windows]
     silent: true
 
