@@ -3,7 +3,6 @@ import duckdb
 
 DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
 SITE_DIR = "site"
-METIER_TAGS = ["test", "metier"]
 METIER_KEYWORDS = ["test", "referentiel", "metier"]
 
 # Couleurs sombres reprises de etc/themes/epub-style.css.
@@ -159,7 +158,7 @@ def niveau_score(niveau: float | int | None, color_class: str = "blue", max_nive
 
 
 def write_family_color_css(site_dir: str, familles: list[tuple[str, str, str]]) -> str:
-    """Écrit la CSS Hugo des couleurs famille, avec variantes claire, sombre et auto."""
+    """Écrit la CSS Hugo des couleurs d'icônes par famille, avec variantes claire, sombre et auto."""
     css_file = os.path.join(site_dir, "static", "css", "family-colors.css")
     os.makedirs(os.path.dirname(css_file), exist_ok=True)
 
@@ -209,7 +208,7 @@ def write_family_color_css(site_dir: str, familles: list[tuple[str, str, str]]) 
 
 
 def write_custom_header(site_dir: str) -> str:
-    """Ajoute la feuille de style des couleurs famille au site Hugo."""
+    """Ajoute les feuilles de style personnalisées au site Hugo."""
     header_file = os.path.join(site_dir, "layouts", "partials", "custom-header.html")
     os.makedirs(os.path.dirname(header_file), exist_ok=True)
 
@@ -268,7 +267,7 @@ def fetch_familles(conn: duckdb.DuckDBPyConnection) -> list[tuple[str, str, str]
 def fetch_metiers(conn: duckdb.DuckDBPyConnection, famille_id: str) -> list[tuple[str, str]]:
     """Récupère les métiers actifs d'une famille."""
     return conn.execute("""
-        SELECT code_metier, metier_collaborateur
+        SELECT code_metier, nom_metier
         FROM metier
         WHERE famille_metier_id = ?
         AND metier_actif = true
@@ -339,7 +338,7 @@ def write_competences_groupe(conn: duckdb.DuckDBPyConnection, code_metier: str, 
     return content + "\n"
 
 
-def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier: int, code_metier: str, nom_metier: str, famille_class: str) -> str:
+def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier: int, code_metier: str, nom_metier: str, famille_class: str, libelle_famille: str) -> str:
     """Écrit la page Markdown d'un métier."""
     metier_dir = os.path.join(famille_dir, code_metier.lower())
     os.makedirs(metier_dir, exist_ok=True)
@@ -348,7 +347,7 @@ def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier
     content = f"""+++
 title = {toml_string(f"{code_metier} - {nom_metier}")}
 weight = {index_metier}
-tags = {toml_list([famille_class])}
+tags = {toml_list([libelle_famille.upper()])}
 keywords = {toml_list(METIER_KEYWORDS)}
 
 +++
@@ -365,10 +364,10 @@ keywords = {toml_list(METIER_KEYWORDS)}
     return metier_file
 
 
-def write_metiers(famille_dir: str, conn: duckdb.DuckDBPyConnection, famille_id: str, famille_class: str) -> None:
+def write_metiers(famille_dir: str, conn: duckdb.DuckDBPyConnection, famille_id: str, famille_class: str, libelle_famille: str) -> None:
     """Écrit toutes les pages métiers d'une famille."""
     for index_metier, (code_metier, nom_metier) in enumerate(fetch_metiers(conn, famille_id), start=1):
-        write_metier(famille_dir, conn, index_metier, code_metier, nom_metier, famille_class)
+        write_metier(famille_dir, conn, index_metier, code_metier, nom_metier, famille_class, libelle_famille)
 
 
 def write_familles_metiers(site_dir: str, conn: duckdb.DuckDBPyConnection) -> str:
@@ -409,7 +408,7 @@ weight = {index_famille}
 
 """)
 
-        write_metiers(famille_dir, conn, famille_id, famille_class)
+        write_metiers(famille_dir, conn, famille_id, famille_class, libelle_famille)
 
     return familles_index
 

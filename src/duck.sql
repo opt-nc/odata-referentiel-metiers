@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS metier_competence;
 DROP TABLE IF EXISTS niveau_description_competence;
 DROP TABLE IF EXISTS competence_utilisateur;
 DROP TABLE IF EXISTS competence_attribut;
+DROP TABLE IF EXISTS metier_verbatim;
 DROP TABLE IF EXISTS metier;
 DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
@@ -46,6 +47,7 @@ DROP TABLE IF EXISTS about;
 
 DROP INDEX IF EXISTS idx_metier_famille;
 DROP INDEX IF EXISTS idx_famille_metier_couleur_famille;
+DROP INDEX IF EXISTS idx_metier_verbatim_code_metier;
 DROP INDEX IF EXISTS idx_metier_statut;
 DROP INDEX IF EXISTS idx_competence_groupe_id;
 DROP INDEX IF EXISTS idx_competence_referentiel_id;
@@ -174,7 +176,7 @@ COMMENT ON COLUMN statut_metier.libelle IS 'Nom du statut du métier';
 CREATE TABLE metier (
     code_metier VARCHAR PRIMARY KEY NOT NULL,
     neobrain_metier_id INTEGER NOT NULL,
-    metier_collaborateur VARCHAR NOT NULL,
+    nom_metier VARCHAR NOT NULL,
     famille_metier_id VARCHAR NOT NULL,
     statut_metier_id VARCHAR NOT NULL,
     metier_actif BOOLEAN NOT NULL,
@@ -191,7 +193,7 @@ INSERT INTO metier
 SELECT DISTINCT
     gmc.code_metier AS code_metier,
     gmc.neobrain_metier_id AS neobrain_metier_id,
-    gmc.nom_metier AS metier_collaborateur,
+    gmc.nom_metier AS nom_metier,
     formatter(gmc.famille_metier) AS famille_metier_id,
     UPPER(formatter(gm.statut_metier)) AS statut_metier_id,
     gm.metier_actif AS metier_actif
@@ -201,10 +203,32 @@ WHERE gmc.code_metier IS NOT NULL;
 COMMENT ON TABLE metier IS 'Table centrale des métiers de l''entreprise';
 COMMENT ON COLUMN metier.code_metier IS 'Code unique du métier';
 COMMENT ON COLUMN metier.neobrain_metier_id IS 'Identifiant interne Neobrain du métier';
-COMMENT ON COLUMN metier.metier_collaborateur IS 'Nom usuel du métier';
+COMMENT ON COLUMN metier.nom_metier IS 'Nom usuel du métier';
 COMMENT ON COLUMN metier.famille_metier_id IS 'Référence à la famille de métiers';
 COMMENT ON COLUMN metier.statut_metier_id IS 'Référence au statut de publication du métier';
 COMMENT ON COLUMN metier.metier_actif IS 'Indicateur d''activité du métier';
+
+CREATE TABLE metier_verbatim (
+    code_metier VARCHAR NOT NULL,
+    verbatim TEXT NOT NULL,
+    PRIMARY KEY (code_metier, verbatim),
+    CONSTRAINT fk_metier_verbatim_metier
+        FOREIGN KEY (code_metier) REFERENCES metier(code_metier)
+);
+
+CREATE INDEX idx_metier_verbatim_code_metier ON metier_verbatim(code_metier);
+
+INSERT INTO metier_verbatim
+SELECT DISTINCT
+    "id_metier" AS code_metier,
+    "verbatim" AS verbatim
+FROM read_csv_auto('data/static/verbatims/*.csv')
+WHERE id_metier IN (SELECT code_metier FROM metier)
+AND verbatim IS NOT NULL;
+
+COMMENT ON TABLE metier_verbatim IS 'Verbatims associés aux métiers, chargés depuis les fichiers CSV statiques';
+COMMENT ON COLUMN metier_verbatim.code_metier IS 'Référence au métier concerné';
+COMMENT ON COLUMN metier_verbatim.verbatim IS 'Phrase décrivant une activité ou un contexte réel du métier';
 
 CREATE TABLE referentiel_competence (
     referentiel_competence_id VARCHAR PRIMARY KEY NOT NULL,
@@ -444,7 +468,7 @@ COMMENT ON COLUMN about.value IS 'Valeur de la métadonnée';
 CREATE OR REPLACE VIEW vw_lister_competences_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     c.code_competence,
     c.nom_competence,
     (SELECT g.libelle FROM groupe_competence g WHERE c.groupe_competence_id = g.groupe_competence_id) AS groupe_competence,
@@ -456,7 +480,7 @@ ORDER BY code_metier;
 
 COMMENT ON VIEW vw_lister_competences_metier IS 'Vue détaillée des compétences requises par métier';
 COMMENT ON COLUMN vw_lister_competences_metier.code_metier IS 'Code du métier';
-COMMENT ON COLUMN vw_lister_competences_metier.metier_collaborateur IS 'Nom du métier';
+COMMENT ON COLUMN vw_lister_competences_metier.nom_metier IS 'Nom du métier';
 COMMENT ON COLUMN vw_lister_competences_metier.code_competence IS 'Code de la compétence requise';
 COMMENT ON COLUMN vw_lister_competences_metier.nom_competence IS 'Nom de référence de la compétence';
 COMMENT ON COLUMN vw_lister_competences_metier.groupe_competence IS 'Libellé du groupe de compétences';
@@ -465,7 +489,7 @@ COMMENT ON COLUMN vw_lister_competences_metier.referentiel_competence IS 'Libell
 CREATE OR REPLACE VIEW vw_compter_competences_par_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     (SELECT COUNT(*) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS nb_competences,
     (SELECT COUNT(*) FROM metier_competence mc WHERE mc.code_metier = m.code_metier AND mc.est_actif = true) AS nb_competences_actives,
     (SELECT AVG(mc.niveau_requis) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS niveau_moyen_requis,
@@ -475,7 +499,7 @@ ORDER BY nb_competences;
 
 COMMENT ON VIEW vw_compter_competences_par_metier IS 'Vue agrégée résumant le profil de compétences de chaque métier';
 COMMENT ON COLUMN vw_compter_competences_par_metier.code_metier IS 'Code unique du métier';
-COMMENT ON COLUMN vw_compter_competences_par_metier.metier_collaborateur IS 'Nom usuel du métier';
+COMMENT ON COLUMN vw_compter_competences_par_metier.nom_metier IS 'Nom usuel du métier';
 COMMENT ON COLUMN vw_compter_competences_par_metier.nb_competences IS 'Nombre total de compétences associées';
 COMMENT ON COLUMN vw_compter_competences_par_metier.nb_competences_actives IS 'Nombre de compétences actuellement actives';
 COMMENT ON COLUMN vw_compter_competences_par_metier.niveau_moyen_requis IS 'Moyenne des niveaux requis';
@@ -498,7 +522,7 @@ COMMENT ON COLUMN vw_competences_orphelines.groupe_competence IS 'Groupe d''appa
 CREATE OR REPLACE VIEW vw_competences_architecte_logiciel AS
 SELECT
     (SELECT gc.libelle FROM groupe_competence gc WHERE c.groupe_competence_id = gc.groupe_competence_id) AS groupe_competence,
-    m.metier_collaborateur,
+    m.nom_metier,
     c.code_competence,
     c.nom_competence,
     mc.niveau_requis,
@@ -506,11 +530,11 @@ SELECT
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence c ON mc.code_competence = c.code_competence
-WHERE m.metier_collaborateur ILIKE '%Architecte%logiciel%';
+WHERE m.nom_metier ILIKE '%Architecte%logiciel%';
 
 COMMENT ON VIEW vw_competences_architecte_logiciel IS 'Vue listant les compétences, le métier et la description du niveau requis spécifiquement pour le métier Architecte Logiciel';
 COMMENT ON COLUMN vw_competences_architecte_logiciel.groupe_competence IS 'Groupe de classification de la compétence (ex: Savoir-faire, Savoir-être)';
-COMMENT ON COLUMN vw_competences_architecte_logiciel.metier_collaborateur IS 'Nom du métier';
+COMMENT ON COLUMN vw_competences_architecte_logiciel.nom_metier IS 'Nom du métier';
 COMMENT ON COLUMN vw_competences_architecte_logiciel.code_competence IS 'Code technique de la compétence';
 COMMENT ON COLUMN vw_competences_architecte_logiciel.nom_competence IS 'Nom de référence de la compétence';
 COMMENT ON COLUMN vw_competences_architecte_logiciel.niveau_requis IS 'Échelon de maîtrise exigé (ex: 1, 2, 3 ou 4)';
@@ -519,7 +543,7 @@ COMMENT ON COLUMN vw_competences_architecte_logiciel.description_niveau_requis I
 CREATE OR REPLACE VIEW vw_metiers_orphelins AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     fm.libelle AS famille_metier,
     stm.libelle AS statut_metier,
     m.metier_actif
@@ -530,7 +554,7 @@ WHERE m.code_metier NOT IN (SELECT DISTINCT code_metier FROM metier_competence);
 
 COMMENT ON VIEW vw_metiers_orphelins IS 'Liste des métiers sans aucune compétence associée';
 COMMENT ON COLUMN vw_metiers_orphelins.code_metier IS 'Code unique du métier';
-COMMENT ON COLUMN vw_metiers_orphelins.metier_collaborateur IS 'Nom du métier';
+COMMENT ON COLUMN vw_metiers_orphelins.nom_metier IS 'Nom du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.famille_metier IS 'Famille du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.statut_metier IS 'Statut de publication du métier';
 COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier est actif';
@@ -538,7 +562,7 @@ COMMENT ON COLUMN vw_metiers_orphelins.metier_actif IS 'Indique si le métier es
 CREATE OR REPLACE VIEW vw_groupes_manquants_par_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     gc.libelle AS groupe_manquant
 FROM metier m, groupe_competence gc
 WHERE gc.libelle <> 'Manager'
@@ -552,11 +576,11 @@ ORDER BY m.code_metier;
 
 COMMENT ON VIEW vw_groupes_manquants_par_metier IS 'Liste les catégories de compétences (Savoir, Savoir-faire, etc.) manquantes pour chaque métier, en excluant légitimement la catégorie Manager.';
 COMMENT ON COLUMN vw_groupes_manquants_par_metier.code_metier IS 'Code unique du métier analysé';
-COMMENT ON COLUMN vw_groupes_manquants_par_metier.metier_collaborateur IS 'Nom usuel du métier analysé';
+COMMENT ON COLUMN vw_groupes_manquants_par_metier.nom_metier IS 'Nom usuel du métier analysé';
 COMMENT ON COLUMN vw_groupes_manquants_par_metier.groupe_manquant IS 'Le groupe de compétences qui fait défaut à ce métier (ex: Savoir-être)';
 
 CREATE OR REPLACE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
-SELECT m.code_metier, m.metier_collaborateur, c.code_competence, c.nom_competence
+SELECT m.code_metier, m.nom_metier, c.code_competence, c.nom_competence
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence c ON mc.code_competence = c.code_competence
@@ -564,7 +588,7 @@ WHERE mc.niveau_requis = 0;
 
 COMMENT ON VIEW vw_metiers_qui_possede_niveau_competence_0 IS 'Vue de contrôle de la qualité des données listant les associations métier-compétence dont le niveau requis est anormalement à 0.';
 COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.code_metier IS 'Code du métier impacté par l''anomalie de saisie';
-COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.metier_collaborateur IS 'Nom du métier impacté';
+COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.nom_metier IS 'Nom du métier impacté';
 COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.code_competence IS 'Code de la compétence associée';
 COMMENT ON COLUMN vw_metiers_qui_possede_niveau_competence_0.nom_competence IS 'Nom de la compétence dont le niveau n''a pas été correctement évalué (0)';
 
@@ -600,5 +624,6 @@ COPY (SELECT * FROM competence ORDER BY code_competence) TO 'data/output/csv/com
 COPY (SELECT * FROM competence_utilisateur ORDER BY code_competence) TO 'data/output/csv/competence_utilisateur.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
 COPY (SELECT * FROM famille_metier_couleur ORDER BY famille_metier_id) TO 'data/output/csv/famille_metier_couleur.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
 COPY (SELECT * FROM metier ORDER BY code_metier) TO 'data/output/csv/metier.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
+COPY (SELECT * FROM metier_verbatim ORDER BY code_metier, verbatim) TO 'data/output/csv/metier_verbatim.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
 COPY (SELECT * FROM metier_competence ORDER BY code_metier, code_competence) TO 'data/output/csv/metier_competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');
 COPY (SELECT * FROM niveau_description_competence ORDER BY code_competence, niveau) TO 'data/output/csv/niveau_description_competence.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',', QUOTE '"');

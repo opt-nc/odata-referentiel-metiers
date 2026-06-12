@@ -15,12 +15,14 @@ DROP TABLE IF EXISTS competence;
 DROP TABLE IF EXISTS categorie_detention;
 DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS referentiel_competence;
+DROP TABLE IF EXISTS metier_verbatim;
 DROP TABLE IF EXISTS metier;
 DROP TABLE IF EXISTS statut_metier;
 DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
 
 DROP INDEX IF EXISTS idx_metier_famille;
+DROP INDEX IF EXISTS idx_metier_verbatim_code_metier;
 DROP INDEX IF EXISTS idx_metier_statut;
 DROP INDEX IF EXISTS idx_competence_groupe_id;
 DROP INDEX IF EXISTS idx_competence_referentiel_id;
@@ -72,7 +74,7 @@ CREATE TABLE categorie_detention (
 CREATE TABLE metier (
     code_metier TEXT PRIMARY KEY NOT NULL,
     neobrain_metier_id INTEGER NOT NULL,
-    metier_collaborateur TEXT NOT NULL,
+    nom_metier TEXT NOT NULL,
     famille_metier_id TEXT NOT NULL,
     statut_metier_id TEXT NOT NULL,
     metier_actif INTEGER NOT NULL, -- en sqlite, le type BOOLEAN peut etre représenté par un 0/1
@@ -82,6 +84,15 @@ CREATE TABLE metier (
 
 CREATE INDEX idx_metier_famille ON metier(famille_metier_id);
 CREATE INDEX idx_metier_statut ON metier(statut_metier_id);
+
+CREATE TABLE metier_verbatim (
+    code_metier TEXT NOT NULL,
+    verbatim TEXT NOT NULL,
+    PRIMARY KEY (code_metier, verbatim),
+    FOREIGN KEY (code_metier) REFERENCES metier(code_metier)
+);
+
+CREATE INDEX idx_metier_verbatim_code_metier ON metier_verbatim(code_metier);
 
 CREATE TABLE competence (
     code_competence TEXT PRIMARY KEY NOT NULL,
@@ -146,6 +157,7 @@ CREATE TABLE about (
 .import --csv --skip 1 data/output/csv/groupe_competence.csv groupe_competence
 .import --csv --skip 1 data/output/csv/categorie_detention.csv categorie_detention
 .import --csv --skip 1 data/output/csv/metier.csv metier
+.import --csv --skip 1 data/output/csv/metier_verbatim.csv metier_verbatim
 .import --csv --skip 1 data/output/csv/competence.csv competence
 .import --csv --skip 1 data/output/csv/competence_utilisateur.csv competence_utilisateur
 .import --csv --skip 1 data/output/csv/niveau_description_competence.csv niveau_description_competence
@@ -156,7 +168,7 @@ CREATE TABLE about (
 CREATE VIEW vw_lister_competences_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     c.code_competence,
     c.nom_competence,
     (SELECT g.libelle FROM groupe_competence g WHERE c.groupe_competence_id = g.groupe_competence_id) AS groupe_competence,
@@ -169,7 +181,7 @@ ORDER BY m.code_metier;
 CREATE VIEW vw_compter_competences_par_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     (SELECT COUNT(1) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS nb_competences,
     (SELECT COUNT(1) FROM metier_competence mc WHERE mc.code_metier = m.code_metier AND mc.est_actif = 1) AS nb_competences_actives,
     (SELECT AVG(mc.niveau_requis) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS niveau_moyen_requis,
@@ -191,7 +203,7 @@ WHERE NOT EXISTS (
 CREATE VIEW vw_competences_architecte_logiciel AS
 SELECT
     gc.libelle AS groupe_competence,
-    m.metier_collaborateur,
+    m.nom_metier,
     c.code_competence,
     c.nom_competence,
     mc.niveau_requis,
@@ -201,12 +213,12 @@ JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence c ON mc.code_competence = c.code_competence
 LEFT JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
 LEFT JOIN niveau_description_competence ndc ON c.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
-WHERE lower(m.metier_collaborateur) = 'architecte logiciel';
+WHERE lower(m.nom_metier) = 'architecte logiciel';
 
 CREATE VIEW vw_metiers_orphelins AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     fm.libelle AS famille_metier,
     stm.libelle AS statut_metier,
     m.metier_actif
@@ -220,7 +232,7 @@ WHERE NOT EXISTS (
 CREATE VIEW vw_groupes_manquants_par_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     gc.libelle AS groupe_manquant
 FROM metier m, groupe_competence gc
 WHERE gc.libelle <> 'Manager'
@@ -233,7 +245,7 @@ WHERE gc.libelle <> 'Manager'
 ORDER BY m.code_metier;
 
 CREATE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
-SELECT m.code_metier, m.metier_collaborateur, c.code_competence, c.nom_competence
+SELECT m.code_metier, m.nom_metier, c.code_competence, c.nom_competence
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence c ON mc.code_competence = c.code_competence

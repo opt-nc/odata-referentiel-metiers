@@ -154,7 +154,7 @@ def fetch_familles(conn) -> list[tuple[str, str, str]]:
 def fetch_metiers(conn, famille_id: str) -> list[tuple[str, str]]:
     """Récupère les métiers actifs d'une famille."""
     return conn.execute("""
-        SELECT code_metier, metier_collaborateur
+        SELECT code_metier, nom_metier
         FROM metier
         WHERE famille_metier_id = ?
         AND metier_actif = true
