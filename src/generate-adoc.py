@@ -177,14 +177,14 @@ def fetch_groupes_competence(conn, code_metier: str) -> list[tuple[str]]:
 def fetch_competences(conn, code_metier: str, libelle_groupe: str) -> list[tuple[str, int]]:
     """Récupère les compétences et leur niveau pour un métier."""
     return conn.execute("""
-        SELECT DISTINCT mc.nom_competence, mc.niveau_requis
+        SELECT DISTINCT c.nom_competence, mc.niveau_requis
         FROM metier_competence mc
         JOIN competence c ON mc.code_competence = c.code_competence
         JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
         JOIN niveau_description_competence ndc ON mc.code_competence = ndc.code_competence
         WHERE mc.code_metier = ?
         AND gc.libelle = ?
-        ORDER BY mc.nom_competence ASC
+        ORDER BY c.nom_competence ASC
     """, [code_metier, libelle_groupe]).fetchall()
 
 
