@@ -530,7 +530,7 @@ SELECT
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
 JOIN competence c ON mc.code_competence = c.code_competence
-WHERE m.nom_metier ILIKE '%Architecte%logiciel%';
+WHERE m.nom_metier LIKE '%Architecte%logiciel%';
 
 COMMENT ON VIEW vw_competences_architecte_logiciel IS 'Vue listant les compétences, le métier et la description du niveau requis spécifiquement pour le métier Architecte Logiciel';
 COMMENT ON COLUMN vw_competences_architecte_logiciel.groupe_competence IS 'Groupe de classification de la compétence (ex: Savoir-faire, Savoir-être)';
