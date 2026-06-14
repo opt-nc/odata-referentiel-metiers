@@ -1,8 +1,9 @@
+import argparse
 import os
 import duckdb
 
-DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
-SITE_DIR = "site"
+DEFAULT_DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
+DEFAULT_SITE_DIR = "site"
 METIER_KEYWORDS = ["test", "referentiel", "metier"]
 
 # Couleurs sombres reprises de etc/themes/epub-style.css.
@@ -212,10 +213,239 @@ def write_custom_header(site_dir: str) -> str:
     header_file = os.path.join(site_dir, "layouts", "partials", "custom-header.html")
     os.makedirs(os.path.dirname(header_file), exist_ok=True)
 
+    content = """<link href="/css/family-colors.css" rel="stylesheet">
+<style>
+:root {
+  --LOGO-IMAGE-width: 3rem;
+}
+
+#R-logo.R-default {
+  justify-content: flex-start;
+  padding-inline: 1rem;
+}
+
+#R-logo.R-default .logo-title {
+  font-size: 1.25rem;
+}
+
+.metiers-family-list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.metier-family-card {
+  align-items: center;
+  background: var(--CARD-BG-color);
+  border: 1px solid var(--CARD-BORDER-color);
+  border-left: 5px solid var(--family-card-color, var(--MAIN-LINK-color));
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  color: var(--MAIN-TEXT-color);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 1.35rem 1.5rem;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.metier-family-card:hover {
+  background: var(--CODE-BG-color);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  color: var(--MAIN-TEXT-color);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.metier-family-card-title {
+  color: var(--MAIN-TITLES-color);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.65rem;
+}
+
+.metier-family-card-meta {
+  align-items: center;
+  color: var(--MAIN-TEXT-color);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  gap: 0.75rem;
+  opacity: 0.82;
+}
+
+.metier-family-card-code {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.metier-family-card-action {
+  align-items: center;
+  color: var(--MAIN-LINK-HOVER-color);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+@media only all and (max-width: 47.999rem) {
+  .metier-family-card {
+    grid-template-columns: 1fr;
+  }
+
+  .metier-family-card-action {
+    justify-content: flex-start;
+  }
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const cleanSearchResultTitles = function () {
+    document.querySelectorAll("#R-searchresults .title").forEach(function (title) {
+      const firstNode = title.firstChild;
+      if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
+        firstNode.textContent = firstNode.textContent.replace(/^\\s*»\\s*/, "");
+      }
+    });
+  };
+
+  cleanSearchResultTitles();
+
+  const searchResults = document.querySelector("#R-searchresults");
+  if (searchResults) {
+    new MutationObserver(cleanSearchResultTitles).observe(searchResults, {
+      childList: true,
+      subtree: true
+    });
+  }
+});
+</script>
+"""
+
     with open(header_file, "w", encoding="utf-8") as f:
-        f.write('<link href="/css/family-colors.css" rel="stylesheet">\n')
+        f.write(content)
 
     return header_file
+
+
+def write_favicon(site_dir: str) -> str:
+    """Utilise le logo OPT-NC comme icône de l'onglet du navigateur."""
+    favicon_file = os.path.join(site_dir, "layouts", "partials", "favicon.html")
+    os.makedirs(os.path.dirname(favicon_file), exist_ok=True)
+
+    content = """<link rel="icon" href="/assets/logo/OPT_NC.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/logo/OPT_NC.png">
+"""
+
+    with open(favicon_file, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    return favicon_file
+
+
+def write_content_footer(site_dir: str) -> str:
+    """Ajoute un pied de page avec les liens sociaux paramétrés dans hugo.toml."""
+    footer_file = os.path.join(site_dir, "layouts", "partials", "content-footer.html")
+    os.makedirs(os.path.dirname(footer_file), exist_ok=True)
+
+    content = """{{- with site.Params.social }}
+<hr class="opt-footer-hr">
+<!-- ✅ CORRECTION : Changement de la balise pour ne plus usurper le rôle global du site -->
+<section class="opt-page-footer" aria-label="Informations complémentaires sur l'offre">
+  
+  <!-- 🌐 Les 5 réseaux sociaux de l'OPT -->
+  <div class="opt-social-links">
+    {{ with .facebook }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur Facebook" target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .twitter }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur Twitter" target="_blank" rel="noopener">
+        <i class="fab fa-twitter" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .instagram }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur Instagram" target="_blank" rel="noopener">
+        <i class="fab fa-instagram" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .youtube }}
+      <a href="{{ . }}" aria-label="Découvrez la chaîne YouTube de l'OPT" target="_blank" rel="noopener">
+        <i class="fab fa-youtube" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .linkedin }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur LinkedIn" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .tiktok }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur TikTok" target="_blank" rel="noopener">
+        <i class="fab fa-tiktok" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+  </div>
+
+  <!-- 🏢 Liens utiles & Institutionnels -->
+  <p class="opt-institution-link">
+    <a href="https://office.opt.nc/fr/emploi-et-carriere/postuler-lopt-nc/avp" target="_blank" rel="noopener">
+      <i class="fas fa-building" aria-hidden="true"></i> Site Institutionnel OPT
+    </a>
+  </p>
+  
+  <!-- ⚖️ Mentions légales, Contact & Accessibilité -->
+  <div class="opt-legal-text">
+    <p>
+      <a href="https://office.opt.nc/fr/mentions-legales" target="_blank" rel="noopener">Mentions légales</a>
+      <span class="opt-separator">|</span>
+      <a href="https://office.opt.nc/fr/l-opt-nc/contact" target="_blank" rel="noopener">Contact</a>
+    </p>
+    <p>© {{ now.Format "2006" }} OPT NC — Tous droits réservés.</p>
+    <p class="opt-italic-brand">Office des Postes et Télécommunications de Nouvelle-Calédonie</p>
+    <p class="opt-accessibility-note">Site conçu pour être accessible aux outils de lecture d'écran (RGAA).</p>
+  </div>
+
+<div class="opt-dev-stack" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 15px 0; font-size: 0.85rem; opacity: 0.85;">
+    
+    <a href="https://github.com/opt-nc/?view_as=public" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fab fa-github" aria-hidden="true" style="font-size: 1.1em;"></i> GitHub
+    </a>
+
+    <a href="https://apigee-optnc-prd-api.apigee.io/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fas fa-network-wired" aria-hidden="true" style="font-size: 1.1em;"></i> Portail Apigee
+    </a>
+
+    <a href="https://www.kaggle.com/optnouvellecaldonie" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fab fa-kaggle" aria-hidden="true" style="font-size: 1.1em;"></i> Kaggle
+    </a>
+
+    <a href="https://huggingface.co/opt-nc" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fas fa-brain" aria-hidden="true" style="font-size: 1.1em;"></i> Hugging Face
+    </a>
+
+    <a href="https://huggingface.co/datasets/opt-nc/odata-avps" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fas fa-database" aria-hidden="true" style="font-size: 1.1em;"></i> Dataset AVP
+    </a>
+
+  </div>
+
+</section>
+
+<div class="avp-build-info" style="font-size: 0.65rem; opacity: 0.5; padding: 10px; text-align: center; border-top: 1px solid var(--CARD-BORDER-color);">
+  Version : <code>r-{{ if site.Data.git_commit }}{{ site.Data.git_commit.hash }}{{ else }}dev{{ end }}</code><br>
+  Généré le : {{ now.Format "02/01/2006 à 15:04" }}
+</div>
+{{- end }}
+"""
+
+    with open(footer_file, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    return footer_file
 
 
 def write_home(site_dir: str) -> str:
@@ -273,6 +503,33 @@ def fetch_metiers(conn: duckdb.DuckDBPyConnection, famille_id: str) -> list[tupl
         AND metier_actif = true
         ORDER BY code_metier
     """, [famille_id]).fetchall()
+
+
+def metiers_famille_cards(metiers: list[tuple[str, str]], famille_class: str, libelle_famille: str) -> str:
+    """Construit la liste de cartes affichée sur la page d'une famille métier."""
+    if not metiers:
+        return ""
+
+    content = f'<div class="metiers-family-list" style="--family-card-color: var(--family-color-{famille_class});">\n'
+    for code_metier, nom_metier in metiers:
+        code_html = texte_cellule_html(code_metier)
+        nom_html = texte_cellule_html(nom_metier)
+        famille_html = texte_cellule_html(libelle_famille.capitalize())
+        href = f"{code_metier.lower()}/"
+
+        content += f'  <a class="metier-family-card" href="{href}">\n'
+        content += '    <div class="metier-family-card-main">\n'
+        content += f'      <p class="metier-family-card-title">{nom_html}</p>\n'
+        content += '      <div class="metier-family-card-meta">\n'
+        content += f'        <span class="metier-family-card-code"><i class="fa-fw fas fa-barcode"></i> {code_html}</span>\n'
+        content += f'        <span><i class="fa-fw fas fa-layer-group"></i> {famille_html}</span>\n'
+        content += "      </div>\n"
+        content += "    </div>\n"
+        content += '    <span class="metier-family-card-action">Voir la fiche complète <i class="fa-fw fas fa-arrow-right"></i></span>\n'
+        content += "  </a>\n"
+    content += "</div>\n\n"
+
+    return content
 
 
 def fetch_groupes_competence(conn: duckdb.DuckDBPyConnection, code_metier: str) -> list[tuple[str]]:
@@ -392,6 +649,8 @@ weight = 3
     familles = fetch_familles(conn)
     write_family_color_css(site_dir, familles)
     write_custom_header(site_dir)
+    write_favicon(site_dir)
+    write_content_footer(site_dir)
 
     # Une famille = une section Hugo/Relearn.
     for index_famille, (famille_id, libelle_famille, _couleur_hex) in enumerate(familles, start=1):
@@ -399,6 +658,7 @@ weight = 3
         famille_dir = os.path.join(familles_dir, famille_id)
         os.makedirs(famille_dir, exist_ok=True)
         famille_index = os.path.join(famille_dir, "_index.md")
+        metiers = fetch_metiers(conn, famille_id)
         with open(famille_index, "w", encoding="utf-8") as f:
             f.write(f"""+++
 title = {toml_string(libelle_famille.capitalize())}
@@ -407,6 +667,7 @@ weight = {index_famille}
 +++
 
 """)
+            f.write(metiers_famille_cards(metiers, famille_class, libelle_famille))
 
         write_metiers(famille_dir, conn, famille_id, famille_class, libelle_famille)
 
@@ -421,11 +682,21 @@ def write_document(site_dir: str, conn: duckdb.DuckDBPyConnection) -> None:
     write_familles_metiers(site_dir, conn)
 
 
+def parse_args():
+    """Lit les paramètres du générateur Hugo Markdown."""
+    parser = argparse.ArgumentParser(description="Génère les pages Markdown du site Hugo.")
+    parser.add_argument("--duckdb", default=DEFAULT_DUCK_DB, help="Chemin vers la base DuckDB source.")
+    parser.add_argument("--site-dir", default=DEFAULT_SITE_DIR, help="Dossier du site Hugo à alimenter.")
+    return parser.parse_args()
+
+
 def main() -> None:
     """Point d'entrée du script."""
-    conn = duckdb.connect(DUCK_DB)
+    args = parse_args()
+
+    conn = duckdb.connect(args.duckdb)
     try:
-        write_document(SITE_DIR, conn)
+        write_document(args.site_dir, conn)
     finally:
         conn.close()
 

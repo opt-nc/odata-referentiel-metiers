@@ -1,12 +1,13 @@
+import argparse
 import os
 from datetime import datetime
 
 import duckdb
 
 
-DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
-DOCS_DIR = os.path.abspath("data/output/docs/")
-OUTPUT_FILE = os.path.join(DOCS_DIR, "referentiel_metiers.adoc")
+DEFAULT_DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
+DEFAULT_DOCS_DIR = "data/output/docs/"
+DEFAULT_ADOC_FILENAME = "referentiel_metiers.adoc"
 
 GROUPE_DESCRIPTIONS = {
     "savoir": "Le savoir regroupe les connaissances théoriques et techniques utiles pour comprendre et exercer un métier.",
@@ -270,13 +271,28 @@ def write_document(output_file: str, conn: duckdb.DuckDBPyConnection) -> None:
         write_familles_metiers(f, conn, familles)
 
 
+def parse_args():
+    """Lit les paramètres du générateur AsciiDoc."""
+    parser = argparse.ArgumentParser(description="Génère le référentiel métiers au format AsciiDoc.")
+    parser.add_argument("--duckdb", default=DEFAULT_DUCK_DB, help="Chemin vers la base DuckDB source.")
+    parser.add_argument("--docs-dir", default=DEFAULT_DOCS_DIR, help="Dossier de sortie des documents.")
+    parser.add_argument("--output-file", help="Chemin complet du fichier AsciiDoc généré.")
+    return parser.parse_args()
+
+
 def main() -> None:
     """Point d'entrée du générateur AsciiDoc."""
-    os.makedirs(DOCS_DIR, exist_ok=True)
+    args = parse_args()
+    if args.output_file:
+        output_file = os.path.abspath(args.output_file)
+    else:
+        output_file = os.path.join(os.path.abspath(args.docs_dir), DEFAULT_ADOC_FILENAME)
 
-    conn = duckdb.connect(DUCK_DB)
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+    conn = duckdb.connect(args.duckdb)
     try:
-        write_document(OUTPUT_FILE, conn)
+        write_document(output_file, conn)
     finally:
         conn.close()
 

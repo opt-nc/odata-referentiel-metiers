@@ -1,12 +1,39 @@
 version: '3'
 
 vars:
+  DIST_DIR: dist
+  OUTPUT_DIR: data/output
+  OUTPUT_SQL_DIR: data/output/sql
+  GENERATED_CSV_DIR: data/output/csv
   SITE_DIR: site
+  DOCS_DIR: data/output/docs
+
+  DUCK_SQL_FILE: src/duck.sql
+  SQLITE_SQL_FILE: src/sqlite.sql
+  PY_GENERATE_ADOC: src/generate-adoc.py
+  PY_GENERATE_MD: src/generate-md.py
+
+  DUCKDB_FILE: dist/ref-metiers-opt-nc.duckdb
+  SQLITE_FILE: dist/ref-metiers-opt-nc.sqlite
+  LOAD_SQL_SOURCE_FILE: data/output/csv/load.sql
+  LOAD_SQL_FILE: data/output/sql/load.sql
+  SCHEMA_SQL_SOURCE_FILE: data/output/csv/schema.sql
+  SCHEMA_SQL_FILE: data/output/sql/schema.sql
+
+  LINT_REPORT_FILE: dist/lint_report.txt
+  SCHEMA_HTML_FILE: dist/ref-metiers-opt-nc-schema.html
+  SCHEMA_PNG_FILE: dist/ref-metiers-opt-nc-schema.png
+  SCHEMA_PDF_FILE: dist/ref-metiers-opt-nc-schema.pdf
+
+  ADOC_FILE: data/output/docs/referentiel_metiers.adoc
+  PDF_FILE: data/output/docs/referentiel_metiers.pdf
+  EPUB_FILE: data/output/docs/referentiel_metiers.epub
+
   SC_BASE: >-
     schemacrawler
     --info-level=standard
     --driver=org.duckdb.DuckDBDriver
-    --url="jdbc:duckdb:dist/ref-metiers-opt-nc.duckdb"
+    --url="jdbc:duckdb:{{.DUCKDB_FILE}}"
 
 tasks:
   default:
@@ -23,8 +50,8 @@ tasks:
   clean:
     desc: Nettoie les sorties générées et le site Hugo.
     cmds:
-      - rm -rf dist
-      - rm -rf data/output
+      - rm -rf "{{.DIST_DIR}}"
+      - rm -rf "{{.OUTPUT_DIR}}"
       - rm -rf "{{.SITE_DIR}}"
       - rm -rf .venv
       - cmd: printf "\033[32mtask [clean] Nettoyage des fichiers générés et du site Hugo terminé.\033[0m\n"
@@ -36,12 +63,12 @@ tasks:
   duckdb:
     desc: Crée le dossier dist et initialise la base DuckDB depuis le SQL
     cmds:
-      - mkdir -p dist
-      - mkdir -p data/output
-      - duckdb dist/ref-metiers-opt-nc.duckdb < src/duck.sql
-      - mkdir -p data/output/sql
-      - mv data/output/csv/load.sql data/output/sql/load.sql
-      - mv data/output/csv/schema.sql data/output/sql/schema.sql
+      - mkdir -p "{{.DIST_DIR}}"
+      - mkdir -p "{{.OUTPUT_DIR}}"
+      - duckdb "{{.DUCKDB_FILE}}" < "{{.DUCK_SQL_FILE}}"
+      - mkdir -p "{{.OUTPUT_SQL_DIR}}"
+      - mv "{{.LOAD_SQL_SOURCE_FILE}}" "{{.LOAD_SQL_FILE}}"
+      - mv "{{.SCHEMA_SQL_SOURCE_FILE}}" "{{.SCHEMA_SQL_FILE}}"
       - cmd: printf "\033[32mtask [duckdb] Base de données DuckDB initialisée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [duckdb] Base de données DuckDB initialisée avec succès.' -ForegroundColor Green"
@@ -51,7 +78,7 @@ tasks:
   sqlite:
     desc: Initialise la base SQLite depuis les csv générés par DuckDB.
     cmds:
-      - sqlite3 dist/ref-metiers-opt-nc.sqlite < src/sqlite.sql
+      - sqlite3 "{{.SQLITE_FILE}}" < "{{.SQLITE_SQL_FILE}}"
       - cmd: printf "\033[32mtask [sqlite] Base de données SQLite initialisée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [sqlite] Base de données SQLite initialisée avec succès.' -ForegroundColor Green"
@@ -66,7 +93,7 @@ tasks:
           --command=lint \
           --linter-configs=.github/schemacrawler/config/schemacrawler-linter-configs.yaml \
           --output-format=text \
-          --output-file=dist/lint_report.txt
+          --output-file="{{.LINT_REPORT_FILE}}"
       - cmd: printf "\033[32mtask [schema] Rapport du lint généré avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Rapport de linting généré avec succès.' -ForegroundColor Green"
@@ -78,7 +105,7 @@ tasks:
           --command=schema \
           --table-types=TABLE \
           --output-format=html \
-          --output-file=dist/ref-metiers-opt-nc-schema.html
+          --output-file="{{.SCHEMA_HTML_FILE}}"
       - cmd: printf "\033[32mtask [schema] Schéma HTML de la base de données généré avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma HTML de la base de données généré avec succès.' -ForegroundColor Green"
@@ -89,7 +116,7 @@ tasks:
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
           --command=schema \
           --output-format=png \
-          --output-file=dist/ref-metiers-opt-nc-schema.png
+          --output-file="{{.SCHEMA_PNG_FILE}}"
       - cmd: printf "\033[32mtask [schema] Schéma PNG de la base de données généré avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma PNG de la base de données généré avec succès.' -ForegroundColor Green"
@@ -100,7 +127,7 @@ tasks:
           --config-file=.github/schemacrawler/config/schemacrawler.config.properties \
           --command=schema \
           --output-format=pdf \
-          --output-file=dist/ref-metiers-opt-nc-schema.pdf
+          --output-file="{{.SCHEMA_PDF_FILE}}"
       - cmd: printf "\033[32mtask [schema] Schéma PDF de la base de données généré avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma PDF de la base de données généré avec succès.' -ForegroundColor Green"
@@ -112,7 +139,7 @@ tasks:
     cmds:
       - task: setup-python
 
-      - uv run src/generate-adoc.py
+      - uv run "{{.PY_GENERATE_ADOC}}" --duckdb "{{.DUCKDB_FILE}}" --docs-dir "{{.DOCS_DIR}}" --output-file "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Fichier AsciiDoc généré avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Fichier AsciiDoc généré avec succès.' -ForegroundColor Green"
@@ -126,7 +153,8 @@ tasks:
           -a imagesdir=data/static/assets \
           -a pdf-theme=etc/themes/pdf-theme.yml \
           -d book \
-          data/output/docs/referentiel_metiers.adoc
+          -o "{{.PDF_FILE}}" \
+          "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Documentation PDF générée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Documentation PDF générée avec succès.' -ForegroundColor Green"
@@ -142,8 +170,8 @@ tasks:
           --epub-title-page=false \
           --epub-embed-font=data/static/assets/fonts/fontawesome/fa-solid-900.ttf \
           -M identifier="urn:uuid:7c6fa56c-6df5-4bb4-a0a1-8cb4a6f7f8b0" \
-          --output=data/output/docs/referentiel_metiers.epub \
-          data/output/docs/referentiel_metiers.adoc
+          --output="{{.EPUB_FILE}}" \
+          "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Documentation EPUB générée avec succès.\033[0m\n"
         platforms: [linux]
       - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Documentation EPUB générée avec succès.' -ForegroundColor Green"
@@ -159,12 +187,15 @@ tasks:
       - git -C "{{.SITE_DIR}}" init
       - git -C "{{.SITE_DIR}}" submodule add --depth 1 https://github.com/McShelby/hugo-theme-relearn.git themes/hugo-theme-relearn
 
-      - uv run src/generate-md.py --site-dir "{{.SITE_DIR}}"
+      - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir "{{.SITE_DIR}}"
+      
       - mkdir -p "{{.SITE_DIR}}/assets/css"
       - cp etc/themes/opt-light-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-light-theme.css"
       - cp etc/themes/opt-dark-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-dark-theme.css"
+      - mkdir -p "{{.SITE_DIR}}/static/assets/logo"
+      - cp data/static/assets/logo/OPT_NC.png "{{.SITE_DIR}}/static/assets/logo/OPT_NC.png"
 
-      - printf "theme = 'hugo-theme-relearn'\n\nbaseURL = '/'\nlocale = 'fr-fr'\ntitle = 'Référentiel Métiers OPT-NC'\n\n[params]\nthemeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']\n\n[markup.goldmark.renderer]\nunsafe = true\n" > "{{.SITE_DIR}}/hugo.toml"
+      - cp etc/config/hugo/hugo.toml "{{.SITE_DIR}}/hugo.toml"
       - hugo -s "{{.SITE_DIR}}"
 
       - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.\033[0m\n"
