@@ -155,6 +155,8 @@ tasks:
   site:
     desc: Crée puis génère le site Hugo avec le thème Relearn.
     cmds:
+      - task: setup-python
+      
       - rm -rf "{{.SITE_DIR}}"
       - hugo new site "{{.SITE_DIR}}"
 
