@@ -8,7 +8,7 @@
 
 {{- $termTitle := .Title }}
 {{- $tagClass := "blue" }}
-{{- with where site.Data.family_tags.tags "title" $termTitle }}
+{{- with where hugo.Data.family_tags.tags "title" $termTitle }}
   {{- with index . 0 }}
     {{- $tagClass = .class }}
   {{- end }}

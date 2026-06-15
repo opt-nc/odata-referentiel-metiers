@@ -45,7 +45,7 @@ By reusing a database and a Python script to produce the documentation, the refe
 - `schemacrawler` (17.11.1+) to generate database schema documentation
 - `asciidoctor-pdf` (2.3.15+) to convert AsciiDoc into PDF
 - `pandoc` (3.9.0.2+) to convert AsciiDoc to PDF
-- `hugo` (0.163.0+) to generate the website
+- `hugo` (0.163.0) to generate the website
 - `task` (3.50.0+) (not strictly necessary, but useful to avoid typing long commands)
 
 ## 🚀 How to Generate the Documentation files
