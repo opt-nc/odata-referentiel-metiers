@@ -1,0 +1,37 @@
+code_metier,verbatim
+OP063,Je configure l'automatisation des déploiements DevOps.
+OP063,Je conçois des architectures logicielles basées sur Java et Angular.
+OP063,"Je conçois et valide des architecures qui permettent de répondre durablement aux exigences des métiers tout en respectant le SDSI et l'urbanisation du SI, en corrélation avec l'urbaniste des SIs"
+OP063,Je définis les standards de programmation et les frameworks à utiliser.
+OP063,Je travaille sur le design de micro-services complexes.
+OP065,Je gère l'infrastructure des serveurs et la virtualisation.
+OP065,Je m'occupe de la sécurité et de la performance des systèmes d'exploitation.
+OP068,J'anime les échanges avec les intégrateurs et prestataires externes
+OP068,J'assiste l'exploitation dans l'analyse et la résolution des problèmes de production
+OP068,"J'assure la traçabilité des développements au sein de la chaîne DevOps (Git, GitHub)"
+OP068,J'assure le RUN et le support des applications que j'ai développées
+OP068,J'assure les montées de version des plateformes Airflow et Superset
+OP068,J'industrialise les tests de non-régression et les tests utilisateurs
+OP068,Je construis et maintiens des images Docker personnalisées adaptées aux contraintes de sécurité et d'intégration
+OP068,Je conçois et développe des DAGs Airflow pour l'orchestration et l'automatisation des traitements de données
+OP068,"Je déploie et administre des applications sur Kubernetes (Helm, Minikube, K9s, kubectl)"
+OP068,Je déploie et maintiens des solutions de visualisation et d'analyse de données avec Apache Superset
+OP068,Je développe des backends Java sur les frameworks Spring Boot et Quarkus à l'aide de Maven
+OP068,"Je développe des front-ends avec Angular, Bootstrap, TypeScript et CSS3"
+OP068,Je développe des pipelines de données pour alimenter et maintenir la cartographie du SI
+OP068,Je développe et maintiens des producers et consumers Kafka (Quarkus)
+OP068,Je gère le déploiement de conteneurs avec Podman
+OP068,Je maintiens les documentations techniques
+OP068,"Je me coordonne avec les acteurs de la DSI (OPS, SEP, SI-Support)"
+OP068,Je mets en place et maintiens des pipelines CI/CD avec GitHub Actions
+OP068,"Je mets en œuvre une architecture lakehouse (DuckDB, DuckLake) pour le stockage analytique des données"
+OP068,"Je migre les applications existantes vers des stacks modernes (Quarkus, conteneurisation)"
+OP068,Je modélise et interroge des graphes de données avec Neo4j et Bloom
+OP068,Je package des applications en charts Helm et gère les montées de version
+OP068,Je participe aux cérémonies SCRUM avec le rôle développeur lors des phases projet
+OP068,Je publie des articles techniques (dev.to) et réalise des vidéos de partage de connaissances
+OP068,Je publie et maintiens des images conteneurs sur DockerHub et Github Registry
+OP068,Je réalise des analyses exploratoires et des prototypes via Jupyter Notebook
+OP068,Je réceptionne et contrôle les livraisons logicielles fournies par les éditeurs ou prestataires externes
+OP068,Je suis force de proposition sur les aspects techniques et l'amélioration du BUILD et du RUN
+OP068,Je supervise le cycle de vie des applications en production
