@@ -234,6 +234,13 @@ def write_custom_header(site_dir: str) -> str:
   margin: 2rem 0;
 }
 
+.familles-family-list {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  margin: 2rem 0;
+}
+
 .metier-family-card {
   align-items: center;
   background: var(--CARD-BG-color);
@@ -346,108 +353,6 @@ def write_favicon(site_dir: str) -> str:
     return favicon_file
 
 
-def write_content_footer(site_dir: str) -> str:
-    """Ajoute un pied de page avec les liens sociaux paramétrés dans hugo.toml."""
-    footer_file = os.path.join(site_dir, "layouts", "partials", "content-footer.html")
-    os.makedirs(os.path.dirname(footer_file), exist_ok=True)
-
-    content = """{{- with site.Params.social }}
-<hr class="opt-footer-hr">
-<!-- ✅ CORRECTION : Changement de la balise pour ne plus usurper le rôle global du site -->
-<section class="opt-page-footer" aria-label="Informations complémentaires sur l'offre">
-  
-  <!-- 🌐 Les 5 réseaux sociaux de l'OPT -->
-  <div class="opt-social-links">
-    {{ with .facebook }}
-      <a href="{{ . }}" aria-label="Suivez l'OPT sur Facebook" target="_blank" rel="noopener">
-        <i class="fab fa-facebook-f" aria-hidden="true"></i>
-      </a>
-    {{ end }}
-    {{ with .twitter }}
-      <a href="{{ . }}" aria-label="Suivez l'OPT sur Twitter" target="_blank" rel="noopener">
-        <i class="fab fa-twitter" aria-hidden="true"></i>
-      </a>
-    {{ end }}
-    {{ with .instagram }}
-      <a href="{{ . }}" aria-label="Suivez l'OPT sur Instagram" target="_blank" rel="noopener">
-        <i class="fab fa-instagram" aria-hidden="true"></i>
-      </a>
-    {{ end }}
-    {{ with .youtube }}
-      <a href="{{ . }}" aria-label="Découvrez la chaîne YouTube de l'OPT" target="_blank" rel="noopener">
-        <i class="fab fa-youtube" aria-hidden="true"></i>
-      </a>
-    {{ end }}
-    {{ with .linkedin }}
-      <a href="{{ . }}" aria-label="Suivez l'OPT sur LinkedIn" target="_blank" rel="noopener">
-        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-      </a>
-    {{ end }}
-    {{ with .tiktok }}
-      <a href="{{ . }}" aria-label="Suivez l'OPT sur TikTok" target="_blank" rel="noopener">
-        <i class="fab fa-tiktok" aria-hidden="true"></i>
-      </a>
-    {{ end }}
-  </div>
-
-  <!-- 🏢 Liens utiles & Institutionnels -->
-  <p class="opt-institution-link">
-    <a href="https://office.opt.nc/fr/emploi-et-carriere/postuler-lopt-nc/avp" target="_blank" rel="noopener">
-      <i class="fas fa-building" aria-hidden="true"></i> Site Institutionnel OPT
-    </a>
-  </p>
-  
-  <!-- ⚖️ Mentions légales, Contact & Accessibilité -->
-  <div class="opt-legal-text">
-    <p>
-      <a href="https://office.opt.nc/fr/mentions-legales" target="_blank" rel="noopener">Mentions légales</a>
-      <span class="opt-separator">|</span>
-      <a href="https://office.opt.nc/fr/l-opt-nc/contact" target="_blank" rel="noopener">Contact</a>
-    </p>
-    <p>© {{ now.Format "2006" }} OPT NC — Tous droits réservés.</p>
-    <p class="opt-italic-brand">Office des Postes et Télécommunications de Nouvelle-Calédonie</p>
-    <p class="opt-accessibility-note">Site conçu pour être accessible aux outils de lecture d'écran (RGAA).</p>
-  </div>
-
-<div class="opt-dev-stack" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 15px 0; font-size: 0.85rem; opacity: 0.85;">
-    
-    <a href="https://github.com/opt-nc/?view_as=public" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
-      <i class="fab fa-github" aria-hidden="true" style="font-size: 1.1em;"></i> GitHub
-    </a>
-
-    <a href="https://apigee-optnc-prd-api.apigee.io/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
-      <i class="fas fa-network-wired" aria-hidden="true" style="font-size: 1.1em;"></i> Portail Apigee
-    </a>
-
-    <a href="https://www.kaggle.com/optnouvellecaldonie" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
-      <i class="fab fa-kaggle" aria-hidden="true" style="font-size: 1.1em;"></i> Kaggle
-    </a>
-
-    <a href="https://huggingface.co/opt-nc" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
-      <i class="fas fa-brain" aria-hidden="true" style="font-size: 1.1em;"></i> Hugging Face
-    </a>
-
-    <a href="https://huggingface.co/datasets/opt-nc/odata-avps" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
-      <i class="fas fa-database" aria-hidden="true" style="font-size: 1.1em;"></i> Dataset AVP
-    </a>
-
-  </div>
-
-</section>
-
-<div class="avp-build-info" style="font-size: 0.65rem; opacity: 0.5; padding: 10px; text-align: center; border-top: 1px solid var(--CARD-BORDER-color);">
-  Version : <code>r-{{ if site.Data.git_commit }}{{ site.Data.git_commit.hash }}{{ else }}dev{{ end }}</code><br>
-  Généré le : {{ now.Format "02/01/2006 à 15:04" }}
-</div>
-{{- end }}
-"""
-
-    with open(footer_file, "w", encoding="utf-8") as f:
-        f.write(content)
-
-    return footer_file
-
-
 def write_home(site_dir: str) -> str:
     """Écrit la page d'accueil du site."""
     home_file = os.path.join(site_dir, "content", "_index.md")
@@ -505,6 +410,41 @@ def fetch_metiers(conn: duckdb.DuckDBPyConnection, famille_id: str) -> list[tupl
     """, [famille_id]).fetchall()
 
 
+def count_metiers(conn: duckdb.DuckDBPyConnection, famille_id: str) -> int:
+    """Compte les métiers actifs d'une famille."""
+    return conn.execute("""
+        SELECT COUNT(*)
+        FROM metier
+        WHERE famille_metier_id = ?
+        AND metier_actif = true
+    """, [famille_id]).fetchone()[0]
+
+
+def familles_metiers_cards(conn: duckdb.DuckDBPyConnection, familles: list[tuple[str, str, str]]) -> str:
+    """Construit les cartes de familles affichées sur la page parent."""
+    if not familles:
+        return ""
+
+    content = '<div class="familles-family-list">\n'
+    for famille_id, libelle_famille, _couleur_hex in familles:
+        famille_class = role_famille(famille_id)
+        libelle_html = texte_cellule_html(libelle_famille.upper())
+        nombre_metiers = count_metiers(conn, famille_id)
+
+        content += f'  <a class="metier-family-card" href="{famille_id}/" style="--family-card-color: var(--family-color-{famille_class});">\n'
+        content += '    <div class="metier-family-card-main">\n'
+        content += f'      <p class="metier-family-card-title">{libelle_html}</p>\n'
+        content += '      <div class="metier-family-card-meta">\n'
+        content += f'        <span><i class="fa-fw fas fa-id-card"></i> {nombre_metiers} métiers actifs</span>\n'
+        content += "      </div>\n"
+        content += "    </div>\n"
+        content += '    <span class="metier-family-card-action">Voir la famille <i class="fa-fw fas fa-arrow-right"></i></span>\n'
+        content += "  </a>\n"
+    content += "</div>\n\n"
+
+    return content
+
+
 def metiers_famille_cards(metiers: list[tuple[str, str]], famille_class: str, libelle_famille: str) -> str:
     """Construit la liste de cartes affichée sur la page d'une famille métier."""
     if not metiers:
@@ -514,7 +454,7 @@ def metiers_famille_cards(metiers: list[tuple[str, str]], famille_class: str, li
     for code_metier, nom_metier in metiers:
         code_html = texte_cellule_html(code_metier)
         nom_html = texte_cellule_html(nom_metier)
-        famille_html = texte_cellule_html(libelle_famille.capitalize())
+        famille_html = texte_cellule_html(libelle_famille.upper())
         href = f"{code_metier.lower()}/"
 
         content += f'  <a class="metier-family-card" href="{href}">\n'
@@ -636,6 +576,11 @@ def write_familles_metiers(site_dir: str, conn: duckdb.DuckDBPyConnection) -> st
     familles_dir = os.path.join(site_dir, "content", "familles-metiers")
     os.makedirs(familles_dir, exist_ok=True)
 
+    familles = fetch_familles(conn)
+    write_family_color_css(site_dir, familles)
+    write_custom_header(site_dir)
+    write_favicon(site_dir)
+
     familles_index = os.path.join(familles_dir, "_index.md")
     with open(familles_index, "w", encoding="utf-8") as f:
         f.write("""+++
@@ -645,12 +590,8 @@ weight = 3
 +++
 
 """)
-
-    familles = fetch_familles(conn)
-    write_family_color_css(site_dir, familles)
-    write_custom_header(site_dir)
-    write_favicon(site_dir)
-    write_content_footer(site_dir)
+        f.write("Cette page regroupe les familles professionnelles du référentiel. Sélectionnez une famille pour consulter les métiers associés.\n\n")
+        f.write(familles_metiers_cards(conn, familles))
 
     # Une famille = une section Hugo/Relearn.
     for index_famille, (famille_id, libelle_famille, _couleur_hex) in enumerate(familles, start=1):
@@ -661,7 +602,7 @@ weight = 3
         metiers = fetch_metiers(conn, famille_id)
         with open(famille_index, "w", encoding="utf-8") as f:
             f.write(f"""+++
-title = {toml_string(libelle_famille.capitalize())}
+title = {toml_string(libelle_famille.upper())}
 weight = {index_famille}
 
 +++

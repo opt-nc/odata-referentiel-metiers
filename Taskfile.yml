@@ -12,6 +12,8 @@ vars:
   SQLITE_SQL_FILE: src/sqlite.sql
   PY_GENERATE_ADOC: src/generate-adoc.py
   PY_GENERATE_MD: src/generate-md.py
+  HUGO_CONFIG_FILE: etc/config/hugo/hugo.toml
+  HUGO_CONTENT_FOOTER_PARTIAL: etc/config/hugo/partials/content-footer.html
 
   DUCKDB_FILE: dist/ref-metiers-opt-nc.duckdb
   SQLITE_FILE: dist/ref-metiers-opt-nc.sqlite
@@ -55,9 +57,6 @@ tasks:
       - rm -rf "{{.SITE_DIR}}"
       - rm -rf .venv
       - cmd: printf "\033[32mtask [clean] Nettoyage des fichiers générés et du site Hugo terminé.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [clean] Nettoyage des fichiers générés et du site Hugo terminé.' -ForegroundColor Green"
-        platforms: [windows]
     silent: true
 
   duckdb:
@@ -70,9 +69,6 @@ tasks:
       - mv "{{.LOAD_SQL_SOURCE_FILE}}" "{{.LOAD_SQL_FILE}}"
       - mv "{{.SCHEMA_SQL_SOURCE_FILE}}" "{{.SCHEMA_SQL_FILE}}"
       - cmd: printf "\033[32mtask [duckdb] Base de données DuckDB initialisée avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [duckdb] Base de données DuckDB initialisée avec succès.' -ForegroundColor Green"
-        platforms: [windows]
     silent: true
 
   sqlite:
@@ -80,9 +76,6 @@ tasks:
     cmds:
       - sqlite3 "{{.SQLITE_FILE}}" < "{{.SQLITE_SQL_FILE}}"
       - cmd: printf "\033[32mtask [sqlite] Base de données SQLite initialisée avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [sqlite] Base de données SQLite initialisée avec succès.' -ForegroundColor Green"
-        platforms: [windows]
     silent: true
 
   schema:
@@ -95,9 +88,6 @@ tasks:
           --output-format=text \
           --output-file="{{.LINT_REPORT_FILE}}"
       - cmd: printf "\033[32mtask [schema] Rapport du lint généré avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Rapport de linting généré avec succès.' -ForegroundColor Green"
-        platforms: [windows]
 
       - |
         {{.SC_BASE}} \
@@ -107,9 +97,6 @@ tasks:
           --output-format=html \
           --output-file="{{.SCHEMA_HTML_FILE}}"
       - cmd: printf "\033[32mtask [schema] Schéma HTML de la base de données généré avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma HTML de la base de données généré avec succès.' -ForegroundColor Green"
-        platforms: [windows]
 
       - |
         {{.SC_BASE}} \
@@ -118,9 +105,6 @@ tasks:
           --output-format=png \
           --output-file="{{.SCHEMA_PNG_FILE}}"
       - cmd: printf "\033[32mtask [schema] Schéma PNG de la base de données généré avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma PNG de la base de données généré avec succès.' -ForegroundColor Green"
-        platforms: [windows]
 
       - |
         {{.SC_BASE}} \
@@ -129,9 +113,6 @@ tasks:
           --output-format=pdf \
           --output-file="{{.SCHEMA_PDF_FILE}}"
       - cmd: printf "\033[32mtask [schema] Schéma PDF de la base de données généré avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [schema] Schéma PDF de la base de données généré avec succès.' -ForegroundColor Green"
-        platforms: [windows]
     silent: true
 
   docs:
@@ -141,9 +122,6 @@ tasks:
 
       - uv run "{{.PY_GENERATE_ADOC}}" --duckdb "{{.DUCKDB_FILE}}" --docs-dir "{{.DOCS_DIR}}" --output-file "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Fichier AsciiDoc généré avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Fichier AsciiDoc généré avec succès.' -ForegroundColor Green"
-        platforms: [windows]
 
       - |
         asciidoctor-pdf \
@@ -156,9 +134,6 @@ tasks:
           -o "{{.PDF_FILE}}" \
           "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Documentation PDF générée avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Documentation PDF générée avec succès.' -ForegroundColor Green"
-        platforms: [windows]
 
       - |
         pandoc \
@@ -173,9 +148,6 @@ tasks:
           --output="{{.EPUB_FILE}}" \
           "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Documentation EPUB générée avec succès.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [docs] Documentation EPUB générée avec succès.' -ForegroundColor Green"
-        platforms: [windows]
     silent: true
 
   site:
@@ -194,20 +166,19 @@ tasks:
       - cp etc/themes/opt-dark-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-dark-theme.css"
       - mkdir -p "{{.SITE_DIR}}/static/assets/logo"
       - cp data/static/assets/logo/OPT_NC.png "{{.SITE_DIR}}/static/assets/logo/OPT_NC.png"
+      - mkdir -p "{{.SITE_DIR}}/layouts/partials"
+      - cp "{{.HUGO_CONTENT_FOOTER_PARTIAL}}" "{{.SITE_DIR}}/layouts/partials/content-footer.html"
 
-      - cp etc/config/hugo/hugo.toml "{{.SITE_DIR}}/hugo.toml"
+      - cp "{{.HUGO_CONFIG_FILE}}" "{{.SITE_DIR}}/hugo.toml"
       - hugo -s "{{.SITE_DIR}}"
 
       - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.\033[0m\n"
-        platforms: [linux]
-      - cmd: powershell -NoProfile -Command "Write-Host 'task [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.' -ForegroundColor Green"
-        platforms: [windows]
     silent: true
 
   install-uv:
     desc: Vérifie si uv est installé, sinon l'installe.
     status:
-      - uv --version 
+      - uv --version
     cmds:
       - pip install uv
     silent: true
