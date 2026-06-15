@@ -15,6 +15,7 @@ vars:
   HUGO_CONFIG_FILE: etc/config/hugo/hugo.toml
   HUGO_LAYOUTS_DIR: etc/config/hugo/layouts
   HUGO_CONTENT_FOOTER_PARTIAL: etc/config/hugo/partials/content-footer.html
+  HUGO_THEME_COMMIT: 8bb66fa674351f3a0b0917a7552caac686eca920
 
   DUCKDB_FILE: dist/ref-metiers-opt-nc.duckdb
   SQLITE_FILE: dist/ref-metiers-opt-nc.sqlite
@@ -157,7 +158,9 @@ tasks:
       - rm -rf "{{.SITE_DIR}}"
       - hugo new site "{{.SITE_DIR}}"
 
-      - git clone --depth 1 https://github.com/McShelby/hugo-theme-relearn.git "{{.SITE_DIR}}/themes/hugo-theme-relearn"
+      - git clone --no-checkout https://github.com/McShelby/hugo-theme-relearn.git "{{.SITE_DIR}}/themes/hugo-theme-relearn"
+      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" fetch --depth 1 origin "{{.HUGO_THEME_COMMIT}}"
+      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" checkout FETCH_HEAD
       - rm -rf "{{.SITE_DIR}}/themes/hugo-theme-relearn/.git"
 
       - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir "{{.SITE_DIR}}"
