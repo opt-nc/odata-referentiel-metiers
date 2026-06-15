@@ -1,10 +1,11 @@
 import argparse
+import json
 import os
 import duckdb
 
 DEFAULT_DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
 DEFAULT_SITE_DIR = "site"
-METIER_KEYWORDS = ["test", "referentiel", "metier"]
+CUSTOM_HEADER_TEMPLATE = "etc/config/hugo/partials/custom-header.html"
 
 # Couleurs sombres reprises de etc/themes/epub-style.css.
 DARK_FAMILY_COLORS = {
@@ -57,7 +58,7 @@ Le référentiel est généré automatiquement à partir de données structurée
 
 
 INTRODUCTION_MD = """+++
-title = "Introduction"
+title = "INTRODUCTION"
 weight = 1
 
 +++
@@ -93,7 +94,7 @@ Cette approche permet de garder une source de données structurée, de produire 
 """
 
 NIVEAU_COMPETENCE_MD = """+++
-title = "Niveaux de compétences"
+title = "NIVEAUX DE COMPÉTENCES"
 weight = 2
 
 +++
@@ -173,7 +174,7 @@ def write_family_color_css(site_dir: str, familles: list[tuple[str, str, str]]) 
     content += "}\n"
 
     # Mode sombre
-    content += "\n:root[data-r-theme-variant='relearn-dark'] {\n"
+    content += "\n:root[data-r-theme-variant='opt-dark-theme'] {\n"
     content += "  --family-color-blue: #76B7E8;\n"
     content += "  --family-color-gray: #D0D0D0;\n"
     for famille_id, _libelle_famille, _couleur_hex in familles:
@@ -208,129 +209,57 @@ def write_family_color_css(site_dir: str, familles: list[tuple[str, str, str]]) 
     return css_file
 
 
-def write_custom_header(site_dir: str) -> str:
-    """Ajoute les feuilles de style personnalisées au site Hugo."""
+def write_family_tag_data(site_dir: str, familles: list[tuple[str, str, str]]) -> str:
+    """Écrit la correspondance entre les tags Hugo et les couleurs de familles."""
+    data_file = os.path.join(site_dir, "data", "family_tags.json")
+    os.makedirs(os.path.dirname(data_file), exist_ok=True)
+
+    content = {
+        "tags": [
+            {
+                "title": libelle_famille.upper(),
+                "class": role_famille(famille_id),
+            }
+            for famille_id, libelle_famille, _couleur_hex in familles
+        ]
+    }
+
+    with open(data_file, "w", encoding="utf-8") as f:
+        json.dump(content, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+    return data_file
+
+
+def write_custom_header_from_template(site_dir: str, familles: list[tuple[str, str, str]]) -> str:
+    """Génère le partial Hugo custom-header depuis son template."""
     header_file = os.path.join(site_dir, "layouts", "partials", "custom-header.html")
     os.makedirs(os.path.dirname(header_file), exist_ok=True)
 
-    content = """<link href="/css/family-colors.css" rel="stylesheet">
-<style>
-:root {
-  --LOGO-IMAGE-width: 3rem;
-}
+    search_family_rules = ""
+    search_family_data = json.dumps(
+        [
+            {
+                "title": libelle_famille.upper(),
+                "className": role_famille(famille_id),
+            }
+            for famille_id, libelle_famille, _couleur_hex in familles
+        ],
+        ensure_ascii=False,
+    )
+    for famille_id, _libelle_famille, _couleur_hex in familles:
+        famille_class = role_famille(famille_id)
+        search_family_rules += (
+            f'#R-searchresults > *:has(a[href*="/familles-metiers/{famille_id}/"]) {{\n'
+            f"  border-left-color: var(--family-color-{famille_class}) !important;\n"
+            "}\n\n"
+        )
 
-#R-logo.R-default {
-  justify-content: flex-start;
-  padding-inline: 1rem;
-}
+    with open(CUSTOM_HEADER_TEMPLATE, "r", encoding="utf-8") as f:
+        content = f.read()
 
-#R-logo.R-default .logo-title {
-  font-size: 1.25rem;
-}
-
-.metiers-family-list {
-  display: grid;
-  gap: 1.25rem;
-  margin: 2rem 0;
-}
-
-.familles-family-list {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  margin: 2rem 0;
-}
-
-.metier-family-card {
-  align-items: center;
-  background: var(--CARD-BG-color);
-  border: 1px solid var(--CARD-BORDER-color);
-  border-left: 5px solid var(--family-card-color, var(--MAIN-LINK-color));
-  border-radius: 6px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  color: var(--MAIN-TEXT-color);
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1fr) auto;
-  padding: 1.35rem 1.5rem;
-  text-decoration: none;
-  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-
-.metier-family-card:hover {
-  background: var(--CODE-BG-color);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
-  color: var(--MAIN-TEXT-color);
-  text-decoration: none;
-  transform: translateY(-2px);
-}
-
-.metier-family-card-title {
-  color: var(--MAIN-TITLES-color);
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.25;
-  margin: 0 0 0.65rem;
-}
-
-.metier-family-card-meta {
-  align-items: center;
-  color: var(--MAIN-TEXT-color);
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-  gap: 0.75rem;
-  opacity: 0.82;
-}
-
-.metier-family-card-code {
-  align-items: center;
-  display: inline-flex;
-  gap: 0.35rem;
-}
-
-.metier-family-card-action {
-  align-items: center;
-  color: var(--MAIN-LINK-HOVER-color);
-  display: inline-flex;
-  font-weight: 700;
-  gap: 0.35rem;
-  white-space: nowrap;
-}
-
-@media only all and (max-width: 47.999rem) {
-  .metier-family-card {
-    grid-template-columns: 1fr;
-  }
-
-  .metier-family-card-action {
-    justify-content: flex-start;
-  }
-}
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const cleanSearchResultTitles = function () {
-    document.querySelectorAll("#R-searchresults .title").forEach(function (title) {
-      const firstNode = title.firstChild;
-      if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
-        firstNode.textContent = firstNode.textContent.replace(/^\\s*»\\s*/, "");
-      }
-    });
-  };
-
-  cleanSearchResultTitles();
-
-  const searchResults = document.querySelector("#R-searchresults");
-  if (searchResults) {
-    new MutationObserver(cleanSearchResultTitles).observe(searchResults, {
-      childList: true,
-      subtree: true
-    });
-  }
-});
-</script>
-"""
+    content = content.replace("{{SEARCH_FAMILY_RULES}}", search_family_rules.rstrip())
+    content = content.replace("{{SEARCH_FAMILY_DATA}}", search_family_data)
 
     with open(header_file, "w", encoding="utf-8") as f:
         f.write(content)
@@ -540,14 +469,18 @@ def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier
     metier_dir = os.path.join(famille_dir, code_metier.lower())
     os.makedirs(metier_dir, exist_ok=True)
     metier_file = os.path.join(metier_dir, "_index.md")
+    metier_keywords = [code_metier, nom_metier, libelle_famille.upper()]
 
     content = f"""+++
 title = {toml_string(f"{code_metier} - {nom_metier}")}
 weight = {index_metier}
+collapsibleMenu = true
 tags = {toml_list([libelle_famille.upper()])}
-keywords = {toml_list(METIER_KEYWORDS)}
+keywords = {toml_list(metier_keywords)}
 
 +++
+
+<span class="a11y-only">Code métier : {code_metier}</span>
 
 """
 
@@ -578,14 +511,16 @@ def write_familles_metiers(site_dir: str, conn: duckdb.DuckDBPyConnection) -> st
 
     familles = fetch_familles(conn)
     write_family_color_css(site_dir, familles)
-    write_custom_header(site_dir)
+    write_family_tag_data(site_dir, familles)
+    write_custom_header_from_template(site_dir, familles)
     write_favicon(site_dir)
 
     familles_index = os.path.join(familles_dir, "_index.md")
     with open(familles_index, "w", encoding="utf-8") as f:
         f.write("""+++
-title = "Familles métiers"
+title = "FAMILLES MÉTIERS"
 weight = 3
+collapsibleMenu = true
 
 +++
 
@@ -604,6 +539,8 @@ weight = 3
             f.write(f"""+++
 title = {toml_string(libelle_famille.upper())}
 weight = {index_famille}
+collapsibleMenu = true
+alwaysopen = false
 
 +++
 

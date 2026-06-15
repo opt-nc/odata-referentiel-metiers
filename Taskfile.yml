@@ -13,6 +13,7 @@ vars:
   PY_GENERATE_ADOC: src/generate-adoc.py
   PY_GENERATE_MD: src/generate-md.py
   HUGO_CONFIG_FILE: etc/config/hugo/hugo.toml
+  HUGO_LAYOUTS_DIR: etc/config/hugo/layouts
   HUGO_CONTENT_FOOTER_PARTIAL: etc/config/hugo/partials/content-footer.html
 
   DUCKDB_FILE: dist/ref-metiers-opt-nc.duckdb
@@ -165,9 +166,10 @@ tasks:
       - cp etc/themes/opt-light-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-light-theme.css"
       - cp etc/themes/opt-dark-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-dark-theme.css"
       - mkdir -p "{{.SITE_DIR}}/static/assets/logo"
-      - cp data/static/assets/logo/OPT_NC.png "{{.SITE_DIR}}/static/assets/logo/OPT_NC.png"
+      - cp data/static/assets/logo/OPT_NC_2.png "{{.SITE_DIR}}/static/assets/logo/OPT_NC_2.png"
       - mkdir -p "{{.SITE_DIR}}/layouts/partials"
       - cp "{{.HUGO_CONTENT_FOOTER_PARTIAL}}" "{{.SITE_DIR}}/layouts/partials/content-footer.html"
+      - cp -R "{{.HUGO_LAYOUTS_DIR}}/." "{{.SITE_DIR}}/layouts/."
 
       - cp "{{.HUGO_CONFIG_FILE}}" "{{.SITE_DIR}}/hugo.toml"
       - hugo -s "{{.SITE_DIR}}"

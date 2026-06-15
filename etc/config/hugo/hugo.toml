@@ -3,12 +3,12 @@ theme = 'hugo-theme-relearn'
 baseURL = '/'
 defaultContentLanguage = 'fr'
 locale = 'fr-fr'
-title = 'Référentiel Métiers OPT-NC'
+title = 'Référentiel Métiers'
 
 [params]
 themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
-logo = { src = '/assets/logo/OPT_NC.png' }
-images = ["/assets/logo/OPT_NC.png"]
+logo = { src = '/assets/logo/OPT_NC_2.png' }
+images = ["/assets/logo/OPT_NC_2.png"]
 
 [params.author]
 name = "OPT - NC"
