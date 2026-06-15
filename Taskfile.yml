@@ -156,8 +156,8 @@ tasks:
       - rm -rf "{{.SITE_DIR}}"
       - hugo new site "{{.SITE_DIR}}"
 
-      - git -C "{{.SITE_DIR}}" init
-      - git -C "{{.SITE_DIR}}" submodule add --depth 1 https://github.com/McShelby/hugo-theme-relearn.git themes/hugo-theme-relearn
+      - git clone --depth 1 https://github.com/McShelby/hugo-theme-relearn.git "{{.SITE_DIR}}/themes/hugo-theme-relearn"
+      - rm -rf "{{.SITE_DIR}}/themes/hugo-theme-relearn/.git"
 
       - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir "{{.SITE_DIR}}"
       
