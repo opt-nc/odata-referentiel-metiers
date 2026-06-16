@@ -5,5 +5,4 @@ data/output/docs
 __pycache__/
 .venv/
 
-pyproject.toml
-uv.lock
+site

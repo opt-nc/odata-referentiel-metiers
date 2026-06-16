@@ -1,0 +1,27 @@
+{{- $taxonomy := "tags" }}
+{{- $taxonomyPage := .Site.GetPage $taxonomy }}
+{{- $taxonomyTitle := partial "title.gotmpl" (dict "page" $taxonomyPage) }}
+{{- $termPages := .GetTerms $taxonomy }}
+
+{{- with $termPages }}
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="{{ $taxonomyTitle }}">
+  <ul>
+  {{- range sort . "Title" }}
+    {{- $tagClass := "blue" }}
+    {{- with where hugo.Data.family_tags.tags "title" .Title }}
+      {{- with index . 0 }}
+        {{- $tagClass = .class }}
+      {{- end }}
+    {{- end }}
+    <li>
+      <a
+        class="term-link"
+        href="{{ partial "permalink.gotmpl" (dict "to" .) }}"
+        style="--VARIABLE-TAGS-BG-color: var(--family-color-{{ $tagClass }}, var(--INTERNAL-TAG-BG-color));">
+        {{ partial "title.gotmpl" (dict "page" . "linkTitle" true) }}
+      </a>
+    </li>
+  {{- end }}
+  </ul>
+</div>
+{{- end }}

@@ -1,0 +1,89 @@
+{{- with site.Params.social }}
+<hr class="opt-footer-hr">
+<!-- ✅ CORRECTION : Changement de la balise pour ne plus usurper le rôle global du site -->
+<section class="opt-page-footer" aria-label="Informations complémentaires sur l'offre">
+  
+  <!-- 🌐 Les 5 réseaux sociaux de l'OPT -->
+  <div class="opt-social-links">
+    {{ with .facebook }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur Facebook" target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .twitter }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur Twitter" target="_blank" rel="noopener">
+        <i class="fab fa-twitter" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .instagram }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur Instagram" target="_blank" rel="noopener">
+        <i class="fab fa-instagram" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .youtube }}
+      <a href="{{ . }}" aria-label="Découvrez la chaîne YouTube de l'OPT" target="_blank" rel="noopener">
+        <i class="fab fa-youtube" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .linkedin }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur LinkedIn" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+    {{ with .tiktok }}
+      <a href="{{ . }}" aria-label="Suivez l'OPT sur TikTok" target="_blank" rel="noopener">
+        <i class="fab fa-tiktok" aria-hidden="true"></i>
+      </a>
+    {{ end }}
+  </div>
+
+  <!-- 🏢 Liens utiles & Institutionnels -->
+  <p class="opt-institution-link">
+    <a href="https://office.opt.nc/fr/emploi-et-carriere/postuler-lopt-nc/avp" target="_blank" rel="noopener">
+      <i class="fas fa-building" aria-hidden="true"></i> Site Institutionnel OPT
+    </a>
+  </p>
+  
+  <!-- ⚖️ Mentions légales, Contact & Accessibilité -->
+  <div class="opt-legal-text">
+    <p>
+      <a href="https://office.opt.nc/fr/mentions-legales" target="_blank" rel="noopener">Mentions légales</a>
+      <span class="opt-separator">|</span>
+      <a href="https://office.opt.nc/fr/l-opt-nc/contact" target="_blank" rel="noopener">Contact</a>
+    </p>
+    <p>© {{ now.Format "2006" }} OPT NC — Tous droits réservés.</p>
+    <p class="opt-italic-brand">Office des Postes et Télécommunications de Nouvelle-Calédonie</p>
+    <p class="opt-accessibility-note">Site conçu pour être accessible aux outils de lecture d'écran (RGAA).</p>
+  </div>
+
+<div class="opt-dev-stack" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 15px 0; font-size: 0.85rem; opacity: 0.85;">
+    
+    <a href="https://github.com/opt-nc/?view_as=public" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fab fa-github" aria-hidden="true" style="font-size: 1.1em;"></i> GitHub
+    </a>
+
+    <a href="https://apigee-optnc-prd-api.apigee.io/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fas fa-network-wired" aria-hidden="true" style="font-size: 1.1em;"></i> Portail Apigee
+    </a>
+
+    <a href="https://www.kaggle.com/optnouvellecaldonie" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fab fa-kaggle" aria-hidden="true" style="font-size: 1.1em;"></i> Kaggle
+    </a>
+
+    <a href="https://huggingface.co/opt-nc" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fas fa-brain" aria-hidden="true" style="font-size: 1.1em;"></i> Hugging Face
+    </a>
+
+    <a href="https://huggingface.co/datasets/opt-nc/odata-avps" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: inherit;">
+      <i class="fas fa-database" aria-hidden="true" style="font-size: 1.1em;"></i> Dataset AVP
+    </a>
+
+  </div>
+
+</section>
+
+<div class="avp-build-info" style="font-size: 0.65rem; opacity: 0.5; padding: 10px; text-align: center; border-top: 1px solid var(--CARD-BORDER-color);">
+  Version : <code>r-{{ if hugo.Data.git_commit }}{{ hugo.Data.git_commit.hash }}{{ else }}dev{{ end }}</code><br>
+  Généré le : {{ now.Format "02/01/2006 à 15:04" }}
+</div>
+{{- end }}

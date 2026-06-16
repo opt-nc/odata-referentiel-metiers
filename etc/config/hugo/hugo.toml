@@ -1,0 +1,25 @@
+theme = 'hugo-theme-relearn'
+
+baseURL = '/'
+defaultContentLanguage = 'fr'
+locale = 'fr-fr'
+title = 'Référentiel Métiers'
+
+[params]
+themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
+logo = { src = '/assets/logo/OPT_NC_2.png' }
+images = ["/assets/logo/OPT_NC_2.png"]
+
+[params.author]
+name = "OPT - NC"
+
+[params.social]
+facebook = 'https://www.facebook.com/OPT.NC'
+twitter = 'https://twitter.com/opt_nc'
+instagram = 'https://www.instagram.com/opt_nc/'
+youtube = 'https://www.youtube.com/user/optnc'
+linkedin = 'https://www.linkedin.com/company/opt-new-caledonia'
+tiktok = 'https://www.tiktok.com/discover/team-opt-nc'
+
+[markup.goldmark.renderer]
+unsafe = true

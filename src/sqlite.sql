@@ -3,7 +3,9 @@ DROP VIEW IF EXISTS vw_competences_architecte_logiciel;
 DROP VIEW IF EXISTS vw_competences_orphelines;
 DROP VIEW IF EXISTS vw_compter_competences_par_metier;
 DROP VIEW IF EXISTS vw_lister_competences_metier;
+DROP VIEW IF EXISTS vw_groupes_manquants_par_metier;
 DROP VIEW IF EXISTS vw_metiers_qui_possede_niveau_competence_0;
+DROP VIEW IF EXISTS vw_competences_dupliquees;
 
 DROP TABLE IF EXISTS about;
 DROP TABLE IF EXISTS metier_competence;
@@ -13,12 +15,14 @@ DROP TABLE IF EXISTS competence;
 DROP TABLE IF EXISTS categorie_detention;
 DROP TABLE IF EXISTS groupe_competence;
 DROP TABLE IF EXISTS referentiel_competence;
+DROP TABLE IF EXISTS metier_verbatim;
 DROP TABLE IF EXISTS metier;
 DROP TABLE IF EXISTS statut_metier;
 DROP TABLE IF EXISTS famille_metier_couleur;
 DROP TABLE IF EXISTS famille_metier;
 
 DROP INDEX IF EXISTS idx_metier_famille;
+DROP INDEX IF EXISTS idx_metier_verbatim_code_metier;
 DROP INDEX IF EXISTS idx_metier_statut;
 DROP INDEX IF EXISTS idx_competence_groupe_id;
 DROP INDEX IF EXISTS idx_competence_referentiel_id;
@@ -70,7 +74,7 @@ CREATE TABLE categorie_detention (
 CREATE TABLE metier (
     code_metier TEXT PRIMARY KEY NOT NULL,
     neobrain_metier_id INTEGER NOT NULL,
-    metier_collaborateur TEXT NOT NULL,
+    nom_metier TEXT NOT NULL,
     famille_metier_id TEXT NOT NULL,
     statut_metier_id TEXT NOT NULL,
     metier_actif INTEGER NOT NULL, -- en sqlite, le type BOOLEAN peut etre représenté par un 0/1
@@ -81,8 +85,18 @@ CREATE TABLE metier (
 CREATE INDEX idx_metier_famille ON metier(famille_metier_id);
 CREATE INDEX idx_metier_statut ON metier(statut_metier_id);
 
+CREATE TABLE metier_verbatim (
+    code_metier TEXT NOT NULL,
+    verbatim TEXT NOT NULL,
+    PRIMARY KEY (code_metier, verbatim),
+    FOREIGN KEY (code_metier) REFERENCES metier(code_metier)
+);
+
+CREATE INDEX idx_metier_verbatim_code_metier ON metier_verbatim(code_metier);
+
 CREATE TABLE competence (
     code_competence TEXT PRIMARY KEY NOT NULL,
+    nom_competence TEXT NOT NULL,
     neobrain_competence_id INTEGER NOT NULL,
     groupe_competence_id TEXT NOT NULL,
     referentiel_competence_id TEXT NOT NULL,
@@ -94,10 +108,10 @@ CREATE INDEX idx_competence_groupe_id ON competence(groupe_competence_id);
 CREATE INDEX idx_competence_referentiel_id ON competence(referentiel_competence_id);
 
 CREATE TABLE competence_utilisateur (
-    code_competence TEXT PRIMARY KEY NOT NULL,
-    nom_competence TEXT NOT NULL,
+    code_competence TEXT NOT NULL,
     categorie_detention_id TEXT NOT NULL,
     date_mise_a_jour TEXT NOT NULL, -- En sqlite, le TIMESTAMP est un TEXT en ISO8601
+    PRIMARY KEY (code_competence, categorie_detention_id),
     FOREIGN KEY (code_competence) REFERENCES competence(code_competence),
     FOREIGN KEY (categorie_detention_id) REFERENCES categorie_detention(categorie_detention_id)
 );
@@ -110,7 +124,7 @@ CREATE TABLE niveau_description_competence (
     niveau INTEGER NOT NULL,
     description TEXT NOT NULL,
     PRIMARY KEY (code_competence, niveau),
-    FOREIGN KEY (code_competence) REFERENCES competence_utilisateur(code_competence)
+    FOREIGN KEY (code_competence) REFERENCES competence(code_competence)
 );
 
 CREATE INDEX idx_niveau_description_comp_utilisateur ON niveau_description_competence(code_competence);
@@ -118,13 +132,12 @@ CREATE INDEX idx_niveau_description_comp_utilisateur ON niveau_description_compe
 CREATE TABLE metier_competence (
     code_metier TEXT NOT NULL,
     code_competence TEXT NOT NULL,
-    nom_competence TEXT NOT NULL,
     poids REAL NOT NULL,
     niveau_requis REAL NOT NULL,
     est_actif INTEGER NOT NULL,
     date_creation TEXT NOT NULL,
     date_mise_a_jour TEXT NOT NULL,
-    PRIMARY KEY (code_metier, code_competence, nom_competence),
+    PRIMARY KEY (code_metier, code_competence),
     FOREIGN KEY (code_metier) REFERENCES metier(code_metier),
     FOREIGN KEY (code_competence) REFERENCES competence(code_competence)
 );
@@ -144,6 +157,7 @@ CREATE TABLE about (
 .import --csv --skip 1 data/output/csv/groupe_competence.csv groupe_competence
 .import --csv --skip 1 data/output/csv/categorie_detention.csv categorie_detention
 .import --csv --skip 1 data/output/csv/metier.csv metier
+.import --csv --skip 1 data/output/csv/metier_verbatim.csv metier_verbatim
 .import --csv --skip 1 data/output/csv/competence.csv competence
 .import --csv --skip 1 data/output/csv/competence_utilisateur.csv competence_utilisateur
 .import --csv --skip 1 data/output/csv/niveau_description_competence.csv niveau_description_competence
@@ -154,9 +168,9 @@ CREATE TABLE about (
 CREATE VIEW vw_lister_competences_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     c.code_competence,
-    mc.nom_competence,
+    c.nom_competence,
     (SELECT g.libelle FROM groupe_competence g WHERE c.groupe_competence_id = g.groupe_competence_id) AS groupe_competence,
     (SELECT r.libelle FROM referentiel_competence r WHERE c.referentiel_competence_id = r.referentiel_competence_id) AS referentiel_competence
 FROM metier m
@@ -167,7 +181,7 @@ ORDER BY m.code_metier;
 CREATE VIEW vw_compter_competences_par_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     (SELECT COUNT(1) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS nb_competences,
     (SELECT COUNT(1) FROM metier_competence mc WHERE mc.code_metier = m.code_metier AND mc.est_actif = 1) AS nb_competences_actives,
     (SELECT AVG(mc.niveau_requis) FROM metier_competence mc WHERE mc.code_metier = m.code_metier) AS niveau_moyen_requis,
@@ -178,10 +192,9 @@ ORDER BY nb_competences;
 CREATE VIEW vw_competences_orphelines AS
 SELECT
     c.code_competence,
-    cu.nom_competence,
+    c.nom_competence,
     g.libelle AS groupe_competence
 FROM competence c
-JOIN competence_utilisateur cu ON c.code_competence = cu.code_competence
 JOIN groupe_competence g ON c.groupe_competence_id = g.groupe_competence_id
 WHERE NOT EXISTS (
     SELECT 1 FROM metier_competence mc WHERE mc.code_competence = c.code_competence
@@ -190,23 +203,22 @@ WHERE NOT EXISTS (
 CREATE VIEW vw_competences_architecte_logiciel AS
 SELECT
     gc.libelle AS groupe_competence,
-    m.metier_collaborateur,
-    cu.code_competence,
-    mc.nom_competence AS nom_competence_metier,
+    m.nom_metier,
+    c.code_competence,
+    c.nom_competence,
     mc.niveau_requis,
     ndc.description AS description_niveau_requis
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
-JOIN competence_utilisateur cu ON mc.code_competence = cu.code_competence
 JOIN competence c ON mc.code_competence = c.code_competence
 LEFT JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
-LEFT JOIN niveau_description_competence ndc ON cu.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
-WHERE lower(m.metier_collaborateur) = 'architecte logiciel';
+LEFT JOIN niveau_description_competence ndc ON c.code_competence = ndc.code_competence AND ndc.niveau = CAST(mc.niveau_requis AS INTEGER)
+WHERE lower(m.nom_metier) = 'architecte logiciel';
 
 CREATE VIEW vw_metiers_orphelins AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     fm.libelle AS famille_metier,
     stm.libelle AS statut_metier,
     m.metier_actif
@@ -220,7 +232,7 @@ WHERE NOT EXISTS (
 CREATE VIEW vw_groupes_manquants_par_metier AS
 SELECT
     m.code_metier,
-    m.metier_collaborateur,
+    m.nom_metier,
     gc.libelle AS groupe_manquant
 FROM metier m, groupe_competence gc
 WHERE gc.libelle <> 'Manager'
@@ -233,7 +245,14 @@ WHERE gc.libelle <> 'Manager'
 ORDER BY m.code_metier;
 
 CREATE VIEW vw_metiers_qui_possede_niveau_competence_0 AS
-SELECT m.code_metier, m.metier_collaborateur, mc.code_competence, mc.nom_competence
+SELECT m.code_metier, m.nom_metier, c.code_competence, c.nom_competence
 FROM metier m
 JOIN metier_competence mc ON m.code_metier = mc.code_metier
+JOIN competence c ON mc.code_competence = c.code_competence
 WHERE mc.niveau_requis = 0;
+
+CREATE VIEW vw_competences_dupliquees AS
+SELECT code_competence, nom_competence, COUNT(1) AS occurrences
+FROM competence
+GROUP BY code_competence, nom_competence
+HAVING COUNT(1) > 1;

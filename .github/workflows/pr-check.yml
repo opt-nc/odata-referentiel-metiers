@@ -40,6 +40,11 @@ jobs:
 
       - name: Install Asciidoctor PDF via APT
         run: sudo apt-get update && sudo apt-get install -y ruby-asciidoctor-pdf
+      
+      - name: Install hugo
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78
+        with:
+          hugo-version: '0.163.0'
 
       - name: Build DuckDB and SQLite databases
         run: |
@@ -61,5 +66,8 @@ jobs:
       - name: Generate documentation
         run: |
           task docs
+
+      - name: Generate Hugo site
+        run: task site
       
           

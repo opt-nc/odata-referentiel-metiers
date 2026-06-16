@@ -1,12 +1,13 @@
+import argparse
 import os
 from datetime import datetime
 
 import duckdb
 
 
-DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
-DOCS_DIR = os.path.abspath("data/output/docs/")
-OUTPUT_FILE = os.path.join(DOCS_DIR, "referentiel_metiers.adoc")
+DEFAULT_DUCK_DB = "dist/ref-metiers-opt-nc.duckdb"
+DEFAULT_DOCS_DIR = "data/output/docs/"
+DEFAULT_ADOC_FILENAME = "referentiel_metiers.adoc"
 
 GROUPE_DESCRIPTIONS = {
     "savoir": "Le savoir regroupe les connaissances théoriques et techniques utiles pour comprendre et exercer un métier.",
@@ -23,7 +24,7 @@ NIVEAUX_COMPETENCE = [
 ]
 
 
-def icon(name: str, role: str, icon_set: str = "fas") -> str:
+def fontawesome_icon(name: str, role: str, icon_set: str = "fas") -> str:
     """Construit une icône AsciiDoc Font Awesome."""
     return f'icon:{name}[set={icon_set},role="{role}"]'
 
@@ -34,8 +35,8 @@ def niveau_score(niveau: int | None, role_couleur: str = "blue", max_niveau: int
         return "-"
 
     niveau_int = int(niveau)
-    cercles_pleins = [icon("circle", role_couleur)] * niveau_int
-    cercles_vides = [icon("circle", "gray", "far")] * (max_niveau - niveau_int)
+    cercles_pleins = [fontawesome_icon("circle", role_couleur)] * niveau_int
+    cercles_vides = [fontawesome_icon("circle", "gray", "far")] * (max_niveau - niveau_int)
     return " ".join(cercles_pleins + cercles_vides)
 
 
@@ -154,7 +155,7 @@ def fetch_familles(conn) -> list[tuple[str, str, str]]:
 def fetch_metiers(conn, famille_id: str) -> list[tuple[str, str]]:
     """Récupère les métiers actifs d'une famille."""
     return conn.execute("""
-        SELECT code_metier, metier_collaborateur
+        SELECT code_metier, nom_metier
         FROM metier
         WHERE famille_metier_id = ?
         AND metier_actif = true
@@ -177,14 +178,14 @@ def fetch_groupes_competence(conn, code_metier: str) -> list[tuple[str]]:
 def fetch_competences(conn, code_metier: str, libelle_groupe: str) -> list[tuple[str, int]]:
     """Récupère les compétences et leur niveau pour un métier."""
     return conn.execute("""
-        SELECT DISTINCT mc.nom_competence, mc.niveau_requis
+        SELECT DISTINCT c.nom_competence, mc.niveau_requis
         FROM metier_competence mc
         JOIN competence c ON mc.code_competence = c.code_competence
         JOIN groupe_competence gc ON c.groupe_competence_id = gc.groupe_competence_id
         JOIN niveau_description_competence ndc ON mc.code_competence = ndc.code_competence
         WHERE mc.code_metier = ?
         AND gc.libelle = ?
-        ORDER BY mc.nom_competence ASC
+        ORDER BY c.nom_competence ASC
     """, [code_metier, libelle_groupe]).fetchall()
 
 
@@ -270,13 +271,28 @@ def write_document(output_file: str, conn: duckdb.DuckDBPyConnection) -> None:
         write_familles_metiers(f, conn, familles)
 
 
+def parse_args():
+    """Lit les paramètres du générateur AsciiDoc."""
+    parser = argparse.ArgumentParser(description="Génère le référentiel métiers au format AsciiDoc.")
+    parser.add_argument("--duckdb", default=DEFAULT_DUCK_DB, help="Chemin vers la base DuckDB source.")
+    parser.add_argument("--docs-dir", default=DEFAULT_DOCS_DIR, help="Dossier de sortie des documents.")
+    parser.add_argument("--output-file", help="Chemin complet du fichier AsciiDoc généré.")
+    return parser.parse_args()
+
+
 def main() -> None:
     """Point d'entrée du générateur AsciiDoc."""
-    os.makedirs(DOCS_DIR, exist_ok=True)
+    args = parse_args()
+    if args.output_file:
+        output_file = os.path.abspath(args.output_file)
+    else:
+        output_file = os.path.join(os.path.abspath(args.docs_dir), DEFAULT_ADOC_FILENAME)
 
-    conn = duckdb.connect(DUCK_DB)
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+    conn = duckdb.connect(args.duckdb)
     try:
-        write_document(OUTPUT_FILE, conn)
+        write_document(output_file, conn)
     finally:
         conn.close()
 
