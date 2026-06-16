@@ -165,6 +165,7 @@ tasks:
       - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" remote add origin https://github.com/McShelby/hugo-theme-relearn.git
       - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" fetch --depth 1 origin "{{.HUGO_THEME_COMMIT}}"
       - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" checkout FETCH_HEAD
+      - rm -rf "{{.SITE_DIR}}/themes/hugo-theme-relearn/.git"
 
       - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir "{{.SITE_DIR}}"
       
