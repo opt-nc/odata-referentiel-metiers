@@ -7,8 +7,8 @@ title = 'Référentiel Métiers'
 
 [params]
 themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
-logo = { src = '/assets/logo/OPT_NC_2.png' }
-images = ["/assets/logo/OPT_NC_2.png"]
+logo = { src = 'https://wink0ni.github.io/odata-referentiel-metiers/assets/logo/OPT_NC_2.png' }
+images = ["assets/logo/OPT_NC_2.png"]
 
 [params.author]
 name = "OPT - NC"

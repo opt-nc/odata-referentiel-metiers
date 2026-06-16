@@ -272,8 +272,8 @@ def write_favicon(site_dir: str) -> str:
     favicon_file = os.path.join(site_dir, "layouts", "partials", "favicon.html")
     os.makedirs(os.path.dirname(favicon_file), exist_ok=True)
 
-    content = """<link rel="icon" href="/assets/logo/OPT_NC.png" type="image/png">
-<link rel="apple-touch-icon" href="/assets/logo/OPT_NC.png">
+    content = """<link rel="icon" href="{{ "assets/logo/OPT_NC_2.png" | relURL }}" type="image/png">
+<link rel="apple-touch-icon" href="{{ "assets/logo/OPT_NC_2.png" | relURL }}">
 """
 
     with open(favicon_file, "w", encoding="utf-8") as f:
