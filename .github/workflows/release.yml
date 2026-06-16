@@ -196,6 +196,8 @@ jobs:
           hugo-version: '0.163.0'
 
       - name: Generate Hugo site
+        env:
+          HUGO_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: task site
 
       - name: Upload Hugo site artifact
