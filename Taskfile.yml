@@ -156,11 +156,13 @@ tasks:
     desc: Crée puis génère le site Hugo avec le thème Relearn.
     cmds:
       - task: setup-python
-      
+
       - rm -rf "{{.SITE_DIR}}"
       - hugo new site "{{.SITE_DIR}}"
 
-      - git clone --no-checkout https://github.com/McShelby/hugo-theme-relearn.git "{{.SITE_DIR}}/themes/hugo-theme-relearn"
+      - mkdir -p "{{.SITE_DIR}}/themes/hugo-theme-relearn"
+      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" init
+      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" remote add origin https://github.com/McShelby/hugo-theme-relearn.git
       - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" fetch --depth 1 origin "{{.HUGO_THEME_COMMIT}}"
       - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" checkout FETCH_HEAD
       - rm -rf "{{.SITE_DIR}}/themes/hugo-theme-relearn/.git"
@@ -177,7 +179,7 @@ tasks:
       - cp -R "{{.HUGO_LAYOUTS_DIR}}/." "{{.SITE_DIR}}/layouts/."
 
       - cp "{{.HUGO_CONFIG_FILE}}" "{{.SITE_DIR}}/hugo.toml"
-      - hugo -s "{{.SITE_DIR}}"
+      - hugo -s "{{.SITE_DIR}}" --minify
 
       - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.\033[0m\n"
     silent: true
