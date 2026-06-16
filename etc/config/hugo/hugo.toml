@@ -1,14 +1,14 @@
 theme = 'hugo-theme-relearn'
 
-baseURL = 'https://opt-nc.github.io/odata-referentiel-metiers/'
+baseURL = 'http://localhost:1313/'
 defaultContentLanguage = 'fr'
 locale = 'fr-fr'
 title = 'Référentiel Métiers'
 
 [params]
 themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
-logo = { src = 'https://opt-nc.github.io/odata-referentiel-metiers/assets/logo/OPT_NC_2.png' }
-images = ["assets/logo/OPT_NC_2.png"]
+logo = { src = 'http://localhost:1313/assets/logo/OPT_NC_2.png' }
+images = ["http://localhost:1313/assets/logo/OPT_NC_2.png"]
 
 [params.author]
 name = "OPT - NC"

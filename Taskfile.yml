@@ -179,8 +179,13 @@ tasks:
       - cp -R "{{.HUGO_LAYOUTS_DIR}}/." "{{.SITE_DIR}}/layouts/."
 
       - cp "{{.HUGO_CONFIG_FILE}}" "{{.SITE_DIR}}/hugo.toml"
-      - hugo -s "{{.SITE_DIR}}" --minify
-
+      - |
+        HUGO_BASE_URL="${HUGO_BASE_URL:-http://localhost:1313/}"
+        HUGO_BASE_URL="${HUGO_BASE_URL%/}/"
+        printf 'baseURL = "%s"\n\n[params]\nlogo = { src = "%sassets/logo/OPT_NC_2.png" }\nimages = ["%sassets/logo/OPT_NC_2.png"]\n' "$HUGO_BASE_URL" "$HUGO_BASE_URL" "$HUGO_BASE_URL" > "{{.SITE_DIR}}/hugo.dynamic.toml"
+        hugo -s "{{.SITE_DIR}}" --config hugo.toml,hugo.dynamic.toml --minify
+      - rm -rf "{{.SITE_DIR}}/hugo.dynamic.toml"
+      
       - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.\033[0m\n"
     silent: true
 
