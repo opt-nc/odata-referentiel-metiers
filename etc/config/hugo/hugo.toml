@@ -1,6 +1,6 @@
 theme = 'hugo-theme-relearn'
 
-baseURL = '/'
+baseURL = 'https://wink0ni.github.io/odata-referentiel-metiers/'
 defaultContentLanguage = 'fr'
 locale = 'fr-fr'
 title = 'Référentiel Métiers'
