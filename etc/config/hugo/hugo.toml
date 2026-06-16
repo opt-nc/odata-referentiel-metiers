@@ -1,13 +1,13 @@
 theme = 'hugo-theme-relearn'
 
-baseURL = 'https://wink0ni.github.io/odata-referentiel-metiers/'
+baseURL = 'https://opt-nc.github.io/odata-referentiel-metiers/'
 defaultContentLanguage = 'fr'
 locale = 'fr-fr'
 title = 'Référentiel Métiers'
 
 [params]
 themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
-logo = { src = 'https://wink0ni.github.io/odata-referentiel-metiers/assets/logo/OPT_NC_2.png' }
+logo = { src = 'https://opt-nc.github.io/odata-referentiel-metiers/assets/logo/OPT_NC_2.png' }
 images = ["assets/logo/OPT_NC_2.png"]
 
 [params.author]
