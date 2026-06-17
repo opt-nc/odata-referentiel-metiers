@@ -209,28 +209,6 @@ def write_family_color_css(site_dir: str, familles: list[tuple[str, str, str]]) 
     return css_file
 
 
-def write_family_tag_data(site_dir: str, familles: list[tuple[str, str, str]]) -> str:
-    """Écrit la correspondance entre les tags Hugo et les couleurs de familles."""
-    data_file = os.path.join(site_dir, "data", "family_tags.json")
-    os.makedirs(os.path.dirname(data_file), exist_ok=True)
-
-    content = {
-        "tags": [
-            {
-                "title": libelle_famille.upper(),
-                "class": role_famille(famille_id),
-            }
-            for famille_id, libelle_famille, _couleur_hex in familles
-        ]
-    }
-
-    with open(data_file, "w", encoding="utf-8") as f:
-        json.dump(content, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-
-    return data_file
-
-
 def write_custom_header_from_template(site_dir: str, familles: list[tuple[str, str, str]]) -> str:
     """Génère le partial Hugo custom-header depuis son template."""
     header_file = os.path.join(site_dir, "layouts", "partials", "custom-header.html")
@@ -472,11 +450,13 @@ def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier
     metier_keywords = [code_metier, nom_metier, libelle_famille.upper()]
 
     content = f"""+++
-title = {toml_string(f"{code_metier} - {nom_metier}")}
-weight = {index_metier}
-collapsibleMenu = true
-tags = {toml_list([libelle_famille.upper()])}
-keywords = {toml_list(metier_keywords)}
+	title = {toml_string(f"{code_metier} - {nom_metier}")}
+	weight = {index_metier}
+	collapsibleMenu = true
+	# TODO: Tags Hugo désactivés pour l'instant.
+	# Pour réactiver la page /tags/, remettre :
+	# tags = {toml_list([libelle_famille.upper()])}
+	keywords = {toml_list(metier_keywords)}
 
 +++
 
@@ -515,7 +495,6 @@ def write_familles_metiers(site_dir: str, conn: duckdb.DuckDBPyConnection) -> st
 
     familles = fetch_familles(conn)
     write_family_color_css(site_dir, familles)
-    write_family_tag_data(site_dir, familles)
     write_custom_header_from_template(site_dir, familles)
     write_favicon(site_dir)
 

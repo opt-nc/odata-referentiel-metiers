@@ -26,8 +26,10 @@ tiktok = 'https://www.tiktok.com/discover/team-opt-nc'
 [markup.goldmark.renderer]
 unsafe = true
 
-[[menu.shortcuts]]
-pre = '<i class="fa-fw fas fa-tags"></i> '
-name = 'Mots-clés'
-pageRef = '/tags'
-weight = 10
+# TODO: Tags Hugo désactivés pour l'instant.
+# Pour réactiver l'entrée de menu /tags/, décommenter ce bloc.
+# [[menu.shortcuts]]
+# pre = '<i class="fa-fw fas fa-tags"></i> '
+# name = 'Mots-clés'
+# pageRef = '/tags'
+# weight = 10
