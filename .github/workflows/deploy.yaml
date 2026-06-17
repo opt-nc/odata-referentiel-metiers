@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pages: read
 
 jobs:
   deploy:
@@ -17,14 +18,36 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
-
-      - name: Download Hugo site artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
-          name: hugo-site
-          path: site/public
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          fetch-depth: 0
+
+      - name: Install Task
+        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
+
+      - name: Setup DuckDB action
+        uses: opt-nc/setup-duckdb-action@c64cd61a8a0af98f7d5d8b45e9dc332d250cd217
+
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14.5'
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78
+        with:
+          hugo-version: '0.163.0'
+
+      - name: Generate DuckDB database
+        run: task duckdb
+
+      - id: pages
+        name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+
+      - name: Generate Hugo site
+        env:
+          HUGO_BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: task site
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453
