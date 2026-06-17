@@ -84,6 +84,33 @@
   white-space: nowrap;
 }
 
+.taxonomy-intro {
+  color: var(--MAIN-TEXT-color);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: -0.5rem auto 2rem;
+  max-width: 44rem;
+  text-align: center;
+}
+
+.taxonomy-backlink {
+  margin: -0.75rem 0 2rem;
+}
+
+.taxonomy-backlink a {
+  align-items: center;
+  color: var(--MAIN-LINK-color);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.taxonomy-backlink a:hover {
+  color: var(--MAIN-LINK-HOVER-color);
+  text-decoration: none;
+}
+
 @media only all and (max-width: 47.999rem) {
   .metier-family-card {
     grid-template-columns: 1fr;
@@ -93,6 +120,85 @@
     justify-content: flex-start;
   }
 }
+
+/* La recherche rapide utilise auto-complete, hors #R-searchresults. */
+.autocomplete-suggestions {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion,
+.autocomplete-suggestions .autocomplete-suggestion .title,
+.autocomplete-suggestions .autocomplete-suggestion .link,
+.autocomplete-suggestions .autocomplete-suggestion .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion .context {
+  color: #111827 !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion b {
+  color: #005A9C !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion.selected,
+.autocomplete-suggestions .autocomplete-suggestion:hover,
+.autocomplete-suggestions .autocomplete-suggestion:focus,
+.autocomplete-suggestions .autocomplete-suggestion:active {
+  background: #e5e7eb !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion.selected,
+.autocomplete-suggestions .autocomplete-suggestion.selected .title,
+.autocomplete-suggestions .autocomplete-suggestion.selected .link,
+.autocomplete-suggestions .autocomplete-suggestion.selected .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion.selected .context,
+.autocomplete-suggestions .autocomplete-suggestion:hover,
+.autocomplete-suggestions .autocomplete-suggestion:hover .title,
+.autocomplete-suggestions .autocomplete-suggestion:hover .link,
+.autocomplete-suggestions .autocomplete-suggestion:hover .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion:hover .context,
+.autocomplete-suggestions .autocomplete-suggestion:focus,
+.autocomplete-suggestions .autocomplete-suggestion:focus .title,
+.autocomplete-suggestions .autocomplete-suggestion:focus .link,
+.autocomplete-suggestions .autocomplete-suggestion:focus .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion:focus .context,
+.autocomplete-suggestions .autocomplete-suggestion:active,
+.autocomplete-suggestions .autocomplete-suggestion:active .title,
+.autocomplete-suggestions .autocomplete-suggestion:active .link,
+.autocomplete-suggestions .autocomplete-suggestion:active .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion:active .context {
+  color: #111827 !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion.selected b,
+.autocomplete-suggestions .autocomplete-suggestion:hover b,
+.autocomplete-suggestions .autocomplete-suggestion:focus b,
+.autocomplete-suggestions .autocomplete-suggestion:active b {
+  color: #005A9C !important;
+}
+
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions,
+[data-r-theme-variant="auto"] .autocomplete-suggestions {
+  background: #111827 !important;
+  border-color: #243147 !important;
+}
+
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .title,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .link,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .breadcrumbs,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .context {
+  color: #f8fafc !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion .title,
+.autocomplete-suggestions .autocomplete-suggestion .link,
+.autocomplete-suggestions .autocomplete-suggestion .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion .context {
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
 {{SEARCH_FAMILY_RULES}}
 
 </style>
@@ -101,13 +207,98 @@ document.addEventListener("DOMContentLoaded", function () {
   // Correspondance entre les familles métiers et leurs classes CSS de couleur.
   const familyTags = {{SEARCH_FAMILY_DATA}};
 
-  // On le retire pour garder des cartes de résultats plus propres.
+  // On le retire pour garder des résultats plus propres.
   const cleanSearchResultTitles = function () {
     document.querySelectorAll("#R-searchresults .title").forEach(function (title) {
       const firstNode = title.firstChild;
       if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
         firstNode.textContent = firstNode.textContent.replace(/^\s*»\s*/, "");
       }
+      title.style.display = title.textContent.trim() ? "" : "none";
+    });
+  };
+
+  const getAutocompletePalette = function () {
+    const variant = document.documentElement.dataset.rThemeVariant;
+    const isDark = variant === "opt-dark-theme" || (
+      variant === "auto" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
+
+    return isDark
+      ? {
+          panelBg: "#111827",
+          panelBorder: "#243147",
+          suggestionBg: "#111827",
+          hoverBg: "#1f2937",
+          title: "#f8fafc",
+          detail: "#cbd5e1",
+          accent: "#93c5fd"
+        }
+      : {
+          panelBg: "#ffffff",
+          panelBorder: "#d1d5db",
+          suggestionBg: "#ffffff",
+          hoverBg: "#e5e7eb",
+          title: "#111827",
+          detail: "#4b5563",
+          accent: "#005A9C"
+        };
+  };
+
+  // Le dropdown de la recherche rapide est reconstruit par Relearn à chaque frappe.
+  // On force donc sa palette directement sur les éléments générés.
+  const normalizeAutocompleteSuggestions = function () {
+    const palette = getAutocompletePalette();
+
+    document.querySelectorAll(".autocomplete-suggestions").forEach(function (panel) {
+      panel.style.setProperty("background", palette.panelBg, "important");
+      panel.style.setProperty("border-color", palette.panelBorder, "important");
+      panel.style.setProperty("color", palette.title, "important");
+
+      panel.querySelectorAll(".autocomplete-suggestion").forEach(function (suggestion) {
+        suggestion.style.setProperty("background", palette.suggestionBg, "important");
+        suggestion.style.setProperty("color", palette.title, "important");
+        suggestion.style.setProperty("white-space", "normal", "important");
+
+        const title = suggestion.querySelector(".title");
+        if (title) {
+          const firstNode = title.firstChild;
+          if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
+            firstNode.textContent = firstNode.textContent.replace(/^\s*»\s*/, "");
+          }
+          title.style.setProperty("color", palette.title, "important");
+          title.style.setProperty("display", title.textContent.trim() ? "block" : "none", "important");
+        }
+
+        suggestion.querySelectorAll(".link").forEach(function (link) {
+          link.style.setProperty("color", palette.title, "important");
+          link.style.setProperty("font-weight", "600", "important");
+          link.style.setProperty("display", "block", "important");
+          link.style.setProperty("overflow", "hidden", "important");
+          link.style.setProperty("text-overflow", "ellipsis", "important");
+          link.style.setProperty("white-space", "nowrap", "important");
+        });
+
+        suggestion.querySelectorAll(".breadcrumbs, .context").forEach(function (detail) {
+          detail.style.setProperty("color", palette.detail, "important");
+          detail.style.setProperty("overflow", "hidden", "important");
+          detail.style.setProperty("text-overflow", "ellipsis", "important");
+          detail.style.setProperty("white-space", "nowrap", "important");
+        });
+
+        suggestion.querySelectorAll("b").forEach(function (highlight) {
+          highlight.style.setProperty("color", palette.accent, "important");
+        });
+
+        suggestion.addEventListener("mouseenter", function () {
+          suggestion.style.setProperty("background", palette.hoverBg, "important");
+        });
+        suggestion.addEventListener("mouseleave", function () {
+          suggestion.style.setProperty("background", palette.suggestionBg, "important");
+        });
+      });
     });
   };
 
@@ -259,6 +450,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   cleanSearchResultTitles();
+  normalizeAutocompleteSuggestions();
   colorSearchResultCards();
   normalizeFamilyMenu();
   waitForSearchAdapter();
@@ -266,8 +458,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // Relearn peut encore modifier le menu après le chargement complet.
   window.addEventListener("load", function () {
     normalizeFamilyMenu();
+    normalizeAutocompleteSuggestions();
     setTimeout(normalizeFamilyMenu, 0);
     setTimeout(normalizeFamilyMenu, 150);
+    setTimeout(normalizeAutocompleteSuggestions, 0);
+    setTimeout(normalizeAutocompleteSuggestions, 150);
+  });
+
+  document.addEventListener("themeVariantLoaded", function () {
+    normalizeAutocompleteSuggestions();
   });
 
   const searchResults = document.querySelector("#R-searchresults");
@@ -276,6 +475,17 @@ document.addEventListener("DOMContentLoaded", function () {
       cleanSearchResultTitles();
       colorSearchResultCards();
     }).observe(searchResults, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  const headerWrapper = document.querySelector("#R-header-wrapper");
+  if (headerWrapper) {
+    new MutationObserver(function () {
+      cleanSearchResultTitles();
+      normalizeAutocompleteSuggestions();
+    }).observe(headerWrapper, {
       childList: true,
       subtree: true
     });

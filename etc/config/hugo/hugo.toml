@@ -9,6 +9,8 @@ title = 'Référentiel Métiers'
 themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
 logo = { src = 'http://localhost:1313/assets/logo/OPT_NC_2.png' }
 images = ["http://localhost:1313/assets/logo/OPT_NC_2.png"]
+disableShortcutsTitle = true
+disableExplicitIndexURLs = true
 
 [params.author]
 name = "OPT - NC"
@@ -23,3 +25,9 @@ tiktok = 'https://www.tiktok.com/discover/team-opt-nc'
 
 [markup.goldmark.renderer]
 unsafe = true
+
+[[menu.shortcuts]]
+pre = '<i class="fa-fw fas fa-tags"></i> '
+name = 'Mots-clés'
+pageRef = '/tags'
+weight = 10

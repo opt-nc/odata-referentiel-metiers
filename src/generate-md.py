@@ -464,7 +464,7 @@ def write_competences_groupe(conn: duckdb.DuckDBPyConnection, code_metier: str, 
     return content + "\n"
 
 
-def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier: int, code_metier: str, nom_metier: str, famille_class: str, libelle_famille: str) -> str:
+def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier: int, code_metier: str, nom_metier: str, famille_id: str, famille_class: str, libelle_famille: str) -> str:
     """Écrit la page Markdown d'un métier."""
     metier_dir = os.path.join(famille_dir, code_metier.lower())
     os.makedirs(metier_dir, exist_ok=True)
@@ -482,6 +482,10 @@ keywords = {toml_list(metier_keywords)}
 
 <span class="a11y-only">Code métier : {code_metier}</span>
 
+<p class="taxonomy-backlink">
+  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour à la famille {libelle_famille.upper()}</a>
+</p>
+
 """
 
     # Un groupe de compétences = une section dans la page métier.
@@ -497,7 +501,7 @@ keywords = {toml_list(metier_keywords)}
 def write_metiers(famille_dir: str, conn: duckdb.DuckDBPyConnection, famille_id: str, famille_class: str, libelle_famille: str) -> None:
     """Écrit toutes les pages métiers d'une famille."""
     for index_metier, (code_metier, nom_metier) in enumerate(fetch_metiers(conn, famille_id), start=1):
-        write_metier(famille_dir, conn, index_metier, code_metier, nom_metier, famille_class, libelle_famille)
+        write_metier(famille_dir, conn, index_metier, code_metier, nom_metier, famille_id, famille_class, libelle_famille)
 
 
 def write_familles_metiers(site_dir: str, conn: duckdb.DuckDBPyConnection) -> str:
@@ -543,6 +547,11 @@ collapsibleMenu = true
 alwaysopen = false
 
 +++
+
+""")
+            f.write("""<p class="taxonomy-backlink">
+  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour aux familles métiers</a>
+</p>
 
 """)
             f.write(metiers_famille_cards(metiers, famille_class, libelle_famille))

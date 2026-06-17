@@ -1,13 +1,6 @@
 version: '3'
 
 vars:
-  DIST_DIR: dist
-  OUTPUT_DIR: data/output
-  OUTPUT_SQL_DIR: data/output/sql
-  GENERATED_CSV_DIR: data/output/csv
-  SITE_DIR: site
-  DOCS_DIR: data/output/docs
-
   DUCK_SQL_FILE: src/duck.sql
   SQLITE_SQL_FILE: src/sqlite.sql
   PY_GENERATE_ADOC: src/generate-adoc.py
@@ -54,9 +47,9 @@ tasks:
   clean:
     desc: Nettoie les sorties générées et le site Hugo.
     cmds:
-      - rm -rf "{{.DIST_DIR}}"
-      - rm -rf "{{.OUTPUT_DIR}}"
-      - rm -rf "{{.SITE_DIR}}"
+      - rm -rf dist
+      - rm -rf data/output
+      - rm -rf site
       - rm -rf .venv
       - cmd: printf "\033[32mtask [clean] Nettoyage des fichiers générés et du site Hugo terminé.\033[0m\n"
     silent: true
@@ -64,10 +57,10 @@ tasks:
   duckdb:
     desc: Crée le dossier dist et initialise la base DuckDB depuis le SQL
     cmds:
-      - mkdir -p "{{.DIST_DIR}}"
-      - mkdir -p "{{.OUTPUT_DIR}}"
+      - mkdir -p dist
+      - mkdir -p data/output
       - duckdb "{{.DUCKDB_FILE}}" < "{{.DUCK_SQL_FILE}}"
-      - mkdir -p "{{.OUTPUT_SQL_DIR}}"
+      - mkdir -p data/output/sql
       - mv "{{.LOAD_SQL_SOURCE_FILE}}" "{{.LOAD_SQL_FILE}}"
       - mv "{{.SCHEMA_SQL_SOURCE_FILE}}" "{{.SCHEMA_SQL_FILE}}"
       - cmd: printf "\033[32mtask [duckdb] Base de données DuckDB initialisée avec succès.\033[0m\n"
@@ -122,7 +115,7 @@ tasks:
     cmds:
       - task: setup-python
 
-      - uv run "{{.PY_GENERATE_ADOC}}" --duckdb "{{.DUCKDB_FILE}}" --docs-dir "{{.DOCS_DIR}}" --output-file "{{.ADOC_FILE}}"
+      - uv run "{{.PY_GENERATE_ADOC}}" --duckdb "{{.DUCKDB_FILE}}" --docs-dir data/output/docs --output-file "{{.ADOC_FILE}}"
       - cmd: printf "\033[32mtask [docs] Fichier AsciiDoc généré avec succès.\033[0m\n"
 
       - |
@@ -157,36 +150,40 @@ tasks:
     cmds:
       - task: setup-python
 
-      - rm -rf "{{.SITE_DIR}}"
-      - hugo new site "{{.SITE_DIR}}"
+      - rm -rf site
+      - hugo new site site
 
-      - mkdir -p "{{.SITE_DIR}}/themes/hugo-theme-relearn"
-      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" init
-      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" remote add origin https://github.com/McShelby/hugo-theme-relearn.git
-      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" fetch --depth 1 origin "{{.HUGO_THEME_COMMIT}}"
-      - git -C "{{.SITE_DIR}}/themes/hugo-theme-relearn" checkout FETCH_HEAD
-      - rm -rf "{{.SITE_DIR}}/themes/hugo-theme-relearn/.git"
+      - mkdir -p "site/themes/hugo-theme-relearn"
+      - git -C "site/themes/hugo-theme-relearn" init
+      - git -C "site/themes/hugo-theme-relearn" remote add origin https://github.com/McShelby/hugo-theme-relearn.git
+      - git -C "site/themes/hugo-theme-relearn" fetch --depth 1 origin "{{.HUGO_THEME_COMMIT}}"
+      - git -C "site/themes/hugo-theme-relearn" checkout FETCH_HEAD
+      - rm -rf "site/themes/hugo-theme-relearn/.git"
 
-      - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir "{{.SITE_DIR}}"
+      - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir site
+      - |
+        mkdir -p "site/data"
+        GIT_HASH="$(git rev-parse --short HEAD 2>/dev/null || printf dev)"
+        printf '{\n  "hash": "%s"\n}\n' "$GIT_HASH" > "site/data/git_commit.json"
       
-      - mkdir -p "{{.SITE_DIR}}/assets/css"
-      - cp etc/themes/opt-light-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-light-theme.css"
-      - cp etc/themes/opt-dark-theme.css "{{.SITE_DIR}}/assets/css/theme-opt-dark-theme.css"
-      - mkdir -p "{{.SITE_DIR}}/static/assets/logo"
-      - cp data/static/assets/logo/OPT_NC_2.png "{{.SITE_DIR}}/static/assets/logo/OPT_NC_2.png"
-      - mkdir -p "{{.SITE_DIR}}/layouts/partials"
-      - cp "{{.HUGO_CONTENT_FOOTER_PARTIAL}}" "{{.SITE_DIR}}/layouts/partials/content-footer.html"
-      - cp -R "{{.HUGO_LAYOUTS_DIR}}/." "{{.SITE_DIR}}/layouts/."
+      - mkdir -p "site/assets/css"
+      - cp etc/themes/opt-light-theme.css "site/assets/css/theme-opt-light-theme.css"
+      - cp etc/themes/opt-dark-theme.css "site/assets/css/theme-opt-dark-theme.css"
+      - mkdir -p "site/static/assets/logo"
+      - cp data/static/assets/logo/OPT_NC_2.png "site/static/assets/logo/OPT_NC_2.png"
+      - mkdir -p "site/layouts/partials"
+      - cp "{{.HUGO_CONTENT_FOOTER_PARTIAL}}" "site/layouts/partials/content-footer.html"
+      - cp -R "{{.HUGO_LAYOUTS_DIR}}/." "site/layouts/."
 
-      - cp "{{.HUGO_CONFIG_FILE}}" "{{.SITE_DIR}}/hugo.toml"
+      - cp "{{.HUGO_CONFIG_FILE}}" "site/hugo.toml"
       - |
         HUGO_BASE_URL="${HUGO_BASE_URL:-http://localhost:1313/}"
         HUGO_BASE_URL="${HUGO_BASE_URL%/}/"
-        printf 'baseURL = "%s"\n\n[params]\nlogo = { src = "%sassets/logo/OPT_NC_2.png" }\nimages = ["%sassets/logo/OPT_NC_2.png"]\n' "$HUGO_BASE_URL" "$HUGO_BASE_URL" "$HUGO_BASE_URL" > "{{.SITE_DIR}}/hugo.dynamic.toml"
-        hugo -s "{{.SITE_DIR}}" --config hugo.toml,hugo.dynamic.toml --minify
-      - rm -rf "{{.SITE_DIR}}/hugo.dynamic.toml"
+        printf 'baseURL = "%s"\nenableGitInfo = true\n\n[params]\nlogo = { src = "%sassets/logo/OPT_NC_2.png" }\nimages = ["%sassets/logo/OPT_NC_2.png"]\n' "$HUGO_BASE_URL" "$HUGO_BASE_URL" "$HUGO_BASE_URL" > "site/hugo.dynamic.toml"
+        hugo -s site --config hugo.toml,hugo.dynamic.toml --minify
+      - rm -rf "site/hugo.dynamic.toml"
       
-      - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans {{.SITE_DIR}}/public.\033[0m\n"
+      - cmd: printf "\033[32mtask [site] Site Hugo généré avec succès dans site/public.\033[0m\n"
     silent: true
 
   install-uv:
