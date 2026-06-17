@@ -163,8 +163,12 @@ tasks:
       - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir site
       - |
         mkdir -p "site/data"
-        GIT_HASH="$(git rev-parse --short HEAD 2>/dev/null || printf dev)"
-        printf '{\n  "hash": "%s"\n}\n' "$GIT_HASH" > "site/data/git_commit.json"
+        SITE_ENV="${SITE_ENV:-local}"
+        RELEASE_VERSION="${RELEASE_TAG:-$(git describe --tags --abbrev=0 2>/dev/null || printf 0.0.1)}"
+        if [ "$SITE_ENV" = "local" ]; then
+          RELEASE_VERSION="${RELEASE_VERSION}-dev"
+        fi
+        printf '{\n  "tag": "%s",\n  "environment": "%s"\n}\n' "$RELEASE_VERSION" "$SITE_ENV" > "site/data/release_version.json"
       
       - mkdir -p "site/assets/css"
       - cp etc/themes/opt-light-theme.css "site/assets/css/theme-opt-light-theme.css"
