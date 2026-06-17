@@ -12,6 +12,14 @@
 {{- end }}
 <h1 id="{{ $termTitle | plainify | anchorize }}">Mot-clé : {{ $termTitle }}</h1>
 
+<p class="taxonomy-intro">
+  Cette page liste les métiers associés au mot-clé <strong>{{ $termTitle }}</strong>. Sélectionnez une fiche pour consulter le détail du métier et ses compétences.
+</p>
+
+<p class="taxonomy-backlink">
+  <a href="{{ "/tags/" | relURL }}"><i class="fa-fw fas fa-arrow-left"></i> Retour aux mots-clés</a>
+</p>
+
 {{- $pages := .Pages }}
 {{- if not $pages }}
   {{- $pages = .Data.Pages }}
@@ -51,6 +59,10 @@
 {{- $title := partial "title.gotmpl" (dict "page" .) }}
 <h1 id="{{ $title | plainify | anchorize }}">{{ $title }}</h1>
 
+<p class="taxonomy-intro">
+  Cette page permet d'explorer les métiers à partir de mots-clés. Pour l'instant, les mots-clés correspondent aux familles métiers ; d'autres mots-clés seront ajoutés progressivement pour faciliter la recherche par domaine, activité ou compétence.
+</p>
+
 {{- $terms := partialCached "_relearn/pagesTaxonomy.gotmpl" . .Path }}
 {{- if $terms }}
 <div class="familles-family-list taxonomy-result-list">
@@ -74,7 +86,7 @@
         <span><i class="fa-fw fas fa-tags"></i> {{ $count }} métiers</span>
       </div>
     </div>
-    <span class="metier-family-card-action">Voir le mot-clé <i class="fa-fw fas fa-arrow-right"></i></span>
+    <span class="metier-family-card-action">Voir les métiers associés <i class="fa-fw fas fa-arrow-right"></i></span>
   </a>
     {{- end }}
   {{- end }}
