@@ -160,6 +160,8 @@ tasks:
       - git -C "site/themes/hugo-theme-relearn" checkout FETCH_HEAD
       - rm -rf "site/themes/hugo-theme-relearn/.git"
 
+      # Les tags Hugo sont désactivés pour l'instant dans src/generate-md.py.
+      # Le "--tags" plus bas sert uniquement à récupérer le tag de release Git.
       - uv run "{{.PY_GENERATE_MD}}" --duckdb "{{.DUCKDB_FILE}}" --site-dir site
       - |
         mkdir -p "site/data"
