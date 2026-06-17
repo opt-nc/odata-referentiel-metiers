@@ -47,6 +47,7 @@ jobs:
       - name: Generate Hugo site
         env:
           HUGO_BASE_URL: ${{ steps.pages.outputs.base_url }}
+          SITE_ENV: github-pages
         run: task site
 
       - name: Deploy to GitHub Pages
