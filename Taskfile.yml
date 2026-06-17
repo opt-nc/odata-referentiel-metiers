@@ -60,7 +60,7 @@ tasks:
       - mkdir -p dist
       - mkdir -p data/output
       - duckdb "{{.DUCKDB_FILE}}" < "{{.DUCK_SQL_FILE}}"
-      - mkdir -p data/output/sql"
+      - mkdir -p data/output/sql
       - mv "{{.LOAD_SQL_SOURCE_FILE}}" "{{.LOAD_SQL_FILE}}"
       - mv "{{.SCHEMA_SQL_SOURCE_FILE}}" "{{.SCHEMA_SQL_FILE}}"
       - cmd: printf "\033[32mtask [duckdb] Base de données DuckDB initialisée avec succès.\033[0m\n"
