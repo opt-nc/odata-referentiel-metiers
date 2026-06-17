@@ -10,6 +10,7 @@ themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme',
 logo = { src = 'http://localhost:1313/assets/logo/OPT_NC_2.png' }
 images = ["http://localhost:1313/assets/logo/OPT_NC_2.png"]
 disableShortcutsTitle = true
+disableExplicitIndexURLs = true
 
 [params.author]
 name = "OPT - NC"

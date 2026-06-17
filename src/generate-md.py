@@ -483,7 +483,7 @@ keywords = {toml_list(metier_keywords)}
 <span class="a11y-only">Code métier : {code_metier}</span>
 
 <p class="taxonomy-backlink">
-  <a href="/familles-metiers/{famille_id}/"><i class="fa-fw fas fa-arrow-left"></i> Retour à la famille {libelle_famille.upper()}</a>
+  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour à la famille {libelle_famille.upper()}</a>
 </p>
 
 """
@@ -550,7 +550,7 @@ alwaysopen = false
 
 """)
             f.write("""<p class="taxonomy-backlink">
-  <a href="/familles-metiers/"><i class="fa-fw fas fa-arrow-left"></i> Retour aux familles métiers</a>
+  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour aux familles métiers</a>
 </p>
 
 """)
