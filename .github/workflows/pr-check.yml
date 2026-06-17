@@ -66,10 +66,14 @@ jobs:
       - name: Generate documentation
         run: |
           task docs
+      
+      - id: pages
+        name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
 
       - name: Generate Hugo site
         env:
-          HUGO_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          HUGO_BASE_URL: ${{ steps.pages.outputs.base_url }}
         run: task site
       
           
