@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -53,13 +53,6 @@ jobs:
           HUGO_BASE_URL: ${{ steps.pages.outputs.base_url }}
           SITE_ENV: github-pages
         run: task site
-
-      - name: Push site to gh-pages branch
-        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: site/public
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
