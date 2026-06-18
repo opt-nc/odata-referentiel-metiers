@@ -207,6 +207,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // Correspondance entre les familles métiers et leurs classes CSS de couleur.
   const familyTags = {{SEARCH_FAMILY_DATA}};
 
+  const disableSearchHighlighting = function () {
+    document.querySelectorAll(".highlightable").forEach(function (element) {
+      element.classList.remove("highlightable");
+    });
+    document.querySelectorAll("mark.search").forEach(function (mark) {
+      mark.replaceWith(document.createTextNode(mark.textContent));
+    });
+  };
+
   // On le retire pour garder des résultats plus propres.
   const cleanSearchResultTitles = function () {
     document.querySelectorAll("#R-searchresults .title").forEach(function (title) {
@@ -450,6 +459,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   cleanSearchResultTitles();
+  disableSearchHighlighting();
   normalizeAutocompleteSuggestions();
   colorSearchResultCards();
   normalizeFamilyMenu();
@@ -457,8 +467,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Relearn peut encore modifier le menu après le chargement complet.
   window.addEventListener("load", function () {
+    disableSearchHighlighting();
     normalizeFamilyMenu();
     normalizeAutocompleteSuggestions();
+    setTimeout(disableSearchHighlighting, 0);
+    setTimeout(disableSearchHighlighting, 150);
     setTimeout(normalizeFamilyMenu, 0);
     setTimeout(normalizeFamilyMenu, 150);
     setTimeout(normalizeAutocompleteSuggestions, 0);
@@ -490,5 +503,12 @@ document.addEventListener("DOMContentLoaded", function () {
       subtree: true
     });
   }
+
+  new MutationObserver(function () {
+    disableSearchHighlighting();
+  }).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 });
 </script>
