@@ -450,21 +450,19 @@ def write_metier(famille_dir: str, conn: duckdb.DuckDBPyConnection, index_metier
     metier_keywords = [code_metier, nom_metier, libelle_famille.upper()]
 
     content = f"""+++
-	title = {toml_string(f"{code_metier} - {nom_metier}")}
-	weight = {index_metier}
-	collapsibleMenu = true
-	# TODO: Tags Hugo désactivés pour l'instant.
-	# Pour réactiver la page /tags/, remettre :
-	# tags = {toml_list([libelle_famille.upper()])}
-	keywords = {toml_list(metier_keywords)}
+title = {toml_string(f"{code_metier} - {nom_metier}")}
+weight = {index_metier}
+collapsibleMenu = true
+# TODO: Tags Hugo désactivés pour l'instant.
+# Pour réactiver la page /tags/, remettre :
+# tags = {toml_list([libelle_famille.upper()])}
+keywords = {toml_list(metier_keywords)}
+backlinkHref = "../"
+backlinkTitle = {toml_string(f"Retour à la famille {libelle_famille.upper()}")}
 
 +++
 
 <span class="a11y-only">Code métier : {code_metier}</span>
-
-<p class="taxonomy-backlink">
-  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour à la famille {libelle_famille.upper()}</a>
-</p>
 
 """
 
@@ -524,13 +522,10 @@ title = {toml_string(libelle_famille.upper())}
 weight = {index_famille}
 collapsibleMenu = true
 alwaysopen = false
+backlinkHref = "../"
+backlinkTitle = "Retour aux familles métiers"
 
 +++
-
-""")
-            f.write("""<p class="taxonomy-backlink">
-  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour aux familles métiers</a>
-</p>
 
 """)
             f.write(metiers_famille_cards(metiers, famille_class, libelle_famille))
