@@ -1,0 +1,99 @@
+{{- if eq .Kind "term" }}
+<article>
+  <header class="headline">
+  </header>
+
+{{- $termTitle := .Title }}
+{{- $tagClass := "blue" }}
+{{- with where hugo.Data.family_tags.tags "title" $termTitle }}
+  {{- with index . 0 }}
+    {{- $tagClass = .class }}
+  {{- end }}
+{{- end }}
+<h1 id="{{ $termTitle | plainify | anchorize }}">Mot-clé : {{ $termTitle }}</h1>
+
+<p class="taxonomy-intro">
+  Cette page liste les métiers associés au mot-clé <strong>{{ $termTitle }}</strong>. Sélectionnez une fiche pour consulter le détail du métier et ses compétences.
+</p>
+
+<p class="taxonomy-backlink">
+  <a href="../"><i class="fa-fw fas fa-arrow-left"></i> Retour aux mots-clés</a>
+</p>
+
+{{- $pages := .Pages }}
+{{- if not $pages }}
+  {{- $pages = .Data.Pages }}
+{{- end }}
+{{- if $pages }}
+<div class="metiers-family-list taxonomy-result-list" style="--family-card-color: var(--family-color-{{ $tagClass }}, var(--SECONDARY-color));">
+  {{- range $pages }}
+    {{- $page := .Page }}
+    {{- $title := .LinkTitle | default $page.LinkTitle }}
+    {{- $hidden := or ($page.Params.hidden) (eq $page.Title "") }}
+    {{- if not $hidden }}
+      {{- $breadcrumb := trim (partial "breadcrumbs.html" (dict "page" $page "dirOnly" true) | plainify | htmlUnescape) "\n\r\t " }}
+  <a class="metier-family-card taxonomy-result-card" href="{{ $page.RelPermalink }}">
+    <div class="metier-family-card-main">
+      <p class="metier-family-card-title">{{ $title }}</p>
+      {{- with $breadcrumb }}
+      <div class="metier-family-card-meta">
+        <span>{{ . }}</span>
+      </div>
+      {{- end }}
+    </div>
+    <span class="metier-family-card-action">Voir la fiche <i class="fa-fw fas fa-arrow-right"></i></span>
+  </a>
+    {{- end }}
+  {{- end }}
+</div>
+{{- end }}
+
+  <footer class="footline">
+  </footer>
+</article>
+{{- else }}
+<article>
+  <header class="headline">
+  </header>
+
+{{- $title := partial "title.gotmpl" (dict "page" .) }}
+<h1 id="{{ $title | plainify | anchorize }}">{{ $title }}</h1>
+
+<p class="taxonomy-intro">
+  Cette page permet d'explorer les métiers à partir de mots-clés. Pour l'instant, les mots-clés correspondent aux familles métiers ; d'autres mots-clés seront ajoutés progressivement pour faciliter la recherche par domaine, activité ou compétence.
+</p>
+
+{{- $terms := partialCached "_relearn/pagesTaxonomy.gotmpl" . .Path }}
+{{- if $terms }}
+<div class="familles-family-list taxonomy-result-list">
+  {{- range $terms }}
+    {{- $page := .Page }}
+    {{- $title := .LinkTitle | default $page.LinkTitle }}
+    {{- $hidden := or ($page.Params.hidden) (eq $page.Title "") }}
+    {{- if not $hidden }}
+      {{- $count := len $page.Pages }}
+      {{- $tagTitle := $page.Title }}
+      {{- $tagClass := "blue" }}
+      {{- with where hugo.Data.family_tags.tags "title" $tagTitle }}
+        {{- with index . 0 }}
+          {{- $tagClass = .class }}
+        {{- end }}
+      {{- end }}
+  <a class="metier-family-card taxonomy-result-card" href="{{ $page.RelPermalink }}" style="--family-card-color: var(--family-color-{{ $tagClass }}, var(--SECONDARY-color));">
+    <div class="metier-family-card-main">
+      <p class="metier-family-card-title">{{ $title }}</p>
+      <div class="metier-family-card-meta">
+        <span><i class="fa-fw fas fa-tags"></i> {{ $count }} métiers</span>
+      </div>
+    </div>
+    <span class="metier-family-card-action">Voir les métiers associés <i class="fa-fw fas fa-arrow-right"></i></span>
+  </a>
+    {{- end }}
+  {{- end }}
+</div>
+{{- end }}
+
+  <footer class="footline">
+  </footer>
+</article>
+{{- end }}

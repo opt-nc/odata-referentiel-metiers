@@ -1,0 +1,35 @@
+theme = 'hugo-theme-relearn'
+
+baseURL = 'http://localhost:1313/'
+defaultContentLanguage = 'fr'
+locale = 'fr-fr'
+title = 'Référentiel Métiers'
+
+[params]
+themeVariant = [{ identifier = 'auto', name = 'Auto', auto = ['opt-light-theme', 'opt-dark-theme'] }, 'opt-light-theme', 'opt-dark-theme']
+logo = { src = 'http://localhost:1313/assets/logo/OPT_NC_2.png' }
+images = ["http://localhost:1313/assets/logo/OPT_NC_2.png"]
+disableShortcutsTitle = true
+disableExplicitIndexURLs = true
+
+[params.author]
+name = "OPT - NC"
+
+[params.social]
+facebook = 'https://www.facebook.com/OPT.NC'
+twitter = 'https://twitter.com/opt_nc'
+instagram = 'https://www.instagram.com/opt_nc/'
+youtube = 'https://www.youtube.com/user/optnc'
+linkedin = 'https://www.linkedin.com/company/opt-new-caledonia'
+tiktok = 'https://www.tiktok.com/discover/team-opt-nc'
+
+[markup.goldmark.renderer]
+unsafe = true
+
+# TODO: Tags Hugo désactivés pour l'instant.
+# Pour réactiver l'entrée de menu /tags/, décommenter ce bloc.
+# [[menu.shortcuts]]
+# pre = '<i class="fa-fw fas fa-tags"></i> '
+# name = 'Mots-clés'
+# pageRef = '/tags'
+# weight = 10

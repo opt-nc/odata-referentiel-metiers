@@ -1,0 +1,6 @@
+{{- with .Params.backlinkTitle }}
+<p class="taxonomy-backlink">
+  <a href="{{ $.Params.backlinkHref | default "../" }}"><i class="fa-fw fas fa-arrow-left"></i> {{ . }}</a>
+</p>
+{{- end }}
+{{- partial "tags.html" . }}
