@@ -1,0 +1,514 @@
+<link href="{{ "css/family-colors.css" | relURL }}" rel="stylesheet">
+<style>
+:root {
+  --LOGO-IMAGE-width: 3rem;
+}
+
+#R-logo.R-default {
+  justify-content: flex-start;
+  padding-inline: 1rem;
+}
+
+#R-logo.R-default .logo-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.metiers-family-list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.familles-family-list {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  margin: 2rem 0;
+}
+
+.metier-family-card {
+  align-items: center;
+  background: var(--CARD-BG-color);
+  border: 1px solid var(--CARD-BORDER-color);
+  border-left: 5px solid var(--family-card-color, var(--MAIN-LINK-color));
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  color: var(--MAIN-TEXT-color);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 1.35rem 1.5rem;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.metier-family-card:hover {
+  background: var(--CODE-BG-color);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  color: var(--MAIN-TEXT-color);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.metier-family-card-title {
+  color: var(--MAIN-TITLES-color);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.65rem;
+}
+
+.metier-family-card-meta {
+  align-items: center;
+  color: var(--MAIN-TEXT-color);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  gap: 0.75rem;
+  opacity: 0.82;
+}
+
+.metier-family-card-code {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.metier-family-card-action {
+  align-items: center;
+  color: var(--MAIN-LINK-HOVER-color);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.taxonomy-intro {
+  color: var(--MAIN-TEXT-color);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: -0.5rem auto 2rem;
+  max-width: 44rem;
+  text-align: center;
+}
+
+.headline .taxonomy-backlink {
+  margin-top: 1em;
+}
+
+.taxonomy-backlink a {
+  align-items: center;
+  color: var(--MAIN-LINK-color);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.taxonomy-backlink a:hover {
+  color: var(--MAIN-LINK-HOVER-color);
+  text-decoration: none;
+}
+
+@media only all and (max-width: 47.999rem) {
+  .metier-family-card {
+    grid-template-columns: 1fr;
+  }
+
+  .metier-family-card-action {
+    justify-content: flex-start;
+  }
+}
+
+/* La recherche rapide utilise auto-complete, hors #R-searchresults. */
+.autocomplete-suggestions {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion,
+.autocomplete-suggestions .autocomplete-suggestion .title,
+.autocomplete-suggestions .autocomplete-suggestion .link,
+.autocomplete-suggestions .autocomplete-suggestion .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion .context {
+  color: #111827 !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion b {
+  color: #005A9C !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion.selected,
+.autocomplete-suggestions .autocomplete-suggestion:hover,
+.autocomplete-suggestions .autocomplete-suggestion:focus,
+.autocomplete-suggestions .autocomplete-suggestion:active {
+  background: #e5e7eb !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion.selected,
+.autocomplete-suggestions .autocomplete-suggestion.selected .title,
+.autocomplete-suggestions .autocomplete-suggestion.selected .link,
+.autocomplete-suggestions .autocomplete-suggestion.selected .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion.selected .context,
+.autocomplete-suggestions .autocomplete-suggestion:hover,
+.autocomplete-suggestions .autocomplete-suggestion:hover .title,
+.autocomplete-suggestions .autocomplete-suggestion:hover .link,
+.autocomplete-suggestions .autocomplete-suggestion:hover .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion:hover .context,
+.autocomplete-suggestions .autocomplete-suggestion:focus,
+.autocomplete-suggestions .autocomplete-suggestion:focus .title,
+.autocomplete-suggestions .autocomplete-suggestion:focus .link,
+.autocomplete-suggestions .autocomplete-suggestion:focus .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion:focus .context,
+.autocomplete-suggestions .autocomplete-suggestion:active,
+.autocomplete-suggestions .autocomplete-suggestion:active .title,
+.autocomplete-suggestions .autocomplete-suggestion:active .link,
+.autocomplete-suggestions .autocomplete-suggestion:active .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion:active .context {
+  color: #111827 !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion.selected b,
+.autocomplete-suggestions .autocomplete-suggestion:hover b,
+.autocomplete-suggestions .autocomplete-suggestion:focus b,
+.autocomplete-suggestions .autocomplete-suggestion:active b {
+  color: #005A9C !important;
+}
+
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions,
+[data-r-theme-variant="auto"] .autocomplete-suggestions {
+  background: #111827 !important;
+  border-color: #243147 !important;
+}
+
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .title,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .link,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .breadcrumbs,
+[data-r-theme-variant="opt-dark-theme"] .autocomplete-suggestions .autocomplete-suggestion .context {
+  color: #f8fafc !important;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion .title,
+.autocomplete-suggestions .autocomplete-suggestion .link,
+.autocomplete-suggestions .autocomplete-suggestion .breadcrumbs,
+.autocomplete-suggestions .autocomplete-suggestion .context {
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+{{SEARCH_FAMILY_RULES}}
+
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Correspondance entre les familles métiers et leurs classes CSS de couleur.
+  const familyTags = {{SEARCH_FAMILY_DATA}};
+
+  const disableSearchHighlighting = function () {
+    document.querySelectorAll(".highlightable").forEach(function (element) {
+      element.classList.remove("highlightable");
+    });
+    document.querySelectorAll("mark.search").forEach(function (mark) {
+      mark.replaceWith(document.createTextNode(mark.textContent));
+    });
+  };
+
+  // On le retire pour garder des résultats plus propres.
+  const cleanSearchResultTitles = function () {
+    document.querySelectorAll("#R-searchresults .title").forEach(function (title) {
+      const firstNode = title.firstChild;
+      if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
+        firstNode.textContent = firstNode.textContent.replace(/^\s*»\s*/, "");
+      }
+      title.style.display = title.textContent.trim() ? "" : "none";
+    });
+  };
+
+  const getAutocompletePalette = function () {
+    const variant = document.documentElement.dataset.rThemeVariant;
+    const isDark = variant === "opt-dark-theme" || (
+      variant === "auto" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
+
+    return isDark
+      ? {
+          panelBg: "#111827",
+          panelBorder: "#243147",
+          suggestionBg: "#111827",
+          hoverBg: "#1f2937",
+          title: "#f8fafc",
+          detail: "#cbd5e1",
+          accent: "#93c5fd"
+        }
+      : {
+          panelBg: "#ffffff",
+          panelBorder: "#d1d5db",
+          suggestionBg: "#ffffff",
+          hoverBg: "#e5e7eb",
+          title: "#111827",
+          detail: "#4b5563",
+          accent: "#005A9C"
+        };
+  };
+
+  // Le dropdown de la recherche rapide est reconstruit par Relearn à chaque frappe.
+  // On force donc sa palette directement sur les éléments générés.
+  const normalizeAutocompleteSuggestions = function () {
+    const palette = getAutocompletePalette();
+
+    document.querySelectorAll(".autocomplete-suggestions").forEach(function (panel) {
+      panel.style.setProperty("background", palette.panelBg, "important");
+      panel.style.setProperty("border-color", palette.panelBorder, "important");
+      panel.style.setProperty("color", palette.title, "important");
+
+      panel.querySelectorAll(".autocomplete-suggestion").forEach(function (suggestion) {
+        suggestion.style.setProperty("background", palette.suggestionBg, "important");
+        suggestion.style.setProperty("color", palette.title, "important");
+        suggestion.style.setProperty("white-space", "normal", "important");
+
+        const title = suggestion.querySelector(".title");
+        if (title) {
+          const firstNode = title.firstChild;
+          if (firstNode && firstNode.nodeType === Node.TEXT_NODE) {
+            firstNode.textContent = firstNode.textContent.replace(/^\s*»\s*/, "");
+          }
+          title.style.setProperty("color", palette.title, "important");
+          title.style.setProperty("display", title.textContent.trim() ? "block" : "none", "important");
+        }
+
+        suggestion.querySelectorAll(".link").forEach(function (link) {
+          link.style.setProperty("color", palette.title, "important");
+          link.style.setProperty("font-weight", "600", "important");
+          link.style.setProperty("display", "block", "important");
+          link.style.setProperty("overflow", "hidden", "important");
+          link.style.setProperty("text-overflow", "ellipsis", "important");
+          link.style.setProperty("white-space", "nowrap", "important");
+        });
+
+        suggestion.querySelectorAll(".breadcrumbs, .context").forEach(function (detail) {
+          detail.style.setProperty("color", palette.detail, "important");
+          detail.style.setProperty("overflow", "hidden", "important");
+          detail.style.setProperty("text-overflow", "ellipsis", "important");
+          detail.style.setProperty("white-space", "nowrap", "important");
+        });
+
+        suggestion.querySelectorAll("b").forEach(function (highlight) {
+          highlight.style.setProperty("color", palette.accent, "important");
+        });
+
+        suggestion.addEventListener("mouseenter", function () {
+          suggestion.style.setProperty("background", palette.hoverBg, "important");
+        });
+        suggestion.addEventListener("mouseleave", function () {
+          suggestion.style.setProperty("background", palette.suggestionBg, "important");
+        });
+      });
+    });
+  };
+
+  // Applique au trait gauche des résultats la couleur de la famille métier.
+  // Le CSS :has() le fait déjà quand le lien contient la famille, et ce bloc sert de sécurité quand le résultat est construit dynamiquement par la recherche.
+  const colorSearchResultCards = function () {
+    document.querySelectorAll("#R-searchresults > *").forEach(function (card) {
+      const text = card.textContent.toUpperCase();
+      const family = familyTags.find(function (item) {
+        return text.includes(item.title);
+      });
+
+      if (family) {
+        card.style.setProperty(
+          "border-left-color",
+          "var(--family-color-" + family.className + ")",
+          "important"
+        );
+      }
+    });
+  };
+
+  // Récupère uniquement les vraies familles métiers.
+  // Le parent /familles-metiers/ est volontairement exclu pour ne pas casser son dépliage.
+  const getFamilyMenuInputs = function () {
+    return Array.from(
+      document.querySelectorAll('#R-sidebar li[data-nav-id^="/familles-metiers/"] > input[type="checkbox"]')
+    ).filter(function (input) {
+      const item = input.closest("li");
+      if (!item) {
+        return false;
+      }
+
+      return item.dataset.navId.split("/").filter(Boolean).length === 3;
+    });
+  };
+
+  // Ferme les familles métiers qui ne correspondent pas à la page courante. Relearn peut garder des cases cochées côté navigateur, donc on force l'état voulu.
+  const closeInactiveFamilyMenus = function () {
+    getFamilyMenuInputs()
+      .forEach(function (input) {
+        if (input.closest("li").classList.contains("parent")) {
+          return;
+        }
+        input.checked = false;
+      });
+  };
+
+  // Quand une famille est ouverte manuellement, les autres familles non actives se ferment.
+  const enableFamilyMenuAccordion = function () {
+    getFamilyMenuInputs()
+      .forEach(function (input) {
+        if (input.dataset.familyAccordionReady === "true") {
+          return;
+        }
+        input.dataset.familyAccordionReady = "true";
+
+        input.addEventListener("change", function () {
+          if (!input.checked) {
+            return;
+          }
+
+          getFamilyMenuInputs()
+            .forEach(function (otherInput) {
+              if (otherInput !== input && !otherInput.closest("li").classList.contains("parent")) {
+                otherInput.checked = false;
+              }
+            });
+        });
+      });
+  };
+
+  // Regroupe la normalisation du menu pour pouvoir la rejouer après les scripts Relearn.
+  const normalizeFamilyMenu = function () {
+    closeInactiveFamilyMenus();
+    enableFamilyMenuAccordion();
+  };
+
+  // Lunr ne retrouve pas toujours les codes métiers alphanumériques.
+  // On complète donc la recherche native avec un match direct dans l'index Hugo.
+  const enableMetierCodeSearchFallback = function () {
+    if (
+      !window.relearn ||
+      !window.relearn.search ||
+      !window.relearn.search.adapter ||
+      window.relearn.search.adapter.metierCodeFallbackReady
+    ) {
+      return false;
+    }
+
+    const originalSearch = window.relearn.search.adapter.search.bind(window.relearn.search.adapter);
+
+    window.relearn.search.adapter.search = async function (term) {
+      const results = await originalSearch(term);
+      const searchText = term.trim().toUpperCase();
+
+      // Le fallback est limité aux recherches courtes contenant au moins un chiffre.
+      if (!/^[A-Z0-9]{1,5}$/.test(searchText) || !/[0-9]/.test(searchText) || !Array.isArray(window.relearn_searchindex)) {
+        return results;
+      }
+
+      const toSearchResult = function (page, index) {
+        return {
+          index: String(index),
+          matches: [searchText],
+          page: page
+        };
+      };
+
+      // On privilégie le titre pour remonter les fiches métiers avant les pages parentes.
+      const titleResults = window.relearn_searchindex.flatMap(function (page, index) {
+        return page.title.toUpperCase().includes(searchText)
+          ? [toSearchResult(page, index)]
+          : [];
+      });
+      const fallbackResults = (
+        titleResults.length
+          ? titleResults
+          : window.relearn_searchindex.flatMap(function (page, index) {
+              return page.content.toUpperCase().includes(searchText)
+                ? [toSearchResult(page, index)]
+                : [];
+            })
+      ).sort(function (left, right) {
+        return left.page.title.localeCompare(right.page.title, "fr");
+      });
+
+      // On évite les doublons avec les résultats déjà trouvés par Lunr.
+      const existingUris = new Set(results.map(function (item) {
+        return item.page && item.page.uri;
+      }));
+
+      return fallbackResults
+        .filter(function (item) {
+          return !existingUris.has(item.page.uri);
+        })
+        .concat(results);
+    };
+
+    window.relearn.search.adapter.metierCodeFallbackReady = true;
+    return true;
+  };
+
+  // Relearn charge son moteur de recherche en différé.
+  const waitForSearchAdapter = function () {
+    if (!enableMetierCodeSearchFallback()) {
+      setTimeout(waitForSearchAdapter, 50);
+    }
+  };
+
+  cleanSearchResultTitles();
+  disableSearchHighlighting();
+  normalizeAutocompleteSuggestions();
+  colorSearchResultCards();
+  normalizeFamilyMenu();
+  waitForSearchAdapter();
+
+  // Relearn peut encore modifier le menu après le chargement complet.
+  window.addEventListener("load", function () {
+    disableSearchHighlighting();
+    normalizeFamilyMenu();
+    normalizeAutocompleteSuggestions();
+    setTimeout(disableSearchHighlighting, 0);
+    setTimeout(disableSearchHighlighting, 150);
+    setTimeout(normalizeFamilyMenu, 0);
+    setTimeout(normalizeFamilyMenu, 150);
+    setTimeout(normalizeAutocompleteSuggestions, 0);
+    setTimeout(normalizeAutocompleteSuggestions, 150);
+  });
+
+  document.addEventListener("themeVariantLoaded", function () {
+    normalizeAutocompleteSuggestions();
+  });
+
+  const searchResults = document.querySelector("#R-searchresults");
+  if (searchResults) {
+    new MutationObserver(function () {
+      cleanSearchResultTitles();
+      colorSearchResultCards();
+    }).observe(searchResults, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  const headerWrapper = document.querySelector("#R-header-wrapper");
+  if (headerWrapper) {
+    new MutationObserver(function () {
+      cleanSearchResultTitles();
+      normalizeAutocompleteSuggestions();
+    }).observe(headerWrapper, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  new MutationObserver(function () {
+    disableSearchHighlighting();
+  }).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+});
+</script>

@@ -1,4 +1,4 @@
-code_metier,neobrain_metier_id,metier_collaborateur,famille_metier_id,statut_metier_id,metier_actif
+code_metier,neobrain_metier_id,nom_metier,famille_metier_id,statut_metier_id,metier_actif
 OP001,11041851,Chargé de soutien des réseaux de vente,vente_relation_client,PUBLIE,true
 OP002,11041852,Chargé d'affaires,vente_relation_client,PUBLIE,true
 OP003,11041853,Conseiller clientèle,vente_relation_client,PUBLIE,true

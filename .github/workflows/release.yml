@@ -220,6 +220,7 @@ jobs:
           git add data/output/csv/referentiel_competence.csv
           git add data/output/csv/statut_metier.csv
           git add data/output/csv/famille_metier_couleur.csv
+          git add data/output/csv/metier_verbatim.csv
 
           git add data/output/sql/load.sql
           git add data/output/sql/schema.sql

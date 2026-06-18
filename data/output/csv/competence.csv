@@ -1,410 +1,410 @@
-code_competence,neobrain_competence_id,groupe_competence_id,referentiel_competence_id
-COMP1,21967172,savoir,opt_nc_2025
-COMP100,21967271,savoir,opt_nc_2025
-COMP101,21967272,savoir,opt_nc_2025
-COMP103,21967274,savoir,opt_nc_2025
-COMP104,21967275,savoir,opt_nc_2025
-COMP105,21967276,savoir,opt_nc_2025
-COMP106,21967277,savoir,opt_nc_2025
-COMP107,21967278,savoir,opt_nc_2025
-COMP108,21967279,savoir,opt_nc_2025
-COMP11,21967182,savoir,opt_nc_2025
-COMP110,21967281,savoir,opt_nc_2025
-COMP111,21967282,savoir,opt_nc_2025
-COMP112,21967283,savoir,opt_nc_2025
-COMP113,21967284,savoir,opt_nc_2025
-COMP114,21967285,savoir,opt_nc_2025
-COMP115,21967286,savoir,opt_nc_2025
-COMP116,21967287,savoir,opt_nc_2025
-COMP117,21967288,savoir,opt_nc_2025
-COMP12,21967183,savoir,opt_nc_2025
-COMP121,21967292,savoir,opt_nc_2025
-COMP122,21967293,savoir,opt_nc_2025
-COMP127,21967298,savoir,opt_nc_2025
-COMP129,21967300,savoir,opt_nc_2025
-COMP130,21967301,savoir,opt_nc_2025
-COMP131,21967302,savoir,opt_nc_2025
-COMP136,21967307,savoir,opt_nc_2025
-COMP137,21967308,savoir,opt_nc_2025
-COMP14,21967185,savoir,opt_nc_2025
-COMP141,21967312,savoir,opt_nc_2025
-COMP143,21967314,savoir,opt_nc_2025
-COMP144,21967315,savoir,opt_nc_2025
-COMP145,21967316,savoir,opt_nc_2025
-COMP147,21967318,savoir,opt_nc_2025
-COMP149,21967320,savoir,opt_nc_2025
-COMP15,21967186,savoir,opt_nc_2025
-COMP151,21967322,savoir,opt_nc_2025
-COMP153,21967324,savoir,opt_nc_2025
-COMP155,21967326,savoir,opt_nc_2025
-COMP156,21967327,savoir,opt_nc_2025
-COMP157,21967328,savoir,opt_nc_2025
-COMP16,21967187,savoir,opt_nc_2025
-COMP17,21967188,savoir,opt_nc_2025
-COMP171,21967342,savoir,opt_nc_2025
-COMP172,21967343,savoir,opt_nc_2025
-COMP173,21967344,savoir,opt_nc_2025
-COMP174,21967345,savoir,opt_nc_2025
-COMP176,21967347,savoir,opt_nc_2025
-COMP179,21967350,savoir,opt_nc_2025
-COMP18,21967189,savoir,opt_nc_2025
-COMP183,21967354,savoir,opt_nc_2025
-COMP184,21967355,savoir,opt_nc_2025
-COMP185,21967356,savoir,opt_nc_2025
-COMP186,21967357,savoir,opt_nc_2025
-COMP187,21967358,savoir,opt_nc_2025
-COMP188,21967359,savoir,opt_nc_2025
-COMP190,21967361,savoir,opt_nc_2025
-COMP191,21967362,savoir,opt_nc_2025
-COMP194,21967365,savoir,opt_nc_2025
-COMP195,21967366,savoir,opt_nc_2025
-COMP196,21967367,savoir,opt_nc_2025
-COMP20,21967191,savoir,opt_nc_2025
-COMP200,21967371,savoir,opt_nc_2025
-COMP206,21967377,savoir,opt_nc_2025
-COMP208,21967379,savoir,opt_nc_2025
-COMP209,21967380,savoir,opt_nc_2025
-COMP210,21967381,savoir,opt_nc_2025
-COMP213,21967384,savoir,opt_nc_2025
-COMP214,21967385,savoir,opt_nc_2025
-COMP215,21967386,savoir,opt_nc_2025
-COMP217,21967388,savoir,opt_nc_2025
-COMP219,21967390,savoir,opt_nc_2025
-COMP22,21967193,savoir,opt_nc_2025
-COMP226,21967397,savoir,opt_nc_2025
-COMP228,21967399,savoir,opt_nc_2025
-COMP230,21967401,savoir,opt_nc_2025
-COMP231,21967402,savoir,opt_nc_2025
-COMP234,21967405,savoir,opt_nc_2025
-COMP235,21967406,savoir,opt_nc_2025
-COMP238,21967409,savoir,opt_nc_2025
-COMP239,21967410,savoir,opt_nc_2025
-COMP240,21967411,savoir,opt_nc_2025
-COMP247,21967418,savoir,opt_nc_2025
-COMP255,21967426,savoir,opt_nc_2025
-COMP256,21967427,savoir,opt_nc_2025
-COMP257,21967428,savoir,opt_nc_2025
-COMP258,21967429,savoir,opt_nc_2025
-COMP259,21967430,savoir,opt_nc_2025
-COMP26,21967197,savoir,opt_nc_2025
-COMP261,21967432,savoir,opt_nc_2025
-COMP262,21967433,savoir,opt_nc_2025
-COMP27,21967198,savoir,opt_nc_2025
-COMP271,21967442,savoir,opt_nc_2025
-COMP272,21967443,savoir,opt_nc_2025
-COMP273,21967444,savoir,opt_nc_2025
-COMP276,21967447,savoir,opt_nc_2025
-COMP28,21967199,savoir,opt_nc_2025
-COMP280,21967451,savoir,opt_nc_2025
-COMP281,21967452,savoir,opt_nc_2025
-COMP283,21967454,savoir,opt_nc_2025
-COMP284,21967455,savoir,opt_nc_2025
-COMP285,21967456,savoir,opt_nc_2025
-COMP286,21967457,savoir,opt_nc_2025
-COMP287,21967458,savoir,opt_nc_2025
-COMP288,21967459,savoir,opt_nc_2025
-COMP289,21967460,savoir,opt_nc_2025
-COMP29,21967200,savoir,opt_nc_2025
-COMP290,21967461,savoir,opt_nc_2025
-COMP291,21967462,savoir,opt_nc_2025
-COMP292,21967463,savoir,opt_nc_2025
-COMP293,21967464,savoir,opt_nc_2025
-COMP294,21967465,savoir,opt_nc_2025
-COMP3,21967174,savoir,opt_nc_2025
-COMP30,21967201,savoir,opt_nc_2025
-COMP304,21967475,savoir,opt_nc_2025
-COMP31,21967202,savoir,opt_nc_2025
-COMP310,21967481,savoir,opt_nc_2025
-COMP311,21967482,savoir,opt_nc_2025
-COMP312,21967483,savoir,opt_nc_2025
-COMP313,21967484,savoir,opt_nc_2025
-COMP316,21967487,savoir,opt_nc_2025
-COMP318,21967489,savoir,opt_nc_2025
-COMP32,21967203,savoir,opt_nc_2025
-COMP320,21967491,savoir,opt_nc_2025
-COMP321,21967492,savoir,opt_nc_2025
-COMP322,21967493,savoir,opt_nc_2025
-COMP328,21967499,savoir,opt_nc_2025
-COMP329,21967500,savoir,opt_nc_2025
-COMP330,21967501,savoir,opt_nc_2025
-COMP331,21967502,savoir,opt_nc_2025
-COMP332,21967503,savoir,opt_nc_2025
-COMP337,21967508,savoir,opt_nc_2025
-COMP34,21967205,savoir,opt_nc_2025
-COMP342,21967513,savoir,opt_nc_2025
-COMP343,21967514,savoir,opt_nc_2025
-COMP347,21967518,savoir,opt_nc_2025
-COMP350,21967521,savoir,opt_nc_2025
-COMP351,21967522,savoir,opt_nc_2025
-COMP352,21967523,savoir,opt_nc_2025
-COMP354,21967525,savoir,opt_nc_2025
-COMP355,21967526,savoir,opt_nc_2025
-COMP356,21967527,savoir,opt_nc_2025
-COMP357,21967528,savoir,opt_nc_2025
-COMP358,21967529,savoir,opt_nc_2025
-COMP359,21967530,savoir,opt_nc_2025
-COMP36,21967207,savoir,opt_nc_2025
-COMP360,21967531,savoir,opt_nc_2025
-COMP366,21967537,savoir,opt_nc_2025
-COMP367,21967538,savoir,opt_nc_2025
-COMP374,21967545,savoir,opt_nc_2025
-COMP375,21967546,savoir,opt_nc_2025
-COMP376,21967547,savoir,opt_nc_2025
-COMP377,21967548,savoir,opt_nc_2025
-COMP379,21967550,savoir,opt_nc_2025
-COMP380,21967551,savoir,opt_nc_2025
-COMP381,21967552,savoir,opt_nc_2025
-COMP382,21967553,savoir,opt_nc_2025
-COMP383,21967554,savoir,opt_nc_2025
-COMP384,21967555,savoir,opt_nc_2025
-COMP385,21967556,savoir,opt_nc_2025
-COMP386,21967557,savoir,opt_nc_2025
-COMP387,21967558,savoir,opt_nc_2025
-COMP388,21967559,savoir,opt_nc_2025
-COMP389,21967560,savoir,opt_nc_2025
-COMP39,21967210,savoir,opt_nc_2025
-COMP390,21967561,savoir,opt_nc_2025
-COMP391,21967562,savoir,opt_nc_2025
-COMP393,21967564,savoir,opt_nc_2025
-COMP395,21967566,savoir,opt_nc_2025
-COMP4,21967175,savoir,opt_nc_2025
-COMP40,21967211,savoir,opt_nc_2025
-COMP405,21967576,savoir,opt_nc_2025
-COMP406,21967577,savoir,opt_nc_2025
-COMP407,21967578,savoir,opt_nc_2025
-COMP408,21967579,savoir,opt_nc_2025
-COMP411,21967582,savoir,opt_nc_2025
-COMP414,21967585,savoir,opt_nc_2025
-COMP415,21967586,savoir,opt_nc_2025
-COMP420,21967591,savoir,opt_nc_2025
-COMP421,21967592,savoir,opt_nc_2025
-COMP422,21967593,savoir,opt_nc_2025
-COMP423,21967594,savoir,opt_nc_2025
-COMP424,21967595,savoir,opt_nc_2025
-COMP426,21967597,savoir,opt_nc_2025
-COMP428,21967599,savoir,opt_nc_2025
-COMP429,21967600,savoir,opt_nc_2025
-COMP43,21967214,savoir,opt_nc_2025
-COMP435,21967606,savoir,opt_nc_2025
-COMP437,21967608,savoir,opt_nc_2025
-COMP438,21967609,savoir,opt_nc_2025
-COMP44,21967215,savoir,opt_nc_2025
-COMP440,21967611,savoir,opt_nc_2025
-COMP441,21967612,savoir,opt_nc_2025
-COMP442,21967613,savoir,opt_nc_2025
-COMP443,21967614,savoir,opt_nc_2025
-COMP444,21967615,savoir,opt_nc_2025
-COMP445,21967616,savoir,opt_nc_2025
-COMP446,21967617,savoir,opt_nc_2025
-COMP447,21967618,savoir,opt_nc_2025
-COMP448,21967619,savoir,opt_nc_2025
-COMP449,21967620,savoir_faire,opt_nc_2025
-COMP450,21967621,savoir_faire,opt_nc_2025
-COMP451,21967622,savoir_faire,opt_nc_2025
-COMP452,21967623,savoir_faire,opt_nc_2025
-COMP453,21967624,savoir_faire,opt_nc_2025
-COMP454,21967625,savoir_faire,opt_nc_2025
-COMP455,21967626,savoir_faire,opt_nc_2025
-COMP456,21967627,savoir_faire,opt_nc_2025
-COMP457,21967628,savoir_faire,opt_nc_2025
-COMP458,21967629,savoir_faire,opt_nc_2025
-COMP459,21967630,savoir_faire,opt_nc_2025
-COMP460,21967631,savoir_faire,opt_nc_2025
-COMP461,21967632,savoir_faire,opt_nc_2025
-COMP462,21967633,savoir_faire,opt_nc_2025
-COMP463,21967634,savoir_faire,opt_nc_2025
-COMP464,21967635,savoir_faire,opt_nc_2025
-COMP465,21967636,savoir_faire,opt_nc_2025
-COMP466,21967637,savoir_faire,opt_nc_2025
-COMP467,21967638,savoir_faire,opt_nc_2025
-COMP468,21967639,savoir_faire,opt_nc_2025
-COMP469,21967640,savoir_faire,opt_nc_2025
-COMP47,21967218,savoir,opt_nc_2025
-COMP470,21967641,savoir_faire,opt_nc_2025
-COMP471,21967642,savoir_faire,opt_nc_2025
-COMP472,21967643,savoir_faire,opt_nc_2025
-COMP473,21967644,savoir_faire,opt_nc_2025
-COMP474,21967645,savoir_faire,opt_nc_2025
-COMP475,21967646,savoir_faire,opt_nc_2025
-COMP476,21967647,savoir_faire,opt_nc_2025
-COMP477,21967648,savoir_faire,opt_nc_2025
-COMP478,21967649,savoir_faire,opt_nc_2025
-COMP479,21967650,savoir_faire,opt_nc_2025
-COMP48,21967219,savoir,opt_nc_2025
-COMP480,21967651,savoir_faire,opt_nc_2025
-COMP481,21967652,savoir_faire,opt_nc_2025
-COMP482,21967653,savoir_faire,opt_nc_2025
-COMP483,21967654,savoir_faire,opt_nc_2025
-COMP484,21967655,savoir_faire,opt_nc_2025
-COMP485,21967656,savoir_faire,opt_nc_2025
-COMP486,21967657,savoir_faire,opt_nc_2025
-COMP487,21967658,savoir_faire,opt_nc_2025
-COMP488,21967659,savoir_faire,opt_nc_2025
-COMP489,21967660,savoir_faire,opt_nc_2025
-COMP490,21967661,savoir_faire,opt_nc_2025
-COMP491,21967662,savoir_faire,opt_nc_2025
-COMP492,21967663,savoir_faire,opt_nc_2025
-COMP493,21967664,savoir_faire,opt_nc_2025
-COMP494,21967665,savoir_faire,opt_nc_2025
-COMP495,21967666,savoir_faire,opt_nc_2025
-COMP496,21967667,savoir_faire,opt_nc_2025
-COMP497,21967668,savoir_faire,opt_nc_2025
-COMP498,21967669,savoir_faire,opt_nc_2025
-COMP499,21967670,savoir_faire,opt_nc_2025
-COMP5,21967176,savoir,opt_nc_2025
-COMP50,21967221,savoir,opt_nc_2025
-COMP500,21967671,savoir_faire,opt_nc_2025
-COMP501,21967672,savoir_faire,opt_nc_2025
-COMP502,21967673,savoir_faire,opt_nc_2025
-COMP503,21967674,savoir_faire,opt_nc_2025
-COMP504,21967675,savoir_faire,opt_nc_2025
-COMP505,21967676,savoir_faire,opt_nc_2025
-COMP506,21967677,savoir_faire,opt_nc_2025
-COMP507,21967678,savoir_faire,opt_nc_2025
-COMP508,21967679,savoir_faire,opt_nc_2025
-COMP509,21967680,savoir_faire,opt_nc_2025
-COMP510,21967681,savoir_faire,opt_nc_2025
-COMP511,21967682,savoir_faire,opt_nc_2025
-COMP512,21967683,savoir_faire,opt_nc_2025
-COMP513,21967684,savoir_faire,opt_nc_2025
-COMP514,21967685,savoir_faire,opt_nc_2025
-COMP515,21967686,savoir_faire,opt_nc_2025
-COMP516,21967687,savoir_faire,opt_nc_2025
-COMP517,21967688,savoir_faire,opt_nc_2025
-COMP518,21967689,savoir_faire,opt_nc_2025
-COMP519,21967690,savoir_faire,opt_nc_2025
-COMP520,21967691,savoir_faire,opt_nc_2025
-COMP521,21967692,savoir_faire,opt_nc_2025
-COMP522,21967693,savoir_faire,opt_nc_2025
-COMP523,21967694,savoir_faire,opt_nc_2025
-COMP524,21967695,savoir_faire,opt_nc_2025
-COMP525,21967696,savoir_faire,opt_nc_2025
-COMP526,21967697,savoir_faire,opt_nc_2025
-COMP527,21967698,savoir_faire,opt_nc_2025
-COMP528,21967699,savoir_faire,opt_nc_2025
-COMP529,21967700,savoir_faire,opt_nc_2025
-COMP53,21967224,savoir,opt_nc_2025
-COMP530,21967701,savoir_faire,opt_nc_2025
-COMP531,21967702,savoir_faire,opt_nc_2025
-COMP532,21967703,savoir_faire,opt_nc_2025
-COMP533,21967704,savoir_faire,opt_nc_2025
-COMP534,21967705,savoir_faire,opt_nc_2025
-COMP535,21967706,savoir_faire,opt_nc_2025
-COMP536,21967707,savoir_faire,opt_nc_2025
-COMP537,21967708,savoir_faire,opt_nc_2025
-COMP538,21967709,savoir_faire,opt_nc_2025
-COMP539,21967710,savoir_faire,opt_nc_2025
-COMP54,21967225,savoir,opt_nc_2025
-COMP540,21967711,savoir_faire,opt_nc_2025
-COMP541,21967712,savoir_faire,opt_nc_2025
-COMP542,21967713,savoir_faire,opt_nc_2025
-COMP543,21967714,savoir_faire,opt_nc_2025
-COMP544,21967715,savoir_faire,opt_nc_2025
-COMP545,21967716,savoir_faire,opt_nc_2025
-COMP546,21967717,savoir_faire,opt_nc_2025
-COMP547,21967718,savoir_faire,opt_nc_2025
-COMP548,21967719,savoir_faire,opt_nc_2025
-COMP549,21967720,savoir_faire,opt_nc_2025
-COMP550,21967721,savoir_faire,opt_nc_2025
-COMP551,21967722,savoir_faire,opt_nc_2025
-COMP552,21967723,savoir_faire,opt_nc_2025
-COMP553,21967724,savoir_faire,opt_nc_2025
-COMP554,21967725,savoir_faire,opt_nc_2025
-COMP555,21967726,savoir_faire,opt_nc_2025
-COMP556,21967727,savoir_faire,opt_nc_2025
-COMP557,21967728,savoir_faire,opt_nc_2025
-COMP558,21967729,savoir_faire,opt_nc_2025
-COMP559,21967730,savoir_faire,opt_nc_2025
-COMP56,21967227,savoir,opt_nc_2025
-COMP560,21967731,savoir_faire,opt_nc_2025
-COMP561,21967732,savoir_faire,opt_nc_2025
-COMP562,21967733,savoir_faire,opt_nc_2025
-COMP563,21967734,savoir_faire,opt_nc_2025
-COMP564,21967735,savoir_faire,opt_nc_2025
-COMP565,21967736,savoir_faire,opt_nc_2025
-COMP566,21967737,savoir_faire,opt_nc_2025
-COMP567,21967738,savoir_faire,opt_nc_2025
-COMP568,21967739,savoir_faire,opt_nc_2025
-COMP569,21967740,savoir_faire,opt_nc_2025
-COMP57,21967228,savoir,opt_nc_2025
-COMP570,21967741,savoir_faire,opt_nc_2025
-COMP571,21967742,savoir_faire,opt_nc_2025
-COMP572,21967743,savoir_faire,opt_nc_2025
-COMP573,21967744,savoir_faire,opt_nc_2025
-COMP574,21967745,savoir_faire,opt_nc_2025
-COMP575,21967746,savoir_faire,opt_nc_2025
-COMP576,21967747,savoir_etre,opt_nc_2025
-COMP577,21967748,savoir_etre,opt_nc_2025
-COMP578,21967749,savoir_etre,opt_nc_2025
-COMP579,21967750,savoir_etre,opt_nc_2025
-COMP58,21967229,savoir,opt_nc_2025
-COMP580,21967751,savoir_etre,opt_nc_2025
-COMP581,21967752,savoir_etre,opt_nc_2025
-COMP582,21967753,savoir_etre,opt_nc_2025
-COMP583,21967754,savoir_etre,opt_nc_2025
-COMP584,21967755,savoir_etre,opt_nc_2025
-COMP585,21967756,savoir_etre,opt_nc_2025
-COMP586,21967757,savoir_etre,opt_nc_2025
-COMP587,21967758,savoir_etre,opt_nc_2025
-COMP588,21967759,savoir_etre,opt_nc_2025
-COMP589,21967760,savoir_etre,opt_nc_2025
-COMP59,21967230,savoir,opt_nc_2025
-COMP590,21967761,savoir_etre,opt_nc_2025
-COMP591,21967762,savoir_etre,opt_nc_2025
-COMP592,21967763,savoir_etre,opt_nc_2025
-COMP593,21967764,savoir_etre,opt_nc_2025
-COMP594,21967765,savoir_etre,opt_nc_2025
-COMP595,21967766,savoir_etre,opt_nc_2025
-COMP596,21967767,savoir_etre,opt_nc_2025
-COMP597,21967768,savoir_etre,opt_nc_2025
-COMP598,21967769,savoir_etre,opt_nc_2025
-COMP599,21967770,savoir_etre,opt_nc_2025
-COMP6,21967177,savoir,opt_nc_2025
-COMP60,21967231,savoir,opt_nc_2025
-COMP600,21967771,manager,opt_nc_2025
-COMP601,21967772,manager,opt_nc_2025
-COMP602,21967773,manager,opt_nc_2025
-COMP603,21967774,manager,opt_nc_2025
-COMP604,21967775,manager,opt_nc_2025
-COMP605,21967776,manager,opt_nc_2025
-COMP606,21967777,manager,opt_nc_2025
-COMP607,22020760,savoir,opt_nc_2025
-COMP608,22020761,savoir,opt_nc_2025
-COMP609,22020763,savoir,opt_nc_2025
-COMP61,21967232,savoir,opt_nc_2025
-COMP611,22020764,savoir,opt_nc_2025
-COMP612,22020765,savoir,opt_nc_2025
-COMP613,22020766,savoir,opt_nc_2025
-COMP614,22020767,savoir,opt_nc_2025
-COMP615,22020768,savoir,opt_nc_2025
-COMP62,22026288,savoir,opt_nc_2025
-COMP63,21967234,savoir,opt_nc_2025
-COMP64,21967235,savoir,opt_nc_2025
-COMP65,21967236,savoir,opt_nc_2025
-COMP67,21967238,savoir,opt_nc_2025
-COMP68,21967239,savoir,opt_nc_2025
-COMP69,21967240,savoir,opt_nc_2025
-COMP7,21967178,savoir,opt_nc_2025
-COMP70,21967241,savoir,opt_nc_2025
-COMP72,21967243,savoir,opt_nc_2025
-COMP73,21967244,savoir,opt_nc_2025
-COMP74,21967245,savoir,opt_nc_2025
-COMP77,21967248,savoir,opt_nc_2025
-COMP78,21967249,savoir,opt_nc_2025
-COMP79,21967250,savoir,opt_nc_2025
-COMP8,21967179,savoir,opt_nc_2025
-COMP80,21967251,savoir,opt_nc_2025
-COMP81,21967252,savoir,opt_nc_2025
-COMP83,21967254,savoir,opt_nc_2025
-COMP84,21967255,savoir,opt_nc_2025
-COMP85,21967256,savoir,opt_nc_2025
-COMP86,21967257,savoir,opt_nc_2025
-COMP87,21967258,savoir,opt_nc_2025
-COMP88,21967259,savoir,opt_nc_2025
-COMP89,21967260,savoir,opt_nc_2025
-COMP90,21967261,savoir,opt_nc_2025
-COMP93,21967264,savoir,opt_nc_2025
-COMP96,21967267,savoir,opt_nc_2025
-COMP97,21967268,savoir,opt_nc_2025
-COMP98,21967269,savoir,opt_nc_2025
-COMP99,21967270,savoir,opt_nc_2025
+code_competence,nom_competence,neobrain_competence_id,groupe_competence_id,referentiel_competence_id
+COMP1,Processus de gestion administrative d'une commande publique.,21967172,savoir,opt_nc_2025
+COMP100,"Hygiène, sécurité et conditions de travail",21967271,savoir,opt_nc_2025
+COMP101,Règles de raccordement postale et d'adressage,21967272,savoir,opt_nc_2025
+COMP103,Règles et normes en matière de transition énergétique,21967274,savoir,opt_nc_2025
+COMP104,"Règles et normes en matière d'installations photovoltaïques, climatisations et électriques ; études de conception de ces installations",21967275,savoir,opt_nc_2025
+COMP105,Maitrise de techniques liées à l'efficacité énergétique ;,21967276,savoir,opt_nc_2025
+COMP106,"Technologies en matière d'électricité, de climatisation, d'énergie renouvelable ;",21967277,savoir,opt_nc_2025
+COMP107,Technique de gestion de projet et de benchmarking,21967278,savoir,opt_nc_2025
+COMP108,"Outils logiciels de supervision d'installations photovoltaïques, de pilotage énergétique, de bureautique et d'applications informatiques (Autocad et MS Project) ;",21967279,savoir,opt_nc_2025
+COMP11,Anglais technique lu et écrit,21967182,savoir,opt_nc_2025
+COMP110,Connaissance de la réglementation sur les statuts de la fonction publique et de l'OPT-NC,21967281,savoir,opt_nc_2025
+COMP111,"Connaissance des instances, processus et circuits de décision de l'OPT-NC",21967282,savoir,opt_nc_2025
+COMP112,Connaissance en droit du travail,21967283,savoir,opt_nc_2025
+COMP113,Connaissance des métiers de l'Office,21967284,savoir,opt_nc_2025
+COMP114,"Offre, réglementation et procédures liées aux produits et services commercialisés par l'OPT",21967285,savoir,opt_nc_2025
+COMP115,Techniques de management,21967286,savoir,opt_nc_2025
+COMP116,Techniques de communication,21967287,savoir,opt_nc_2025
+COMP117,Techniques de gestion de conflits,21967288,savoir,opt_nc_2025
+COMP12,Connaissance en Gestion documentaire,21967183,savoir,opt_nc_2025
+COMP121,Management/Pilotage,21967292,savoir,opt_nc_2025
+COMP122,Connaissance de la démarché qualité,21967293,savoir,opt_nc_2025
+COMP127,Techniques d'animation,21967298,savoir,opt_nc_2025
+COMP129,"Techniques de modélisations statistiques (tris croisés, typologies, scoring...).",21967300,savoir,opt_nc_2025
+COMP130,"Connaissance des différentes techniques d'entretien dans le cadre d'études qualitatives : focus group, entretien en face à face, observation...",21967301,savoir,opt_nc_2025
+COMP131,Connaissance de la culture marketing,21967302,savoir,opt_nc_2025
+COMP136,Maitrise des SIG et des outils de gestion logistique,21967307,savoir,opt_nc_2025
+COMP137,"Expertise en transport, logistique, flux et transit international",21967308,savoir,opt_nc_2025
+COMP14,"Architectures, protocoles et infrastructures des réseaux publics et d'entreprise",21967185,savoir,opt_nc_2025
+COMP141,Connaissance des outils et des méthodes d'approvisionnement et de tenue de planning,21967312,savoir,opt_nc_2025
+COMP143,Connaissance des régles d'urbanisme des différentes zones d'interventions,21967314,savoir,opt_nc_2025
+COMP144,Connaissance des SI,21967315,savoir,opt_nc_2025
+COMP145,"Matériel télécom, postal et services OPT",21967316,savoir,opt_nc_2025
+COMP147,Procédures douanières,21967318,savoir,opt_nc_2025
+COMP149,Connaissances de la réglementation de la formation profesionnelle continue,21967320,savoir,opt_nc_2025
+COMP15,Sécurité des réseaux,21967186,savoir,opt_nc_2025
+COMP151,Connaissance en gestion budgétaire et comptable,21967322,savoir,opt_nc_2025
+COMP153,Connaissance en méthode d'ingénierie de formation et de gestion de projet,21967324,savoir,opt_nc_2025
+COMP155,Réglementation postale,21967326,savoir,opt_nc_2025
+COMP156,Réglementation douanière,21967327,savoir,opt_nc_2025
+COMP157,Connaissance des offres et services postaux,21967328,savoir,opt_nc_2025
+COMP16,Equipements réseau et sécurité Cisco et Palo Alto,21967187,savoir,opt_nc_2025
+COMP17,Technologies de virtualisation et de programmation réseau,21967188,savoir,opt_nc_2025
+COMP171,Connaissance de la réglementation du domaine,21967342,savoir,opt_nc_2025
+COMP172,Connaissance des logiciels et systèmes d'information liés aux activités confiées,21967343,savoir,opt_nc_2025
+COMP173,Maitriser la règlementation liée aux produits et services commercialisées par l'office,21967344,savoir,opt_nc_2025
+COMP174,Maitrise de la comptabilité des agences,21967345,savoir,opt_nc_2025
+COMP176,Techniques de management des ventes,21967347,savoir,opt_nc_2025
+COMP179,"Connaissance des réseaux de télécommunications et de leurs caractéristiques (fonctionnalités, normes, standards et capacités)",21967350,savoir,opt_nc_2025
+COMP18,Système d'exploitation Linux,21967189,savoir,opt_nc_2025
+COMP183,"Maitrise sur les frameworks J2EE : Hibernate, Spring, Spring boot, Spring integration, Spring batch, ...",21967354,savoir,opt_nc_2025
+COMP184,"Connaissance des framework Front-End : Bootstrap, Angular 2+",21967355,savoir,opt_nc_2025
+COMP185,"Connaissance des outils Gitlab, Sonarqube, Jenkins, Artifactory",21967356,savoir,opt_nc_2025
+COMP186,"Connaissance approfondie des architectures logicielles (N-Tiers, SOA, WOA, microservices...)",21967357,savoir,opt_nc_2025
+COMP187,Connaissance d'approches Agiles ou Lean,21967358,savoir,opt_nc_2025
+COMP188,"Connaissances des principaux systèmes d'exploitation, SGBD et langages Java, Javascript, PL/SQL...",21967359,savoir,opt_nc_2025
+COMP190,Règles de constructions dans le domaine du bâtiment,21967361,savoir,opt_nc_2025
+COMP191,Risques liés aux constructions,21967362,savoir,opt_nc_2025
+COMP194,"Porter un diagnostic sur le patrimoine bâti, apporter au maître d'ouvrage des arguments techniques d'aide à la décision, informer des contraintes techniques inhérentes à certains choix",21967365,savoir,opt_nc_2025
+COMP195,"Rédiger un cahier des charges, un programme d'opération, choisir un concepteur",21967366,savoir,opt_nc_2025
+COMP196,Principes de la commande publique,21967367,savoir,opt_nc_2025
+COMP20,Ordonnanceur $Universe,21967191,savoir,opt_nc_2025
+COMP200,Techniques de phoning,21967371,savoir,opt_nc_2025
+COMP206,Règles de gestion publique,21967377,savoir,opt_nc_2025
+COMP208,Statistiques,21967379,savoir,opt_nc_2025
+COMP209,Outils bureautiques (notamment tableurs et bases de données),21967380,savoir,opt_nc_2025
+COMP210,Outils de communication,21967381,savoir,opt_nc_2025
+COMP213,Techniques du controle interne et maitrise des risques,21967384,savoir,opt_nc_2025
+COMP214,Modélisation des processus,21967385,savoir,opt_nc_2025
+COMP215,Analyse et évaluation des risques,21967386,savoir,opt_nc_2025
+COMP217,Culture de la maitrise des risques,21967388,savoir,opt_nc_2025
+COMP219,Cadre de référence du contrôle interne,21967390,savoir,opt_nc_2025
+COMP22,"Architectures applicatives et processus de développement (DevOps) Langages Shell, Python Commandes SQL de base Processus ITIL V3 fondamentaux",21967193,savoir,opt_nc_2025
+COMP226,"Connaissance de l'organisation et des processus de l'Office applicables à l'activité ""relation client""",21967397,savoir,opt_nc_2025
+COMP228,Techniques d'animations commerciales et coaching,21967399,savoir,opt_nc_2025
+COMP230,Techniques de management,21967401,savoir,opt_nc_2025
+COMP231,"Vérification de la bonne application par les équipes opérationnelles des prestataires, des règles de l'art en vigueur pour chaque type d'opération considérée (câblage électrique, câblage optique, électronique, génie civil), ainsi que des règles de sécurité",21967402,savoir,opt_nc_2025
+COMP234,Contrôle du respect des engagements contractuels avec les prestataires,21967405,savoir,opt_nc_2025
+COMP235,"Réalisation des diagnostics, conseil aux prestataires et proposition de solutions en cas de difficultés rencontrées.",21967406,savoir,opt_nc_2025
+COMP238,"Utilisation de Python ( Librairies Pandas, Numpy, Matplotlib, Seaborn, Sichit learn, Machinelearning)",21967409,savoir,opt_nc_2025
+COMP239,"Connaissances des outils de Business Intelligence (Power bi, Tableur)",21967410,savoir,opt_nc_2025
+COMP240,Utilisation SQL,21967411,savoir,opt_nc_2025
+COMP247,Sciences humaines et sociales,21967418,savoir,opt_nc_2025
+COMP255,Ingénierie et processus métier,21967426,savoir,opt_nc_2025
+COMP256,Systèmes d'Information Géographique,21967427,savoir,opt_nc_2025
+COMP257,"Maitrise des progiciels : Plateforme ArcGIS (Pro, Desktop, Entreprise, Online et Mobile), MS 365",21967428,savoir,opt_nc_2025
+COMP258,Maitrise de Python,21967429,savoir,opt_nc_2025
+COMP259,Maitrise dans l'administration de base de données,21967430,savoir,opt_nc_2025
+COMP26,Comptabilité publique,21967197,savoir,opt_nc_2025
+COMP261,"Modes opératoires et procédures en vigueur au sein de l'établissement,",21967432,savoir,opt_nc_2025
+COMP262,Procédures comptables et budgétaires en vigueur,21967433,savoir,opt_nc_2025
+COMP27,Réglementation des marchés publics,21967198,savoir,opt_nc_2025
+COMP271,Comptabilité analytique,21967442,savoir,opt_nc_2025
+COMP272,"Principes élémentaires de la mécanique et des systèmes électriques, hydrauliques et pneumatiques.",21967443,savoir,opt_nc_2025
+COMP273,Techniques de diagnostic et d'inventaire.,21967444,savoir,opt_nc_2025
+COMP276,Procédures d'habilitation des matériels.,21967447,savoir,opt_nc_2025
+COMP28,"Notions de droit civil, administratif et public.",21967199,savoir,opt_nc_2025
+COMP280,"Techniques du bâtiment de second d'oeuvre : maçonnerie, plâtrerie, électricité, menuiserie, plomberie, soudure, peinture ...",21967451,savoir,opt_nc_2025
+COMP281,Fonctionnement des différents types d'outillage.,21967452,savoir,opt_nc_2025
+COMP283,Notions de sécurité et de risques pour le public.,21967454,savoir,opt_nc_2025
+COMP284,Techniques de signalisation.,21967455,savoir,opt_nc_2025
+COMP285,"Techniques de bâtiment, second oeuvre",21967456,savoir,opt_nc_2025
+COMP286,Techniques de métré.,21967457,savoir,opt_nc_2025
+COMP287,Réglementations des établissements recevant du public (ERP).,21967458,savoir,opt_nc_2025
+COMP288,"Maîtriser l'utilisation du système d'information (OTRS, GLPI, Patrimoine immobilier)",21967459,savoir,opt_nc_2025
+COMP289,"Règles d'entretien et de gestion écoresponsable d'un bâtiment (tri sélectif, économies d'eau, etc.)",21967460,savoir,opt_nc_2025
+COMP29,Connaissance des outils bureautiques et applications informatiques nécessaires au métier,21967200,savoir,opt_nc_2025
+COMP290,Périmètre d'intervention en fonction de ses qualifications et habilitations Techniques bâtiment second œuvre prenant en compte les spécialités de chaque corps d'état,21967461,savoir,opt_nc_2025
+COMP291,Réglementation thermique et labels pour le patrimoine bâti existant Typologie des risques,21967462,savoir,opt_nc_2025
+COMP292,"Hydraulique, système de sécurité incendie et automatisme",21967463,savoir,opt_nc_2025
+COMP293,Techniques de planification,21967464,savoir,opt_nc_2025
+COMP294,Réglementations et normes en matière de sécurité des bâtiments,21967465,savoir,opt_nc_2025
+COMP3,Méthode d'achat et d'approvisionnement et de gestion de stock.,21967174,savoir,opt_nc_2025
+COMP30,"Environnement administratif, institutionnel et politique",21967201,savoir,opt_nc_2025
+COMP304,Communication écrite et orale,21967475,savoir,opt_nc_2025
+COMP31,Connaissance de l'organisation et des procédures de l'OPT-NC applicables à son domaine d'activité,21967202,savoir,opt_nc_2025
+COMP310,Connaissance des protocoles et architectures de réseaux.,21967481,savoir,opt_nc_2025
+COMP311,"Connaissance des matériels et des constructeurs, de l'état de l'art des technologies et des équipements dans son domaine",21967482,savoir,opt_nc_2025
+COMP312,"Connaissance des règles d'ingénierie, des matériels et équipements, des concepts et techniques d'architecture des réseaux.",21967483,savoir,opt_nc_2025
+COMP313,Connaissance des processus de l'entreprise applicables aux projets de construction et d'évolution de sites de télécommunications.,21967484,savoir,opt_nc_2025
+COMP316,Connaissance du ou des matériels et équipements relevant de son périmètre d'activité.,21967487,savoir,opt_nc_2025
+COMP318,"Connaissance des méthodologies de gestion de projet (PMP, PMI, Prince 2, Agile...),",21967489,savoir,opt_nc_2025
+COMP32,Flore.,21967203,savoir,opt_nc_2025
+COMP320,Coordination d'équipes de testeurs,21967491,savoir,opt_nc_2025
+COMP321,Elaboration des phases de tests et recettes,21967492,savoir,opt_nc_2025
+COMP322,Etablissement des tableaux de bord,21967493,savoir,opt_nc_2025
+COMP328,Méthodes d'entreposage,21967499,savoir,opt_nc_2025
+COMP329,Méthodes de colisage,21967500,savoir,opt_nc_2025
+COMP330,Techniques d'inventaire,21967501,savoir,opt_nc_2025
+COMP331,Permis poids lourd,21967502,savoir,opt_nc_2025
+COMP332,Certificat d'aptitude à la conduite en sécurité (Caces),21967503,savoir,opt_nc_2025
+COMP337,Connaissance des outils et méthodes de tenue de planning.,21967508,savoir,opt_nc_2025
+COMP34,Techniques de débroussaillage et de désherbage.,21967205,savoir,opt_nc_2025
+COMP342,Générale de l'ingénierie des lignes et de leurs caractéristiques.,21967513,savoir,opt_nc_2025
+COMP343,Générale des technologies associées aux réseaux et aux services.,21967514,savoir,opt_nc_2025
+COMP347,Réglementation postale et des domaines foncitonnels couverts,21967518,savoir,opt_nc_2025
+COMP350,Processus ITIL,21967521,savoir,opt_nc_2025
+COMP351,Processus métier,21967522,savoir,opt_nc_2025
+COMP352,Psychologie du travail,21967523,savoir,opt_nc_2025
+COMP354,Techniques d'analyse des comportements,21967525,savoir,opt_nc_2025
+COMP355,Techniques d'entretiens,21967526,savoir,opt_nc_2025
+COMP356,Tests d'évaluation psychologique,21967527,savoir,opt_nc_2025
+COMP357,Droit du travail,21967528,savoir,opt_nc_2025
+COMP358,Fonctionnement de la collectivité et statuts de la fonction publique,21967529,savoir,opt_nc_2025
+COMP359,Santé/Social,21967530,savoir,opt_nc_2025
+COMP36,Procédures administratives de la collectivité.,21967207,savoir,opt_nc_2025
+COMP360,Techniques de rédaction,21967531,savoir,opt_nc_2025
+COMP366,"Règles budgétaires, comptables et fiscales d'un établissement public,",21967537,savoir,opt_nc_2025
+COMP367,"Procédures administratives et règles internes de commande de l'OPT-NC,",21967538,savoir,opt_nc_2025
+COMP374,"Notions de modélisation d'architecture SI et des référentiels COBIT, PMI, ITIL",21967545,savoir,opt_nc_2025
+COMP375,Connaissances du domaine concerné,21967546,savoir,opt_nc_2025
+COMP376,"Connaissances de systèmes d'exploitation AS/400, UNIX/LINUX, Windows",21967547,savoir,opt_nc_2025
+COMP377,"Connaissances des systèmes de gestion de SGBD Oracle, MySQL et du langage PL/SQL",21967548,savoir,opt_nc_2025
+COMP379,Technologie et normes en bâtiment et génie civil.,21967550,savoir,opt_nc_2025
+COMP380,Outils de diagnostic et de gestion du patrimoine.,21967551,savoir,opt_nc_2025
+COMP381,Outils de pilotage opérationnel des activités (tableaux de bord) et de planification de projets.,21967552,savoir,opt_nc_2025
+COMP382,"Documents d'orientation générale locaux ou territoriaux (plan de développement urbain (PDU), schéma de cohérence territoriale (SCOT), etc.)",21967553,savoir,opt_nc_2025
+COMP383,Droit de la construction.,21967554,savoir,opt_nc_2025
+COMP384,Maîtrise du management des projets (PMBoK...) et des méthodes agiles (Scrum),21967555,savoir,opt_nc_2025
+COMP385,Connaissance des bonnes pratiques de la relation avec les métiers (BRMBoK),21967556,savoir,opt_nc_2025
+COMP386,Maitrise des outils de gestion de projets,21967557,savoir,opt_nc_2025
+COMP387,Connaissance des problématiques d'urbanisation des SI.,21967558,savoir,opt_nc_2025
+COMP388,Gérer des risques,21967559,savoir,opt_nc_2025
+COMP389,Architectures techniques et infrastructures des systèmes d'information,21967560,savoir,opt_nc_2025
+COMP39,Connaissance de la réglementation bancaire,21967210,savoir,opt_nc_2025
+COMP390,Système d'exploitation i5/OS,21967561,savoir,opt_nc_2025
+COMP391,"Procédures, normes et standards d'exploitation",21967562,savoir,opt_nc_2025
+COMP393,Sécurité des systèmes d'information,21967564,savoir,opt_nc_2025
+COMP395,Architecture des réseaux d'entreprise,21967566,savoir,opt_nc_2025
+COMP4,Utilisation des logiciels spécialisés en approvisionnement et logistique,21967175,savoir,opt_nc_2025
+COMP40,Connaissance de la réglementation LCB-FT,21967211,savoir,opt_nc_2025
+COMP405,"Connaissance des produits et services de la BU (marché, produits et concurrence)",21967576,savoir,opt_nc_2025
+COMP406,"Connaissance de l'écosystème interne OPT-NC, et externe liés aux métiers",21967577,savoir,opt_nc_2025
+COMP407,Connaissance du plan stratégique de l'Office,21967578,savoir,opt_nc_2025
+COMP408,"Connaissances des bases fondamentales du marketing, du développement et de la promotion d'une offre commerciale adaptée aux différents marchés (analyse du marché, mix marketing...)",21967579,savoir,opt_nc_2025
+COMP411,"Connaissance des sources d'information de veille, sur les tendances d'usage des utilisateurs finaux",21967582,savoir,opt_nc_2025
+COMP414,Connaissance des techniques et supports de communication et médias,21967585,savoir,opt_nc_2025
+COMP415,Ressources humaines,21967586,savoir,opt_nc_2025
+COMP420,Connaissance de la cybersécurité et RGPD,21967591,savoir,opt_nc_2025
+COMP421,Configurations usuelles matérielles et systèmes des postes clients.,21967592,savoir,opt_nc_2025
+COMP422,"Outils bureautiques, logiciels courants, outils de sécurité.",21967593,savoir,opt_nc_2025
+COMP423,Notions en informatique de réseau.,21967594,savoir,opt_nc_2025
+COMP424,Connaissance des processus de l'OPT-NC applicables à la gestion courante des réseaux et services.,21967595,savoir,opt_nc_2025
+COMP426,Connaissance technique des produits et services télécoms et des SI,21967597,savoir,opt_nc_2025
+COMP428,Connaissances de l'énergie (basse tension et courant continu),21967599,savoir,opt_nc_2025
+COMP429,"Maitriser les systèmes d'exploitation Windows, Unix, Linux et les outils bureautiques",21967600,savoir,opt_nc_2025
+COMP43,Générale des architectures et fonctions des équipements.,21967214,savoir,opt_nc_2025
+COMP435,Connaissance des processus de l'entreprise applicables à la gestion des incidents.,21967606,savoir,opt_nc_2025
+COMP437,Gestion du stress et mécontentement client,21967608,savoir,opt_nc_2025
+COMP438,Connaissance d'un outil de gestion des tickets.,21967609,savoir,opt_nc_2025
+COMP44,Connaissance des taux de disponibilité cible des équipements et des indicateurs de fonctionnement,21967215,savoir,opt_nc_2025
+COMP440,Connaissance des logiciels Microsoft,21967611,savoir,opt_nc_2025
+COMP441,Connaissance de premier niveau en réseau informatique,21967612,savoir,opt_nc_2025
+COMP442,Administration systèmes et réseaux,21967613,savoir,opt_nc_2025
+COMP443,bonne pratique d'organisation de la production informatique (ITIL),21967614,savoir,opt_nc_2025
+COMP444,"Maîtrise des outils de gouvernance des SI (TOGAF, COBIT, ITIL).",21967615,savoir,opt_nc_2025
+COMP445,Maîtrise du management des projets et de la planification des projets (MS Project Server),21967616,savoir,opt_nc_2025
+COMP446,Connaissance dans les domaines de l'infrastructure matérielle et des réseaux,21967617,savoir,opt_nc_2025
+COMP447,Connaitre les outils de production BIZAGI et Entreprise Architect,21967618,savoir,opt_nc_2025
+COMP448,Connaissances des architectures logicielles actuelles (micro-services),21967619,savoir,opt_nc_2025
+COMP449,"Accompagner une personne, un groupe",21967620,savoir_faire,opt_nc_2025
+COMP450,"Accompagner un changement, une réforme, un dispositif",21967621,savoir_faire,opt_nc_2025
+COMP451,"Accueillir une personne, un groupe, du public",21967622,savoir_faire,opt_nc_2025
+COMP452,Agir en situation difficile,21967623,savoir_faire,opt_nc_2025
+COMP453,Alerter sur une situation à risque,21967624,savoir_faire,opt_nc_2025
+COMP454,Analyser un besoin,21967625,savoir_faire,opt_nc_2025
+COMP455,Analyser un comportement,21967626,savoir_faire,opt_nc_2025
+COMP456,"Analyser un contexte, une problématique, une complexité",21967627,savoir_faire,opt_nc_2025
+COMP457,"Analyser un projet, une démarche",21967628,savoir_faire,opt_nc_2025
+COMP458,Analyser un risque,21967629,savoir_faire,opt_nc_2025
+COMP459,"Analyser une information, une donnée, une situation, un dispositif",21967630,savoir_faire,opt_nc_2025
+COMP460,"Animer un réseau, une communauté",21967631,savoir_faire,opt_nc_2025
+COMP461,"Animer un groupe, une équipe",21967632,savoir_faire,opt_nc_2025
+COMP462,Animer une réunion,21967633,savoir_faire,opt_nc_2025
+COMP463,"Anticiper un risque, une évolution",21967634,savoir_faire,opt_nc_2025
+COMP464,"Appliquer une règle, une procédure, un dispositif",21967635,savoir_faire,opt_nc_2025
+COMP465,Arbitrer,21967636,savoir_faire,opt_nc_2025
+COMP466,Archiver,21967637,savoir_faire,opt_nc_2025
+COMP467,Argumenter,21967638,savoir_faire,opt_nc_2025
+COMP468,Assister,21967639,savoir_faire,opt_nc_2025
+COMP469,Assurer une maintenance,21967640,savoir_faire,opt_nc_2025
+COMP47,Maitriser les systèmes d'exploitation,21967218,savoir,opt_nc_2025
+COMP470,Assurer une maîtrise d'ouvrage,21967641,savoir_faire,opt_nc_2025
+COMP471,Auditer,21967642,savoir_faire,opt_nc_2025
+COMP472,"Capitaliser une expérience, une connaissance",21967643,savoir_faire,opt_nc_2025
+COMP473,Commander,21967644,savoir_faire,opt_nc_2025
+COMP474,Communiquer,21967645,savoir_faire,opt_nc_2025
+COMP475,Communiquer dans un contexte de crise,21967646,savoir_faire,opt_nc_2025
+COMP476,"Concevoir un outil, un dispositif",21967647,savoir_faire,opt_nc_2025
+COMP477,"Concevoir un projet, une démarche",21967648,savoir_faire,opt_nc_2025
+COMP478,"Concevoir un support, un document",21967649,savoir_faire,opt_nc_2025
+COMP479,Concilier les besoins de l'agent et de l'organisation,21967650,savoir_faire,opt_nc_2025
+COMP48,Maitriser les outils de monitoring,21967219,savoir,opt_nc_2025
+COMP480,Conduire le changement,21967651,savoir_faire,opt_nc_2025
+COMP481,Conduire un entretien,21967652,savoir_faire,opt_nc_2025
+COMP482,Conduire un partenariat,21967653,savoir_faire,opt_nc_2025
+COMP483,"Conduire un projet, une démarche",21967654,savoir_faire,opt_nc_2025
+COMP484,"Conseiller une personne, un groupe",21967655,savoir_faire,opt_nc_2025
+COMP485,Constituer et entretenir un réseau,21967656,savoir_faire,opt_nc_2025
+COMP486,Contribuer,21967657,savoir_faire,opt_nc_2025
+COMP487,Contrôler,21967658,savoir_faire,opt_nc_2025
+COMP488,Convaincre,21967659,savoir_faire,opt_nc_2025
+COMP489,Coopérer,21967660,savoir_faire,opt_nc_2025
+COMP490,Coordonner,21967661,savoir_faire,opt_nc_2025
+COMP491,Décider,21967662,savoir_faire,opt_nc_2025
+COMP492,"Défendre une position, un intérêt",21967663,savoir_faire,opt_nc_2025
+COMP493,Déléguer,21967664,savoir_faire,opt_nc_2025
+COMP494,Démontrer,21967665,savoir_faire,opt_nc_2025
+COMP495,Détecter,21967666,savoir_faire,opt_nc_2025
+COMP496,Diagnostiquer,21967667,savoir_faire,opt_nc_2025
+COMP497,Dialoguer,21967668,savoir_faire,opt_nc_2025
+COMP498,Dialoguer avec les représentants du personnel,21967669,savoir_faire,opt_nc_2025
+COMP499,"Diffuser une information, une publication",21967670,savoir_faire,opt_nc_2025
+COMP5,"Méthodes d'ingénierie logicielles et de gestion de projets,",21967176,savoir,opt_nc_2025
+COMP50,Connaissance de la chaîne d'approvisionnment,21967221,savoir,opt_nc_2025
+COMP500,"Diriger une structure, un service",21967671,savoir_faire,opt_nc_2025
+COMP501,Ecouter,21967672,savoir_faire,opt_nc_2025
+COMP502,Elaborer un budget,21967673,savoir_faire,opt_nc_2025
+COMP503,"Elaborer un plan d'action, un programme",21967674,savoir_faire,opt_nc_2025
+COMP504,Elaborer une méthode,21967675,savoir_faire,opt_nc_2025
+COMP505,"Elaborer une stratégie, une politique",21967676,savoir_faire,opt_nc_2025
+COMP506,Emettre un avis,21967677,savoir_faire,opt_nc_2025
+COMP507,Encadrer un groupe,21967678,savoir_faire,opt_nc_2025
+COMP508,Enquêter,21967679,savoir_faire,opt_nc_2025
+COMP509,Evaluer,21967680,savoir_faire,opt_nc_2025
+COMP510,Expertiser,21967681,savoir_faire,opt_nc_2025
+COMP511,Expliquer,21967682,savoir_faire,opt_nc_2025
+COMP512,Exploiter une information,21967683,savoir_faire,opt_nc_2025
+COMP513,Fiabiliser,21967684,savoir_faire,opt_nc_2025
+COMP514,Fixer un objectif,21967685,savoir_faire,opt_nc_2025
+COMP515,Former,21967686,savoir_faire,opt_nc_2025
+COMP516,"Gérer des flux, des stocks",21967687,savoir_faire,opt_nc_2025
+COMP517,Gérer les relations interpersonnelles,21967688,savoir_faire,opt_nc_2025
+COMP518,Gérer les relations medias,21967689,savoir_faire,opt_nc_2025
+COMP519,Gérer un budget,21967690,savoir_faire,opt_nc_2025
+COMP520,Gérer un conflit,21967691,savoir_faire,opt_nc_2025
+COMP521,Gérer une relation client,21967692,savoir_faire,opt_nc_2025
+COMP522,"Gérer une situation de crise, d'urgence ou dangereuse",21967693,savoir_faire,opt_nc_2025
+COMP523,Gérer une situation de stress,21967694,savoir_faire,opt_nc_2025
+COMP524,Innover,21967695,savoir_faire,opt_nc_2025
+COMP525,Instruire un dossier,21967696,savoir_faire,opt_nc_2025
+COMP526,Juger,21967697,savoir_faire,opt_nc_2025
+COMP527,Maîtriser les délais,21967698,savoir_faire,opt_nc_2025
+COMP528,Manager,21967699,savoir_faire,opt_nc_2025
+COMP529,"Manipuler un matériel, une marchandise, un armement",21967700,savoir_faire,opt_nc_2025
+COMP53,Notion des régles des contrats publics,21967224,savoir,opt_nc_2025
+COMP530,Manœuvrer un engin spécialisé,21967701,savoir_faire,opt_nc_2025
+COMP531,Mener une médiation,21967702,savoir_faire,opt_nc_2025
+COMP532,Mener une veille,21967703,savoir_faire,opt_nc_2025
+COMP533,Mettre en forme un document,21967704,savoir_faire,opt_nc_2025
+COMP534,"Mettre en œuvre une méthode, une technique, un système, un dispositif",21967705,savoir_faire,opt_nc_2025
+COMP535,"Mettre en œuvre une règle, une norme, une procédure, un protocole",21967706,savoir_faire,opt_nc_2025
+COMP536,Mobiliser,21967707,savoir_faire,opt_nc_2025
+COMP537,Modéliser un processus,21967708,savoir_faire,opt_nc_2025
+COMP538,Négocier,21967709,savoir_faire,opt_nc_2025
+COMP539,"Organiser une activité, une réunion, un événement",21967710,savoir_faire,opt_nc_2025
+COMP54,Techniques commerciales,21967225,savoir,opt_nc_2025
+COMP540,Passer un marché,21967711,savoir_faire,opt_nc_2025
+COMP541,Piloter la performance,21967712,savoir_faire,opt_nc_2025
+COMP542,Piloter un prestataire,21967713,savoir_faire,opt_nc_2025
+COMP543,Piloter une activité,21967714,savoir_faire,opt_nc_2025
+COMP544,"Piloter une étude, une recherche",21967715,savoir_faire,opt_nc_2025
+COMP545,Planifier,21967716,savoir_faire,opt_nc_2025
+COMP546,Pratiquer son art,21967717,savoir_faire,opt_nc_2025
+COMP547,"Prendre en compte un contexte, une contrainte, une complexité",21967718,savoir_faire,opt_nc_2025
+COMP548,Prioriser,21967719,savoir_faire,opt_nc_2025
+COMP549,"Promouvoir une action, une démarche",21967720,savoir_faire,opt_nc_2025
+COMP550,Proposer,21967721,savoir_faire,opt_nc_2025
+COMP551,Prospecter un marché,21967722,savoir_faire,opt_nc_2025
+COMP552,"Réaliser une étude, une tache, un travail",21967723,savoir_faire,opt_nc_2025
+COMP553,"Rechercher des données, des informations",21967724,savoir_faire,opt_nc_2025
+COMP554,Rédiger,21967725,savoir_faire,opt_nc_2025
+COMP555,Rédiger un acte juridique,21967726,savoir_faire,opt_nc_2025
+COMP556,Rédiger un cahier des charges,21967727,savoir_faire,opt_nc_2025
+COMP557,Reformuler une demande,21967728,savoir_faire,opt_nc_2025
+COMP558,Rendre compte,21967729,savoir_faire,opt_nc_2025
+COMP559,Représenter,21967730,savoir_faire,opt_nc_2025
+COMP56,Connaissance des technologies associées aux réseaux et aux équipements.,21967227,savoir,opt_nc_2025
+COMP560,Résoudre un problème,21967731,savoir_faire,opt_nc_2025
+COMP561,"Retranscrire un besoin, un concept, une information, une donnée",21967732,savoir_faire,opt_nc_2025
+COMP562,Sélectionner,21967733,savoir_faire,opt_nc_2025
+COMP563,S'exprimer à l'oral,21967734,savoir_faire,opt_nc_2025
+COMP564,Superviser une personne,21967735,savoir_faire,opt_nc_2025
+COMP565,"Synthétiser des informations, des données, un document",21967736,savoir_faire,opt_nc_2025
+COMP566,Traduire un projet en plan d'actions,21967737,savoir_faire,opt_nc_2025
+COMP567,Traduire,21967738,savoir_faire,opt_nc_2025
+COMP568,"Transmettre un savoir, une technique, une compétence",21967739,savoir_faire,opt_nc_2025
+COMP569,Travailler en équipe,21967740,savoir_faire,opt_nc_2025
+COMP57,Réglementation des télécommunications.,21967228,savoir,opt_nc_2025
+COMP570,Travailler en mode projet,21967741,savoir_faire,opt_nc_2025
+COMP571,Travailler en partenariat,21967742,savoir_faire,opt_nc_2025
+COMP572,Travailler en réseau,21967743,savoir_faire,opt_nc_2025
+COMP573,"Utiliser un système, un matériel",21967744,savoir_faire,opt_nc_2025
+COMP574,"Valider une solution, une information",21967745,savoir_faire,opt_nc_2025
+COMP575,"Valoriser une action, une production",21967746,savoir_faire,opt_nc_2025
+COMP576,Curiosité intellectuelle,21967747,savoir_etre,opt_nc_2025
+COMP577,Esprit de synthèse,21967748,savoir_etre,opt_nc_2025
+COMP578,Esprit d'initiative,21967749,savoir_etre,opt_nc_2025
+COMP579,Etre autonome,21967750,savoir_etre,opt_nc_2025
+COMP58,Techniques de gestion de projets,21967229,savoir,opt_nc_2025
+COMP580,Etre persévérant,21967751,savoir_etre,opt_nc_2025
+COMP581,Etre rigoureux,21967752,savoir_etre,opt_nc_2025
+COMP582,Sens critique,21967753,savoir_etre,opt_nc_2025
+COMP583,Sens de l'analyse,21967754,savoir_etre,opt_nc_2025
+COMP584,Sens de l'innovation/Créativité,21967755,savoir_etre,opt_nc_2025
+COMP585,Aisance relationnelle,21967756,savoir_etre,opt_nc_2025
+COMP586,Avoir l'esprit d'équipe,21967757,savoir_etre,opt_nc_2025
+COMP587,Aptitude à l'écoute,21967758,savoir_etre,opt_nc_2025
+COMP588,Capacité à communiquer,21967759,savoir_etre,opt_nc_2025
+COMP589,Etre diplomate,21967760,savoir_etre,opt_nc_2025
+COMP59,Maitriser les outils et Systèmes d'informations de la direction télécoms de l'OPT-NC,21967230,savoir,opt_nc_2025
+COMP590,Faire preuve d'autorité,21967761,savoir_etre,opt_nc_2025
+COMP591,Faire preuve de discrétion,21967762,savoir_etre,opt_nc_2025
+COMP592,Faire preuve de leadership,21967763,savoir_etre,opt_nc_2025
+COMP593,Sens de la pédagogie,21967764,savoir_etre,opt_nc_2025
+COMP594,Faculté d'adaptation,21967765,savoir_etre,opt_nc_2025
+COMP595,Maîtrise de soi,21967766,savoir_etre,opt_nc_2025
+COMP596,Réactivité,21967767,savoir_etre,opt_nc_2025
+COMP597,Sens de l'organisation,21967768,savoir_etre,opt_nc_2025
+COMP598,Sens des responsabilités,21967769,savoir_etre,opt_nc_2025
+COMP599,Sens du service public,21967770,savoir_etre,opt_nc_2025
+COMP6,"Analyse, urbanisation, modélisation, architectures logicielles, SGBDR, BI,",21967177,savoir,opt_nc_2025
+COMP60,Connaissance des systèmes d'informations de l'OPT-NC,21967231,savoir,opt_nc_2025
+COMP600,"Communication - Capacité à transmettre clairement des informations, à écouter activement, et à établir un échange efficace pour atteindre des objectifs communs",21967771,manager,opt_nc_2025
+COMP601,"Facilitation - Aptitude à mobiliser les ressources, créer un environnement favorable, et accompagner les équipes dans l'atteinte des objectifs de manière collaborative.",21967772,manager,opt_nc_2025
+COMP602,"Prise de décision - Capacité à analyser les situations, à prendre des décisions appropriées et à en assumer la responsabilité pour garantir l'atteinte des objectifs",21967773,manager,opt_nc_2025
+COMP603,"Professionnalisme - Respect des règles, des standards et des comportements attendus, tout en faisant preuve d'exemplarité et d'intégrité dans ses actions.",21967774,manager,opt_nc_2025
+COMP604,"Esprit d'équipe - Capacité à favoriser la cohésion, la collaboration et l'engagement des membres pour atteindre les objectifs collectifs",21967775,manager,opt_nc_2025
+COMP605,"Adaptabilité - Aptitude à ajuster ses méthodes et comportements face aux changements ou aux imprévus, en maintenant efficacité et motivation",21967776,manager,opt_nc_2025
+COMP606,"Courage managérial - Capacité à affronter des situations difficiles, à prendre des décisions impopulaires si nécessaire, tout en restant aligné avec les valeurs et les objectifs de l'entreprise._x000D_",21967777,manager,opt_nc_2025
+COMP607,Connaissance d'ingénierie dédiée au domaine particulier,22020760,savoir,opt_nc_2025
+COMP608,Connaissance d'outils mathématiques et statistiques pertinents du domaine.,22020761,savoir,opt_nc_2025
+COMP609,Connaissance de l'architecture des réseaux et services,22020763,savoir,opt_nc_2025
+COMP61,Connaissance de l'organisation du fonctionnement et des processus de l'OPT-NC,21967232,savoir,opt_nc_2025
+COMP611,Connaissance de l'état de l'art et d'expertise des technologies et des équipements dans son domaine,22020764,savoir,opt_nc_2025
+COMP612,Connaissance de l'organisation et du plan stratégique de l'Office,22020765,savoir,opt_nc_2025
+COMP613,Connaissance des intervenants et sous-traitants relevant de son domaine d'expertise,22020766,savoir,opt_nc_2025
+COMP614,Connaissance des logiciels de dessins assistés par ordinateur (DAO et CAO) et base de données SIG,22020767,savoir,opt_nc_2025
+COMP615,Méthodes de rédaction des documents techniques,22020768,savoir,opt_nc_2025
+COMP62,Architecture des systèmes d'information,22026288,savoir,opt_nc_2025
+COMP63,"Connaissance des architectures WOA (API REST, micro-services...), de la containerisation des applications (Docker / Kubernetes) et de DevOps",21967234,savoir,opt_nc_2025
+COMP64,Connaissance des marketplace d'API et des outils d'API management,21967235,savoir,opt_nc_2025
+COMP65,Maîtrise des principes d'intégration continue et de livraison continue (CI/CD),21967236,savoir,opt_nc_2025
+COMP67,"Environnements/frameworks: o Linux, Windows o Java/J2EE, TypeScript/Javascript, SpringBoot, Angular, IONIC, Bootstrap, Gitlab, Github, Jenkins, SonarQube, Artifactory, Ansible/Tower",21967238,savoir,opt_nc_2025
+COMP68,PostgreSQL,21967239,savoir,opt_nc_2025
+COMP69,Connaissance de méthodes et principaux référentiels de gestion de services IT,21967240,savoir,opt_nc_2025
+COMP7,"Conception et développement dans les environnements / langages / BDD suivants** : o Angular, Springboot, Ionic, Bootstrap, Jhipster, ELK, o Linux / Windows o JAVA, typescript/javascript, HTML, XML, CSS, Powershell o PostgreSQL, Oracle",21967178,savoir,opt_nc_2025
+COMP70,Gestion documentaire et de projets,21967241,savoir,opt_nc_2025
+COMP72,Culture pluridisciplinaire,21967243,savoir,opt_nc_2025
+COMP73,Gestion de l'information,21967244,savoir,opt_nc_2025
+COMP74,Techniques d'accueil,21967245,savoir,opt_nc_2025
+COMP77,Droit/Réglementation,21967248,savoir,opt_nc_2025
+COMP78,"Contrôle, audit et évaluation",21967249,savoir,opt_nc_2025
+COMP79,Méthodes et techniques de contrôle,21967250,savoir,opt_nc_2025
+COMP8,"Connaissance AGL ADELIA, CLP/400,",21967179,savoir,opt_nc_2025
+COMP80,"Organisation, méthode et processus",21967251,savoir,opt_nc_2025
+COMP81,Connaissance des produits et services de l'OPT-NC,21967252,savoir,opt_nc_2025
+COMP83,"Techniques de vente (processus de vente : prospection,accueil client, découverte du besoin, présentation produits,négociation, suivi du client...)",21967254,savoir,opt_nc_2025
+COMP84,Avoir une culture pluri-disciplinaire,21967255,savoir,opt_nc_2025
+COMP85,Connaissances des nouvelles technologies de l'information et de la communication (NTIC),21967256,savoir,opt_nc_2025
+COMP86,Connaissance de l'environnement des médias supports et leurs spécificités,21967257,savoir,opt_nc_2025
+COMP87,Connaissance des logiciels PAO et vidéos,21967258,savoir,opt_nc_2025
+COMP88,Connaissance des réseaux sociaux et site web,21967259,savoir,opt_nc_2025
+COMP89,Aptitude à gérer le stress et les situatons d'urgence,21967260,savoir,opt_nc_2025
+COMP90,Etre force de proposition,21967261,savoir,opt_nc_2025
+COMP93,"Connaissance de la règlementation et des procédures postales, financières et télécoms.",21967264,savoir,opt_nc_2025
+COMP96,Techniques d'accueil de la clientèle,21967267,savoir,opt_nc_2025
+COMP97,"Réglementation postale, notamment en matière de distribution",21967268,savoir,opt_nc_2025
+COMP98,Techniques de gestes et postures,21967269,savoir,opt_nc_2025
+COMP99,Quartiers et secteurs géographiques,21967270,savoir,opt_nc_2025
