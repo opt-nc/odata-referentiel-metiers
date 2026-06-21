@@ -18,7 +18,7 @@ jobs:
       new_release_version: ${{ steps.release.outputs.new_release_version }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
 
       - name: Semantic Release
         id: release
@@ -38,7 +38,7 @@ jobs:
     needs: [ release ]
     steps:
       - name: Checkout repositories
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
 
       - name: Install Task
         uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
@@ -85,7 +85,7 @@ jobs:
     needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
 
       - name: Install Task
         uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa
@@ -98,7 +98,7 @@ jobs:
 
       - id: install-schemacrawler
         name: Install SchemaCrawler
-        uses: schemacrawler/SchemaCrawler-Local-Action@ddd39d2e1d15cf000e0b7aaa30c6f00fe6b7f15f
+        uses: schemacrawler/SchemaCrawler-Local-Action@403484356d4b1b536b76f853d49b78aacd9d2620
 
       - name: Install Graphviz to generate schemas
         run: sudo apt-get update && sudo apt-get install -y graphviz
@@ -131,7 +131,7 @@ jobs:
     needs: [ release, generate_databases ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
 
       - name: Download DuckDB artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
@@ -176,7 +176,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           fetch-depth: 0
 
