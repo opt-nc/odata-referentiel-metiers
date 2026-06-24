@@ -31,7 +31,7 @@ jobs:
           version: 3.9.0.2
 
       - name: Setup DuckDB action
-        uses: opt-nc/setup-duckdb-action@c64cd61a8a0af98f7d5d8b45e9dc332d250cd217
+        uses: opt-nc/setup-duckdb-action@69cdd8ddbc31d02a76e4b733fdfad3b19123a3e7
 
       - id: install-schemacrawler
         name: Install SchemaCrawler
