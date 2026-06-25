@@ -32,7 +32,7 @@ jobs:
         uses: opt-nc/setup-duckdb-action@69cdd8ddbc31d02a76e4b733fdfad3b19123a3e7
 
       - name: Setup Python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.14.5'
 
